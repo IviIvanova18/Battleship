@@ -64,6 +64,6 @@ typedef struct CellX_{
     int k;
 }CellX;
 
-Node_Clause *create_element_List_Clause(clause c);
+Node_Clause *create_element_List_Clause(clause clause);
 List_Clause create_empty_List_Clauses();
-List_Clause add_element_List_Clause(List_Clause* L, clause c);
+List_Clause add_element_List_Clause(List_Clause* L, clause clause);
