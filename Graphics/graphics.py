@@ -1,4 +1,3 @@
-
 from cgitb import reset
 import sys
 import tkinter as tk
