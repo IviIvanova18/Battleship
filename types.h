@@ -9,14 +9,13 @@
 
 
 
-// ab
+//x
 typedef struct _literal_ {
-    char name; 
+    int name; 
     bool negation;
 } literal;
 
-
-//a+b
+//x+y
 typedef struct _clause_ {
     literal tab[MAXVARNUM];
     int size;
@@ -38,7 +37,8 @@ typedef struct Node_Clause_
 typedef struct List_Clause_
 {
 	unsigned int size;      
-	Node_Clause *first;     
+	Node_Clause *first; 
+    Node_Clause *last;    
 }List_Clause;
 
 
@@ -64,6 +64,7 @@ typedef struct CellX_{
     int k;
 }CellX;
 
-Node_Clause *create_element_List_Clause(clause clause);
+Node_Clause *create_element_List_Clause(clause *clause);
 List_Clause create_empty_List_Clauses();
-List_Clause add_element_List_Clause(List_Clause* L, clause clause);
+List_Clause add_element_List_Clause(List_Clause* L, clause *clause);
+clause* copyInputClauseToDestination(clause* destination, clause* input);
