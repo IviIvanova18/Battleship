@@ -1,0 +1,244 @@
+
+from cgitb import reset
+import sys
+import tkinter as tk
+from tkinter import *
+from tkinter.font import Font
+from traceback import print_tb
+from turtle import width
+from board import Board, read_board_from_file
+from boat import Boat
+import numpy as np
+
+import graphics
+from setuptools import Command
+
+
+def rules():
+
+    text = """Battleships also known as Bimaru is a logic puzzle in a square grid of 10 x 10 \nsmall squares with simple rules and challenging solutions.
+    The rules of Battleships are simple:\n
+    You have to find the location of the battleships hidden in the grid.\n
+    The armada includes one battleship four squares long, two cruisers three squares long, three destroyers two squares long, and four submarines one square in size. \n
+    Each ship occupies a number of contiguous squares on the grid, arranged horizontally or vertically. \n
+    The ships are placed so that no ship touches any other ship, not even diagonally. \n
+    The numbers outside the grid show the number of cells occupied by battleships on that col/column."""
+
+
+    rulesWindow = Toplevel(root, height=700, width=700)
+    rulesWindow.title("Rules")
+    # rulesWindow.iconbitmap("Scrabble.ico")
+    rulesWindow.config(bg="#ff9130")
+    rulesLabel = Label(rulesWindow, text=text,bg="#ff9130",font='Arial 9 bold')
+    rulesLabel.place(relx=0.5, rely=0.5, anchor=CENTER)
+    closeButton = Button(rulesLabel, text="Close", command=rulesWindow.destroy)
+    closeButton.place(x=225, y=400)
+
+
+
+def placeBoats(rootName,x,y):
+    global movables
+    movables = []
+    for tile in range(4):
+        movables.append(Boat(x+tile*60,y,rootName, rootName))
+    count =0 
+    for sc in range(3):
+        for s in range(2):
+            movables.append(Boat(x+count*33+sc*20,y+40,rootName, rootName))
+            count+=1
+    count =0 
+    for sc in range(2):
+        for s in range(3):
+            movables.append(Boat(x+count*33+sc*20,y+80,rootName, rootName))
+            count+=1
+    for s in range(4):
+        movables.append(Boat(x+s*33,y+120,rootName, rootName))
+
+
+def solvePuzzle():
+    boatPlacement = read_solution_game()
+    # print(movables)
+    for tile in movables:
+        item = boatPlacement.pop()
+        x,y = item
+        tile.placeTileInGrid(x,y)
+
+def split(word):
+    return [char for char in word if char != '\n']
+
+
+
+
+
+def read_solution_game():
+    f = open(sys.argv[2],'r')
+    row=0
+    listTiles = list()
+    for line in f.readlines():
+        col=0
+        x = split(line)
+        for c in x:
+            if int(c) == 1:
+                tile = (col,row)
+                listTiles.append(tile)
+            col +=1
+        row +=1
+    f.close()
+    # print(listTiles)
+    return listTiles
+
+def popupmsg(msg, title):
+    root = tk.Tk()
+    root.title(title)
+    label = tk.Label(root, text=msg)
+    label.pack(side="top", fill="x", pady=10)
+    B1 = tk.Button(root, text="Okay", command = root.destroy)
+    B1.pack()
+
+def checkModel():
+    listTile =list()
+    grid = np.zeros((10, 10))
+    for tile in movables:
+        tilePositionCoordinates = tile.tileCoordinates()
+        x,y = tilePositionCoordinates
+        # IndexError: index 11 is out of bounds for axis 0 with size 10
+        # when outside of boinds see again the constrains
+
+        if x<0 or x>=10 or y< 0 or y>=10:
+            popupmsg("Put all the boats in the grid!",'Error')
+        else:
+            grid[x][y]=1
+        listTile.append(tilePositionCoordinates)
+    solution = read_solution_game()
+    solutiongrid = np.zeros((10, 10))
+    for cell in solution:
+        i,j = cell
+        solutiongrid[j][i]=1
+    if np.array_equal(solutiongrid,grid):
+        popupmsg("Congrats YOU WON!!!","win")
+    else :
+        popupmsg("Try again!","lose")
+
+
+
+
+def resetPuzzle():
+    for tile in movables:
+        tile.returnToOrigin()
+
+
+def board(): 
+    global board
+    # boardWindow = Toplevel(root,height=500,width=700)
+    root.title("Board") 
+    root.geometry('700x500') 
+    root.config(bg="#a1f0ea")
+    b = Board(0,0,None,None,None)
+    b= read_board_from_file(b)
+    n,m=b.height,b.width   
+    board = list()
+    for col in range(b.height):
+        line=list()
+        for x in range(b.width):
+            line.append(None)
+        line.append(str(b.listRow[col]))
+        board.append(line)
+    b.listColumn.append(None)
+    board.append(b.listColumn)
+
+
+    boardWidth = boardHeight= 385
+    boardFrame = Frame(root)
+    boardFrame.place(x=30, y=40, width=boardWidth, height = boardHeight)
+
+    labels = list()
+    squares = list()
+    for i in range(11):
+        for j in range(11):
+            label = board[i][j]
+            labels.append(Label(text = label))
+            frame = Frame(boardFrame, bd=0.5,background="#0f3536")
+            frame.place(x=i*35,y = j*35,width=35, height=35)
+            if (i, j) in b.listRocks:
+                color = "#858a99"
+            elif j == n or i == m:
+                color = "#d3eff0"
+            else :
+                color =  "#74ccf4"
+            square = Label(frame,text=label, bg =color, height=30, width=30)   
+            squares.append(square)
+            squares[-1].pack(fill=X)
+            frame.lift()
+    font = Font(family='Helvitica', size=10)
+    checkButton = Button(root, text = "Check",bg='#366d91',
+        fg='#ffffff',
+        bd=0.5,
+        font=font, 
+        relief = RAISED,
+        command=checkModel)
+    checkButton.place(x=110,y=boardHeight+80,height = 20, width= 100)
+    solveButton = Button(root, text = "Solve",bg='#366d91',
+        fg='#ffffff',
+        bd=0.5,
+        font=font, 
+        relief = RAISED,command=solvePuzzle)
+    solveButton.place(x=260,y=boardHeight+80,height = 20, width= 100)
+    solveButton = Button(root, text = "Reset",bg='#366d91',
+        fg='#ffffff',
+        bd=0.5,
+        font=font, 
+        relief = RAISED,command=resetPuzzle)
+    solveButton.place(x=410,y=boardHeight+80,height = 20, width= 100)
+    placeBoats(root,boardWidth+50,100)
+
+
+
+
+
+# print(read_solution_game())
+
+root = Tk()
+root.resizable(True, True) 
+root.geometry('450x200') 
+root.config(bg="#a1f0ea")
+font = Font(family='Helvitica', size=15)
+welcomeFont = Font(family="Helvetica",size = 17, weight="bold",
+                slant="italic")
+welcomeLabel = Label(root, text = "Welcome to Battleship logic game!",background="#a1f0ea",font=welcomeFont)
+# welcomeLabel.place(anchor="center")
+rulesButton = Button(root, text = "Rules of the game",
+    bg='#366d91',
+    fg='#ffffff',
+    bd=0.5,
+    font=font, 
+    relief = RAISED, command = rules)
+
+# checkButton.place(x=110,y=boardHeight+80,height = 20, width= 100)
+
+playButton = Button(root, text="Play",
+    bg='#366d91',
+    fg='#ffffff',
+    bd=0.5,
+    font=font, 
+    relief = RAISED, 
+    command = board
+)
+
+
+exitButton = Button(root, text = "Exit", 
+    bg='#366d91',
+    fg='#ffffff',
+    bd=0.5,
+    font=font, 
+    relief = RAISED,  
+    command = root.quit)
+
+root.title("Battleship")
+# root.iconbitmap("battleship.png")
+
+welcomeLabel.place(x = 40, y = 10)
+rulesButton.place(x = 120, y = 50)
+playButton.place(x = 170, y = 100)
+exitButton.place(x = 172, y = 150)
+
+root.mainloop()
