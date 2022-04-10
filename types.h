@@ -4,8 +4,31 @@
 #include <assert.h>
 #include <string.h>
 
-#define MAXSIZE 10
-#define MAXVARNUM 10
+#ifndef _TYPES_H_
+#define _TYPES_H_
+
+#define MAXSIZE 100
+#define MAXVARNUM 1000
+
+#define GridSizeHeight 10
+#define GridSizeWidth 10
+
+#define BoatCount 10
+
+#define BigBoatSize 4
+#define BigBoatCount 1
+
+#define MediumBoatSize 3
+#define MediumBoatCount 2
+
+#define SmallBoatSize 2
+#define SmallBoatCount 3
+
+#define TinyBoatSize 1
+#define TinyBoatCount 4
+
+
+
 
 
 
@@ -68,3 +91,8 @@ Node_Clause *create_element_List_Clause(clause *clause);
 List_Clause create_empty_List_Clauses();
 List_Clause add_element_List_Clause(List_Clause* L, clause *clause);
 clause* copyInputClauseToDestination(clause* destination, clause* input);
+void print_List_Clause(List_Clause*L);
+void print_Clause(clause c);
+void add_element_Clause(clause *c,literal l);
+
+#endif 
