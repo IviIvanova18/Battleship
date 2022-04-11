@@ -34,8 +34,7 @@ int main(int argc, char* argv[]){
 
 
    
-    // add_element_List_Clause(&list,&c2);
     List_Clause list;
-    //add_element_List_Clause(&list,&cl);
-    contiguousCell(&list);
+    allConstrants(&list);
+    //print_List_Clause(&list);
 }

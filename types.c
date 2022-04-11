@@ -31,7 +31,6 @@ List_Clause add_element_List_Clause(List_Clause* L, clause *c){
 	}
 	else
 	{
-
 		L->last->next = el;
 		L->last = el;
 		el->next = NULL;
@@ -57,6 +56,42 @@ void add_element_Clause(clause *clause,literal literal){
 //     return ptr;
 // }
 
+
+void print_literal_usual_form(literal l){
+	int numCopy = l.name;        
+    int k = numCopy % 10;
+    numCopy /= 10;
+    int j = numCopy % 10;
+    numCopy /= 10;
+    int i = numCopy % 10;
+    numCopy /= 10;
+	if(l.name <=999){
+		if (l.negation) {
+			printf("(-X_%d,%d,%d)",i,j,k);
+
+		}else{
+			printf("(+X_%d,%d,%d)",i,j,k);
+		}
+	}else if(l.name>=1000 && l.name<=1999){
+		if (l.negation) {
+			printf("(-B_%d,%d,%d)",i,j,k);
+
+		}else{
+			printf("(+B_%d,%d,%d)",i,j,k);
+		}
+	}else if(l.name >= 2000 && l.name <= 2009){
+		if (l.negation) {
+			printf("(-O_%d)",k);
+
+		}else{
+			printf("(+O_%d)",k);
+		}
+		
+	}else{
+		printf("Error %d",l.name);
+	}
+}
+
 void print_Clause(clause c){
 	int k;
 	int n = c.size;
@@ -65,15 +100,16 @@ void print_Clause(clause c){
 	for (k = 0; k < n; k++)
 	{	
 		literal l = c.tab[k];
-		if (l.negation) {
-			printf("(-%d)",l.name);
-		}else{
-		printf("(+%d)",l.name);
-
-		}
+		print_literal_usual_form(l);
+		// if (l.negation) {
+		// 	// printf("(-%d)",l.name);
+		// }else{
+		// // printf("(+%d)",l.name);
+		// }
 	} 
 	printf("]");
 }
+
 
 void print_List_Clause(List_Clause *L)
 {
