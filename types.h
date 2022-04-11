@@ -92,6 +92,7 @@ List_Clause create_empty_List_Clauses();
 List_Clause add_element_List_Clause(List_Clause* L, clause *clause);
 clause* copyInputClauseToDestination(clause* destination, clause* input);
 void print_List_Clause(List_Clause*L);
+void print_literal_usual_form(literal l);
 void print_Clause(clause c);
 void add_element_Clause(clause *c,literal l);
 

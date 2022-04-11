@@ -1,0 +1,12 @@
+git checkout -b namebranch
+git status 
+git add -A
+git commit -m "Comment"
+git push origin namebranch
+git pull origin main
+
+
+//delete branch 
+git checkout main 
+git pull
+git branch -D namebranch
