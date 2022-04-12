@@ -90,7 +90,7 @@ void print_clause(clause c) {
 
 void print_clauseSet(clauseSet cs) {
     for (int i = 0; i < cs.size; i++)
-        print_clause(cs.tab[i]); // print_is_valid(cs.tab[i]);
+        print_is_valid(cs.tab[i]); //print_clause(cs.tab[i]);
 }
 
 void print_modal(modal m) {

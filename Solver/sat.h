@@ -128,7 +128,8 @@ void unit_propagate(literal l, clauseSet *cs); /* Sould onmy be called with unit
 
 bool is_pure_literal(literal l, clauseSet cs);
 literal find_pure_literal(clauseSet cs);
-literal first_non_null_literal(clauseSet cs);
+literal first_non_null_literal(clause c);
+literal first_non_null_literal_in_set(clauseSet cs);
 bool is_empty_clause(clause c);
 bool is_empty_set(clauseSet cs);
 bool contains_empty_clause(clauseSet cs);
