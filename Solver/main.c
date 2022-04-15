@@ -2,11 +2,11 @@
 
 int main(int argc, char *argv[]) {
 
-    // clock_t begin = clock();
+    clock_t begin = clock();
     srand(time(0));
 
     if (argc < 4) {
-        puts("Input format : filename ; s for SAT or u for UNSAT ; solver number (1, 2 or 3)");
+        puts("Input format : filename ; s for SAT or u for UNSAT ; solver number (1, 2 or 3) ; output filename (optional)");
         return 1;
     }
 
@@ -39,16 +39,21 @@ int main(int argc, char *argv[]) {
     else
         puts("UNSAT");
 
-    print_modal(m);
+    // print_modal(m);
 
     if (argv[2][0] == 's' || argv[2][0] == 'S')
         assert(SAT);
     else 
         assert(!SAT);
 
-    // clock_t end = clock();
-    // double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-    // printf("Time : %f\n", time_spent);
+    FILE *g;
+    if (argc == 5) g =  fopen(argv[4], "a");
+    else g =  fopen("Tests/time.txt", "a");
+
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    fprintf(g, "%s, ", argv[1]);
+    fprintf(g, "%f\n", time_spent);
 
     free(m.tab);
     free(CS.tab);
