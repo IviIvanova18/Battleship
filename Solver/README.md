@@ -1,27 +1,49 @@
-Super Basic Sat-solver
+# Sat-solvers
 
-    To run with a specific DIMACS file:
-        'make'
-        './test_sat filename x' <- with x the expected output (s for SAT and u for UNSAT)
+## How to use
+- To run with a specific DIMACS file:
+    ```
+    make
+    ./test_sat filename x n output-filename
+    ```
+    - `filename`: name of the DIMACS file
+    - `x`: expected output (s for SAT and u for UNSAT)  
+    - `n`: the solver to be used (1, 2 or 3)
+    - `output-filename`: an optional argument, used to print the run time
+    
+- Example: 
+    ```
+    make
+    ./test_sat Tests/exemple.cnf s 3
+    ```
 
-    Example: 
-        make
-        ./test_sat Tests/exemple.cnf s
+## Tests
+- To run all satisfiable tests:
+  ```make tests_sat```
 
-    To run all satisfiable tests:
-        'make tests_sat'
+- To run all unsatisfiable tests: (Not recommended with solver1, running times can be extremly long...)
+    ```make tests_unsat```
 
-    To run all unsatisfiable tests: (Not recommended, running time may exceed ...)
-        'make tests_unsat'
+- To run all 'simple' unsatisfiable tests: (The simple tests are the size of the exercices done in class)
+    ```make tests_unsat```
+    
+- To run all tests:
+    ```make test_all```
 
-    To run all 'simple' unsatisfiable tests: (The simple tests are the size of the exercices done in class)
-        'make tests_unsat'
 
-    To run all tests:
-        'make test_all'
+#### Output:
+If the test is successful, only it's name will be printed.
+Otherwise, the assert function will stop the program.
 
-    Output:
-        If the test is successful, only it's name will be printed.
-        Otherwise, the assert function will stop the program.
+#### Format of test files: 
+DIMACS
+    
+## Solvers 
+### Solver 1
+A "stupid" solver, tries every combination until a correct modal is found.
 
-    Format of test files: DIMACS
+### Solver 2
+Uses the WalkSat algorithm
+
+### Solver 3
+DPLL
