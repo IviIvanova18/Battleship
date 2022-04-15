@@ -1,1 +1,9 @@
 Tests/Simple/SAT/test_sat_3.txt, 0.000115
+Tests/Simple/SAT/test_sat_2.txt, 0.000076
+Tests/Simple/SAT/test_sat_3.txt, 0.000079
+Tests/Simple/SAT/test_sat_4.txt, 0.000065
+Tests/Simple/SAT/test_sat_5.txt, 0.000069
+Tests/Simple/SAT/test_sat_6.txt, 0.000101
+Tests/Simple/SAT/test_sat_7.txt, 0.000076
+Tests/Simple/SAT/test_sat_8.txt, 0.000063
+Tests/Simple/SAT/test_sat_9.txt, 0.000074
