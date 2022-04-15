@@ -110,7 +110,7 @@ void read_clause_set(clauseSet *cs, FILE *f); /* Read a set of clauses form a fi
  ***************/
 clause simpli(clause c); /* simplify a clause */
 void simpli_cset(clauseSet *cs); /* simplify a clause set */
-bool sat(clauseSet cs); /* True if the set of clauses is satisfable */
+bool solver1(clauseSet cs, combination *c); /* True if the set of clauses is satisfable */
 
 /***************
  * Solver2     *

@@ -19,18 +19,20 @@ int main(int argc, char *argv[]) {
     remove_valid_clauses(&CS);
     fclose(f);
 
-    // bool SAT = sat(CS);
-    // m = solver2(CS);
-    // if (argv[3][0] == '1')
-    //     SAT = sat(CS);
-    // else 
-    
-    // bool SAT = true;    
-    // modal m = solver2(CS);
-    // if (is_null_modal(m)) SAT = false;
-    
+    bool SAT;
     modal m = init_combination(CS.tab[0].size);
-    bool SAT = DPLL(CS, &m);
+    
+    if (argv[3][0] == '3')
+        SAT = DPLL(CS, &m); // The set is being free inside the function
+    else if (argv[3][0] == '1') {
+        SAT = solver1(CS, &m);
+        clear_cset(CS);
+    } else {
+        m = solver2(CS);
+        if (is_null_modal(m)) SAT = false;
+        else SAT = true;
+        clear_cset(CS);
+    }
 
     if (SAT)
         puts("SAT");
@@ -39,17 +41,16 @@ int main(int argc, char *argv[]) {
 
     print_modal(m);
 
-    // if (argv[2][0] == 's' || argv[2][0] == 'S')
-    //     assert(SAT);
-    // else 
-    //     assert(!SAT);
+    if (argv[2][0] == 's' || argv[2][0] == 'S')
+        assert(SAT);
+    else 
+        assert(!SAT);
 
     // clock_t end = clock();
     // double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     // printf("Time : %f\n", time_spent);
 
-    // free(m.tab);
-    // clear_cset(CS);
+    free(m.tab);
     free(CS.tab);
     return 0;
 }
