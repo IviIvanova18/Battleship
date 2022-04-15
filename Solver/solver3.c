@@ -97,41 +97,53 @@ literal first_non_null_literal_in_set(clauseSet cs) {
     return init_literal();
 }
 
-bool DPLL(clauseSet cs) {
+void assign_to_modal(modal *m, int pos, bool val) {
+    if (val)
+        m->tab[pos] = 1;
+    else 
+        m->tab[pos] = 0;
+}
+
+bool DPLL(clauseSet cs, modal *m) {
     literal l;
     clause c;
-    modal m = init_combination(cs.tab[0].size);
-    remove_valid_clauses(&cs);
+    // remove_valid_clauses(&cs);
     c = find_unit_clause(cs);
     while (!is_null_clause(c)){
-        unit_propagate(first_non_null_literal(c), &cs);
+        l = first_non_null_literal(c);
+        unit_propagate(l, &cs);
+        assign_to_modal(m, l.pos, !l.negation);
         c = find_unit_clause(cs);
     }
-    remove_valid_clauses(&cs);
+    // remove_valid_clauses(&cs);
 
     l = find_pure_literal(cs);
     while (!is_null_lit(l)) {
         pure_literal_assign(l, &cs);
+        assign_to_modal(m, l.pos, !l.negation);
         l = find_pure_literal(cs);
     }
 
     if (is_empty_set(cs)) return true;
     if (contains_empty_clause(cs)) return false;
     
+    // remove_valid_clauses(&cs);
+
     l = first_non_null_literal_in_set(cs);
  
     clauseSet cs1 = init_clauseSet(cs.size);
     copy_cset(cs, &cs1);
     assign_to_set(l, &cs1, true);
-    bool d1 = DPLL(cs1);
+    bool d1 = DPLL(cs1, m);
     if (d1) {
         free(cs1.tab);
         return true;
     }
+
     clauseSet cs2 = init_clauseSet(cs.size);
     copy_cset(cs, &cs2);
     assign_to_set(l, &cs2, false);
-    bool d2 = DPLL(cs2);
+    bool d2 = DPLL(cs2, m);
     if (d2) {
         free(cs2.tab);
         return true;

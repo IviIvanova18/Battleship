@@ -66,14 +66,17 @@ int in_clause2(literal l, clause c); /* Return the position of literal l in the 
 void add_l_clause(clause *c, literal l); /* Add the literal l to the clause c */
 void add_l_clause2(clause *c, literal l); /* Add the literal l to the clause c (use when c was initialized with init_clause) */
 void add_clause_Cset(clauseSet *cs, clause c); /* Add the clause c to set cs */
+void copy_cset(clauseSet cs, clauseSet *cs2); /* Copy cs into cs2 */
 
-/* Other */
-clauseSet false_set(clauseSet cs, combination c); /* Return all clauses cl with c(cl) = 0 */
+/* Random */
 clause random_clause(clauseSet cs); /* Returns a random clause from cs */
 clause random_false_clause(clauseSet cs, combination c); /* Returns a random clause cl with c(cl) = 0 */
 literal random_literal(clause c); /* Returns a random literal from c */
 double random_min_max(double min, double max); /* Returns a random float from [min, max] */
-void copy_cset(clauseSet cs, clauseSet *cs2);
+
+/* Other */
+clauseSet false_set(clauseSet cs, combination c); /* Return all clauses cl with c(cl) = 0 */
+
 /***************
  * Modals      *
  ***************/
@@ -137,6 +140,6 @@ void assign(literal l, clause *c, bool val);
 void assign_to_set(literal l, clauseSet *cs, bool val);
 clauseSet assign_to_new_set(literal l, clauseSet cs, bool val);
 void pure_literal_assign(literal l, clauseSet *cs);
-// bool _DPLL(clauseSet cs, clauseSet *cs1, clauseSet *cs2);
-bool _DPLL(clauseSet cs);
-bool DPLL(clauseSet cs);
+void assign_to_modal(modal *m, int pos, bool val); /* Assign val to the modal at position pos */
+bool DPLL(clauseSet cs, modal *m);
+// bool DPLL(clauseSet cs);
