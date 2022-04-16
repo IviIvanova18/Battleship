@@ -59,6 +59,7 @@ bool is_null_clause(clause c); /* True if all the literals are null */
 bool same_name(literal a, literal b); /* True if both literals have the same name */
 bool same_var(literal a, literal b); /* True for {a, a} or {-a, -a} but not for {a, -a} */
 bool neg_in_clause(literal l, clause c); /* True if the negation of the literal l is in the clause c */
+bool neg_in_clauseSet(literal l, clauseSet cs); /* True if the negation of the literal l is in the clauseSet cs */
 int in_clause(literal l, clause c); /* Return the position of literal l in the clause c or -1 if it's not in c, using same_name() */
 int in_clause2(literal l, clause c); /* Return the position of literal l in the clause c or -1 if it's not in c, using same_var() */
 

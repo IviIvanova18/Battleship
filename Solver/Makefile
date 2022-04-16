@@ -3,7 +3,7 @@ GREEN = \033[0;32m
 YELLOW = \033[1;33m
 NC = \033[0m # No Color
 
-TESTS_SAT = Tests/Sat/uf20/* 
+TESTS_SAT = Tests/Sat/uf20/* #Tests/Sat/uuf50/*
 TESTS_UNSAT = Tests/Unsat/pigon/*
 main: sat.o dimacs.c modal.c solver1.c solver2.c solver3.c
  
@@ -11,28 +11,28 @@ tests_sat: main
 	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
 	@for i in $(TESTS_SAT) ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
-		./main $$i s 1 ; \
+		./main $$i s 3 Tests/solver3_time.txt; \
 	done
 
 tests_simpsat: main
 	@printf "$(YELLOW)##### Running Simple UNSAT Tests ##### $(NC) \n"
 	@for i in Tests/Simple/SAT/* ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
-		./main $$i s 1 ; \
+		./main $$i s 3 ; \
 	done
 
 tests_unsat: main
 	@printf "$(YELLOW)##### Running UNSAT Tests ##### $(NC) \n"
 	@for i in $(TESTS_UNSAT) ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
-		./main $$i u 1 ; \
+		./main $$i u 3 Tests/solver3.time; \
 	done
 
 tests_simpunsat: main
 	@printf "$(YELLOW)##### Running Simple UNSAT Tests ##### $(NC) \n"
 	@for i in Tests/Simple/UNSAT/* ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
-		./main $$i u 1 ; \
+		./main $$i u 3 ; \
 	done
 
 clean:

@@ -16,14 +16,27 @@ int main(int argc, char *argv[]) {
     clauseSet CS = init_clauseSet(600);
 
     read_DIMACS(&CS, f);
+    // print_clauseSet(CS);
     remove_valid_clauses(&CS);
-    fclose(f);
+    // remove_clause(&CS, 0);
+    // puts("");
+    // print_clauseSet(CS);
+    clauseSet cs2 = init_clauseSet(600);
+    copy_cset(CS, &cs2);
+    // puts("cs2 ; ");
+    // print_clauseSet(cs2);
+
+
+
+    
 
     bool SAT;
     modal m = init_combination(CS.tab[0].size);
     
-    if (argv[3][0] == '3')
+    if (argv[3][0] == '3') {
         SAT = DPLL(CS, &m); // The set is being free inside the function
+        // puts("\nDPLL");
+    }
     else if (argv[3][0] == '1') {
         SAT = solver1(CS, &m);
         clear_cset(CS);
@@ -40,6 +53,11 @@ int main(int argc, char *argv[]) {
         puts("UNSAT");
 
     // print_modal(m);
+    // bool check = check_set_modal(cs2, m);
+    // if (check)
+    //     puts("check");
+    // else
+    //     puts("not check");
 
     if (argv[2][0] == 's' || argv[2][0] == 'S')
         assert(SAT);
@@ -48,7 +66,7 @@ int main(int argc, char *argv[]) {
 
     FILE *g;
     if (argc == 5) g =  fopen(argv[4], "a");
-    else g =  fopen("Tests/time.txt", "a");
+    else g =  fopen("Tests/time.txt", "w");
 
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
@@ -57,5 +75,7 @@ int main(int argc, char *argv[]) {
 
     free(m.tab);
     free(CS.tab);
+    free(cs2.tab);
+    fclose(f);
     return 0;
 }
