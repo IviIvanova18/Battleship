@@ -8,7 +8,7 @@
     ```
     - `filename`: name of the DIMACS file
     - `x`: expected output (s for SAT and u for UNSAT)  
-    - `n`: the solver to be used (1, 2 or 3)
+    - `n`: solver number (1, 2 or 3)
     - `output-filename`: an optional argument, used to print the run time
     
 - Example: 
@@ -16,6 +16,16 @@
     make
     ./test_sat Tests/exemple.cnf s 3
     ```
+    
+## Solvers 
+### Solver 1
+A "stupid" solver, tries every combination until a correct modal is found.
+
+### Solver 2
+Uses the WalkSat algorithm.
+
+### Solver 3
+DPLL.
 
 ## Tests
 - To run all satisfiable tests:
@@ -38,12 +48,3 @@ Otherwise, the assert function will stop the program.
 #### Format of test files: 
 DIMACS
     
-## Solvers 
-### Solver 1
-A "stupid" solver, tries every combination until a correct modal is found.
-
-### Solver 2
-Uses the WalkSat algorithm
-
-### Solver 3
-DPLL
