@@ -48,3 +48,10 @@ Otherwise, the assert function will stop the program.
 #### Format of test files: 
 DIMACS
     
+    
+## Comparison
+
+Average time on 1000 satisfiable tests (20 variables and 91 clauses):
+- Solver1 : 0.089728s
+- Solver2 : 1.860959s
+- Solver3 : 0.002850s
