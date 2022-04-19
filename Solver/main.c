@@ -47,6 +47,8 @@ int main(int argc, char *argv[]) {
         clear_cset(CS);
     }
 
+    clock_t end = clock();
+
     if (SAT)
         puts("SAT");
     else
@@ -66,9 +68,8 @@ int main(int argc, char *argv[]) {
 
     FILE *g;
     if (argc == 5) g =  fopen(argv[4], "a");
-    else g =  fopen("Tests/time.txt", "w");
+    else g =  fopen("Tests/time.time", "w");
 
-    clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     fprintf(g, "%s, ", argv[1]);
     fprintf(g, "%f\n", time_spent);
