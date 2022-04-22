@@ -87,10 +87,27 @@ typedef struct CellX_{
     int k;
 }CellX;
 
+//[1,2,3]
+typedef struct _combination_ {
+    int size; 
+    int tab[10];
+}combination;
+
+//[1,2,3],[2,3,4]...
+typedef struct _combination_list_ {
+    int size;
+    combination tab[MAXVARNUM];
+}combination_list;
+
 Node_Clause *create_element_List_Clause(clause *clause);
 List_Clause create_empty_List_Clauses();
 List_Clause add_element_List_Clause(List_Clause* L, clause *clause);
 clause* copyInputClauseToDestination(clause* destination, clause* input);
+
+combination_list create_empty_combination_list();
+void add_new_combination(combination_list *comb_list,combination combination);
+void print_all_combinations(combination_list comb_list);
+
 void print_List_Clause(List_Clause*L);
 void print_literal_usual_form(literal l);
 void print_Clause(clause c);
