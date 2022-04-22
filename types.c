@@ -40,6 +40,29 @@ List_Clause add_element_List_Clause(List_Clause* L, clause *c){
 	return *L;
 }
 
+combination_list create_empty_combination_list(){
+	combination_list comb_list;
+	comb_list.size = 0;
+	return comb_list;
+}
+void add_new_combination(combination_list *comb_list,combination combination){
+	comb_list->size++;
+	comb_list->tab[comb_list->size-1] = combination;
+}
+
+void print_all_combinations(combination_list comb_list) {
+	for(int j=0;j<comb_list.size;j++){
+        combination c;
+        c = comb_list.tab[j];
+        for(int i=0;i<c.size;i++){
+            printf("%d ",c.tab[i]);
+        }
+           
+        printf("\n");
+        
+    }
+}
+
 void add_element_Clause(clause *clause,literal literal){
 	clause->size++;
 	clause->tab[clause->size-1] = literal;

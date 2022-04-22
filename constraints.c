@@ -314,10 +314,253 @@ void oneBoatOrSectionOfBoat(List_Clause *clauseList){
 	}
 }
 
-void allConstrants(List_Clause *clauseList){
+
+void read_game_file(FILE* f, int column_list[], int line_list[]){
+	int x;
+	int count = 0;
+	int L,H;
+	fscanf(f, "%d", &L);
+	fscanf(f, "%d", &H);
+
+    while (!feof(f) && count<H) {
+        fscanf(f, "%d", &x);
+		column_list[count] = x;
+		count++;
+       
+    }
+	count = 0;
+	while (!feof(f) && count<L) {
+        fscanf(f, "%d", &x);
+		line_list[count] = x;
+		count++;
+    }
+	fclose(f);
+	
+}
+
+void createCombination(int r,combination_list* comb_list)
+{   
+	int arr[]={0,1,2,3,4,5,6,7,8,9};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int data[r];
+    combinationUtil(arr, data, 0, n-1, 0, r,comb_list);
+}
+void combinationUtil(int arr[], int data[], int start, int end,int index, int r,combination_list *comb_list){
+    if (index == r)
+    {   
+        int j=0;
+		combination combination;
+		combination.size = 0;
+        for (j=0; j<r; j++){
+			combination.size++;
+			combination.tab[combination.size-1] = data[j];
+		}
+		comb_list->size++;
+		comb_list->tab[comb_list->size-1] = combination;
+        return;
+    }
+
+    for (int i=start; i<=end && end-i+1 >= r-index; i++)
+    {
+        data[index] = arr[i];
+        combinationUtil(arr, data, i+1, end, index+1, r,comb_list);
+    }
+}
+
+void NChosesKColumnFirstPart(List_Clause *clauseList,int column_list[]){
+	int i,j,c,l,k;
+	int currR;
+	literal literal;
+	combination_list comb_list;
+	combination currComb;
+	comb_list.size = 0;
+	for(j=0; j<GridSizeHeight; j++){
+		currR = column_list[j];
+    	int m = currR +1;
+        comb_list.size = 0;
+    	createCombination(m,&comb_list);
+		//for every possible combination
+		for(c=0; c<comb_list.size; c++){
+			clause clause;
+			clause.size = 0;
+			//the current combination 
+			currComb = comb_list.tab[c];
+			//for every element in the current combination
+			for(l=0; l<currComb.size; l++){
+				i = currComb.tab[l];
+				for(k=0;k<BoatCount;k++){
+					literal.name = 100*i+10*j+k;
+					literal.negation = true;
+					add_element_Clause(&clause,literal);
+				}
+			}
+            add_element_List_Clause(clauseList,&clause);
+		}
+
+	}
+
+	
+}
+
+void NChosesKColumnSecondPart(List_Clause *clauseList,int column_list[]){
+	int i,j,c,l,k;
+	int currR;
+	literal literal;
+	combination_list comb_list;
+	combination currComb;
+	comb_list.size = 0;
+	for(j=0; j<GridSizeHeight; j++){
+		currR = column_list[j];	
+    	int m = GridSizeHeight-currR+1;
+        comb_list.size = 0;
+    	createCombination(m,&comb_list);
+		//for every possible combination
+		for(c=0; c<comb_list.size; c++){
+			clause clause;
+			clause.size = 0;
+			//the current combination 
+			currComb = comb_list.tab[c];
+			//for every element in the current combination
+			for(l=0; l<currComb.size; l++){
+				i = currComb.tab[l];
+				for(k=0;k<BoatCount;k++){
+					literal.name = 100*i+10*j+k;
+					literal.negation = false;
+					add_element_Clause(&clause,literal);
+				}
+			}
+            add_element_List_Clause(clauseList,&clause);
+
+		}
+
+	}
+
+	
+}
+
+void NChosesKColumn(List_Clause *clauseList,int column_list[]){
+	NChosesKColumnFirstPart(clauseList,column_list);
+	NChosesKColumnSecondPart(clauseList,column_list);
+
+}
+
+void NChosesKLineFirstPart(List_Clause *clauseList,int line_list[]){
+	int i,j,c,l,k;
+	int currR;
+	literal literal;
+	combination_list comb_list;
+	combination currComb;
+	comb_list.size = 0;
+	for(i=0; i<GridSizeWidth; i++){
+		currR = line_list[j];
+    	int m = currR +1;
+        comb_list.size = 0;
+    	createCombination(m,&comb_list);
+		//for every possible combination
+		for(c=0; c<comb_list.size; c++){
+			clause clause;
+			clause.size = 0;
+			//the current combination 
+			currComb = comb_list.tab[c];
+			
+			//for every element in the current combination
+			for(l=0; l<currComb.size; l++){
+				j = currComb.tab[l];
+				for(k=0;k<BoatCount;k++){
+					literal.name = 100*i+10*j+k;
+					literal.negation = true;
+					add_element_Clause(&clause,literal);
+				}
+			}
+            add_element_List_Clause(clauseList,&clause);
+
+		}
+
+	}
+
+	
+}
+
+void NChosesKLineSecondPart(List_Clause *clauseList,int line_list[]){
+	int i,j,c,l,k,m;
+	int currR;
+	literal literal;
+	combination_list comb_list;
+	combination currComb;
+	comb_list.size = 0;
+	for(i=0; i<GridSizeWidth; i++){
+		currR = line_list[j];
+    	m = GridSizeHeight-currR+1;
+        comb_list.size = 0;
+    	createCombination(m,&comb_list);
+		//for every possible combination
+		for(c=0; c<comb_list.size; c++){
+			clause clause;
+			clause.size = 0;
+			//the current combination 
+			currComb = comb_list.tab[c];
+			
+			//for every element in the current combination
+			for(l=0; l<currComb.size; l++){
+				j = currComb.tab[l];
+				for(k=0;k<BoatCount;k++){
+					literal.name = 100*i+10*j+k;
+					literal.negation = false;
+					add_element_Clause(&clause,literal);
+				}
+			}
+            add_element_List_Clause(clauseList,&clause);
+		}
+	}
+}
+
+void NChosesKLine(List_Clause *clauseList,int line_list[]){
+	NChosesKLineFirstPart(clauseList,line_list);
+	NChosesKLineSecondPart(clauseList,line_list);
+}
+
+
+void allConstrants(List_Clause *clauseList,int column_list[],int line_list[]){
 	contiguousCell(clauseList);
     thereIsAtLeastOneBoatK(clauseList);
     thereIsAtMostOneBoatK(clauseList);
     oneBoatOrSectionOfBoat(clauseList);
+	NChosesKColumn(clauseList,column_list);
+    NChosesKLine(clauseList,line_list);
+}
+
+void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut){
+	assert (clauseList); 
+    Node_Clause *c;
+    c = clauseList->first;
+	fprintf(fileOut,"p cnf 2000 %d\n",clauseList->size);
+    while (c!=NULL) {
+        if(c->next==NULL){
+            print_Clause_DIMACS_Format(c->data,fileOut);
+        }else{
+			print_Clause_DIMACS_Format(c->data,fileOut);
+            fprintf(fileOut,"\n");
+        }
+        c = c->next;
+    }
+}
+
+void print_Clause_DIMACS_Format(clause c, FILE *fileOut){
+	int k;
+	int n = c.size;
+	literal l;
+	
+	for (k = 0; k < n; k++)
+	{	
+		l = c.tab[k];
+		if(l.negation){
+			fprintf(fileOut,"-%d ",l.name);
+
+		}else{
+			fprintf(fileOut,"%d ",l.name);
+		}
+
+	} 
+	fprintf(fileOut,"0");
 }
 
