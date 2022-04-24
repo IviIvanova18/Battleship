@@ -1,11 +1,5 @@
 #include "sat.h"
 
-// void assign(literal l, clause *c, bool val) {
-//     if ((val && l.name > 0 && c->tab[l.pos].name > 0) || (!val && l.name < 0 && c->tab[l.pos].name < 0))
-//         c->valid = true;
-//     c->tab[l.pos] = init_literal();
-// }
-
 void assign(literal l, clause *c, bool val) {
     if ((val && c->tab[l.pos].name > 0) || (!val && c->tab[l.pos].name < 0))
         c->valid = true;
@@ -49,64 +43,39 @@ clause find_unit_clause(clauseSet cs) {
 }
 
 void unit_propagate(literal l, clauseSet *cs) {
-    // puts("~~~ In propagate ~~~");
-    // printf("literal In propagate: "); print_literal(l);
-
     if (!is_null_lit(l)) {
         for (int i = 0; i < cs->size; i++) {
-            if (in_clause2(l, cs->tab[i]) >= 0){
-                // printf("in if with clause : "); print_clause(cs->tab[i]);
-                // remove_clause(cs, i);
+            if (in_clause2(l, cs->tab[i]) >= 0)
                 cs->tab[i].valid = true;
-                // puts("After first remove : ");
-                // print_clauseSet(*cs);
-            }
-            if (neg_in_clause(l, cs->tab[i])) {
-                // printf("in else with clause : "); print_clause(cs->tab[i]);
-                cs->tab[i].tab[l.pos] = init_literal();
-
-            }
+            if (neg_in_clause(l, cs->tab[i])) 
+                cs->tab[i].tab[l.pos] = init_literal();         
         }
         remove_valid_clauses(cs);
     }
-    // puts("End of propagate");
 }
-
-// bool is_pure_literal(literal l, clauseSet cs) {
-//     for (int i = 0; i < cs.size; i++)
-//         if (is_null_lit(l) || neg_in_clause(l, cs.tab[i]))
-//             return false;
-//     return true;
-// }
 
 bool is_pure_literal(literal l, clauseSet cs) {
     return !neg_in_clauseSet(l, cs);
 }
 
 literal find_pure_literal(clauseSet cs) {
-    for (int i = 0; i < cs.size; i++) {
-        for (int j = 0; j < cs.tab[i].size; j++) {
-            if (!is_null_lit(cs.tab[i].tab[j]) && is_pure_literal(cs.tab[i].tab[j], cs)) {
-                // printf("in find_pure_literal Found literal : "); print_literal(cs.tab[i].tab[j]);
+    for (int i = 0; i < cs.size; i++) 
+        for (int j = 0; j < cs.tab[i].size; j++) 
+            if (!is_null_lit(cs.tab[i].tab[j]) && is_pure_literal(cs.tab[i].tab[j], cs)) 
                 return cs.tab[i].tab[j];
-
-            }
-        }
-    }
     return init_literal();
 }
 
 void pure_literal_assign(literal l, clauseSet *cs) {
     for (int i = 0; i < cs->size; i++)
         if (in_clause(l, cs->tab[i]) >= 0)
-            remove_clause(cs, i); //assign(l, &cs->tab[i], val);
+            remove_clause(cs, i);
 }
 
 literal first_non_null_literal(clause c) {
-    for (int i = 0; i < c.size; i++) {
+    for (int i = 0; i < c.size; i++) 
         if (!is_null_lit(c.tab[i]))
             return c.tab[i];
-    }
     return init_literal();
 }
 
@@ -136,7 +105,6 @@ bool DPLL(clauseSet cs, modal *m) {
         l2 = first_non_null_literal(c);
         assign_to_modal(m, l2.pos, !l2.negation);
         unit_propagate(l2, &cs);
-        // unit_propagate(first_non_null_literal(c), &cs);
         c = find_unit_clause(cs);
     }
     // remove_valid_clauses(&cs);
