@@ -18,17 +18,6 @@ void assign_to_set(literal l, clauseSet *cs, bool val) {
     remove_valid_clauses(cs);
 }
 
-clauseSet assign_to_new_set(literal l, clauseSet cs, bool val) {
-    clauseSet cs2 = init_clauseSet(cs.size);
-    for (int i = 0; i < cs.size; i++)
-        assign(l, &cs2.tab[i], val);
-    return cs2;
-}
-
-// bool is_empty_clause(clause c) {
-//     return c.size == 0;
-// }
-
 bool is_unit_clause(clause c) {
     bool found1 = false;
     bool found2 = false;;
@@ -47,7 +36,7 @@ bool is_empty_set(clauseSet cs) {
 
 bool contains_empty_clause(clauseSet cs) {
     for (int i = 0; i < cs.size; i++) 
-        if (is_null_clause(cs.tab[i])) //is_empty_clause
+        if (is_null_clause(cs.tab[i]))
             return true;
     return false;
 }
@@ -108,9 +97,6 @@ literal find_pure_literal(clauseSet cs) {
 }
 
 void pure_literal_assign(literal l, clauseSet *cs) {
-    // bool val;
-    // if (l.name > 0) val = true;
-    // else val = false;
     for (int i = 0; i < cs->size; i++)
         if (in_clause(l, cs->tab[i]) >= 0)
             remove_clause(cs, i); //assign(l, &cs->tab[i], val);
@@ -169,7 +155,6 @@ bool DPLL(clauseSet cs, modal *m) {
     if (contains_empty_clause(cs))
         return false;
     
-
     l = first_non_null_literal_in_set(cs);
  
     clauseSet cs1 = init_clauseSet(cs.size);
@@ -296,3 +281,7 @@ bool DPLL(clauseSet cs, modal *m) {
 //     // free(cs2.tab);
 //     // return d1 || d2;
 // }
+
+void hello() {
+    return;
+}

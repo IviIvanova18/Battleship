@@ -1,3 +1,5 @@
 *.Identifier
 *.o
 *.time
+main
+time

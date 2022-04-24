@@ -6,12 +6,31 @@ NC = \033[0m # No Color
 TESTS_SAT = Tests/Sat/uf20/* #Tests/Sat/uuf50/*
 TESTS_UNSAT = Tests/Unsat/pigon/*
 main: sat.o dimacs.c modal.c solver1.c solver2.c solver3.c
- 
-tests_sat: main
+
+time: time.o
+
+tests_sat3: main
+	@rm -f Tests/solver3.time
 	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
 	@for i in $(TESTS_SAT) ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
-		./main $$i s 3 Tests/solver3_time.txt; \
+		./main $$i s 3 Tests/solver3.time; \
+	done
+
+tests_sat2: main
+	@rm -f Tests/solver2.time
+	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
+	@for i in $(TESTS_SAT) ; do \
+		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
+		./main $$i s 2 Tests/solver2.time; \
+	done
+
+tests_sat1: main
+	@rm -f Tests/solver1.time
+	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
+	@for i in $(TESTS_SAT) ; do \
+		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
+		./main $$i s 1 Tests/solver1.time; \
 	done
 
 tests_simpsat: main
@@ -36,4 +55,4 @@ tests_simpunsat: main
 	done
 
 clean:
-	rm -f *.o main
+	rm -f *.o main time

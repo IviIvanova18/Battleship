@@ -71,9 +71,9 @@ int main(int argc, char *argv[]) {
     else g =  fopen("Tests/time.time", "w");
 
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-    fprintf(g, "%s, ", argv[1]);
+    // fprintf(g, "%s, ", argv[1]); // Test's name
     fprintf(g, "%f\n", time_spent);
-
+ 
     free(m.tab);
     free(CS.tab);
     free(cs2.tab);
