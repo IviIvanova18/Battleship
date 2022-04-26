@@ -61,6 +61,7 @@ void supLitClause(literal l, clause *c) {
 }
 
 void remove_clause(clauseSet *cs, int p) {
+    free_clause(cs->tab[p]);
     for (int i = p; i < cs->size - 1; i++)
         cs->tab[i] = cs->tab[i + 1];
     cs->size--;
@@ -90,7 +91,7 @@ void print_clause(clause c) {
 
 void print_clauseSet(clauseSet cs) {
     for (int i = 0; i < cs.size; i++)
-        print_clause(cs.tab[i]); // print_is_valid(cs.tab[i]);
+        print_is_valid(cs.tab[i]); //print_clause(cs.tab[i]);
 }
 
 void print_modal(modal m) {
@@ -135,14 +136,26 @@ bool same_name(literal a, literal b) {
     return (abs(a.name) == abs(b.name));
 }
 
+// bool same_var(literal a, literal b) {
+//     return (abs(a.name) == abs(b.name) && (a.negation - b.negation == 0));
+// }
+
 bool same_var(literal a, literal b) {
-    return (abs(a.name) == abs(b.name) && (a.negation - b.negation == 0));
+    return (same_name(a,b) && ((a.name > 0 &&  b.name > 0) || (a.name < 0 &&  b.name < 0)));
 }
 
 bool neg_in_clause(literal l, clause c) {
     int p = in_clause(l, c);
     if (p == -1) return false;
-    return (l.negation + c.tab[p].negation == 1);
+    return ((l.name > 0 && c.tab[p].name < 0) || (l.name < 0 && c.tab[p].name > 0));
+}
+
+bool neg_in_clauseSet(literal l, clauseSet cs) {
+    for (int i = 0; i < cs.size; i++) {
+        if (neg_in_clause(l, cs.tab[i]))
+            return true;
+    }
+    return false;
 }
 
 int in_clause(literal l, clause c) {

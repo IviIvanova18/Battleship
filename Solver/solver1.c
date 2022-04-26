@@ -1,32 +1,31 @@
 #include "sat.h"
 
-/* !!!!!!!!!
- * The modal sat is printing in the right modal + 1 (so not the right modal)
- */
-bool sat(clauseSet cs) {
+bool solver1(clauseSet cs, combination *c) {
     // simpli_cset(&cs);
-    int counter = 0;
+    // int counter = 0;
     int j;
     bool all_good = false;
-    combination c = init_combination(cs.tab[0].size);
+    // combination c = init_combination(cs.tab[0].size);
     while (!all_good) {
         all_good = true;
         for (int i = 0; i < cs.size; i++) {
             if (!cs.tab[i].valid) {
-                if (!check_modal(cs.tab[i], c)) {
+                if (!check_modal(cs.tab[i], *c)) {
                     all_good = false;
                     break; 
                 }   
             }
         }
-        inc(&c);
-        counter++;
-        if (counter % 1000000 == 0){ printf("checking modal %d : ", counter); print_modal(c);}
-        if (all_one(c))
+        // counter++;
+        // if (counter % 1000000 == 0){ printf("checking modal %d : ", counter); print_modal(*c);}
+        if (all_one(*c))
             return false;
+        if (!all_good) // So the modal is not increased after finding the right one
+            inc(c);
+
     }
-    // printf("Final modal %d : ", counter); print_modal(c);
-    free(c.tab);
+    // printf("Final modal %d : ", counter); print_modal(*c);
+    // free(c.tab);
     return true;
 }
 

@@ -1,2 +1,6 @@
 *.Identifier
 *.o
+*.time
+main
+time
+zchaff
