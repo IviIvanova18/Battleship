@@ -153,4 +153,25 @@ void print_List_Clause(List_Clause *L)
 }
 
 
+void addBoat(clause *c,int i,int j, int k,bool negation){
+	//-Bi,j,k
+	literal l;
+	l.name = 1000+100*i+10*j+k;
+	l.negation = negation;
+	add_element_Clause(c,l);
+}
 
+void addOrientation(clause *c,int k,bool negation){
+	//ok
+	literal l;
+	l.name = 2000+k;
+	l.negation = negation;
+	add_element_Clause(c,l);
+}
+
+void addCell(clause *c,int i,int j, int k,bool negation){
+	literal l;
+	l.name = 100*i+10*j+k;
+	l.negation = negation;
+	add_element_Clause(c,l);
+}

@@ -41,6 +41,9 @@ void NChosesKLineFirstPart(List_Clause *clauseList,int line_list[]);
 void NChosesKLineSecondPart(List_Clause *clauseList,int line_list[]);
 void NChosesKLine(List_Clause *clauseList,int line_list[]);
 
+
+
+
 void allConstrants(List_Clause *clauseList,int column_list[],int line_list[]);
 
 void print_Clause_DIMACS_Format(clause c, FILE *fileOut);
