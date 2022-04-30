@@ -89,9 +89,16 @@ void print_clause(clause c) {
     printf("%d ###\n", c.tab[c.size - 1].name);
 }
 
+// void print_clause(clause c) {
+//     for (int i = 0; i < c.size; i++)
+//         if (!is_null_lit(c.tab[i])){printf("%d + ", c.tab[i].name);}
+//     puts("###");
+// }
+
+
 void print_clauseSet(clauseSet cs) {
     for (int i = 0; i < cs.size; i++)
-        print_is_valid(cs.tab[i]); //print_clause(cs.tab[i]);
+        print_clause(cs.tab[i]); // print_is_valid(cs.tab[i]);
 }
 
 void print_modal(modal m) {

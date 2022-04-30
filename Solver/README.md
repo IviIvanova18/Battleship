@@ -49,3 +49,6 @@ Average time on 1000 satisfiable tests (20 variables and 91 clauses):
 - Solver1 : 0.089728s
 - Solver2 : 1.860959s
 - Solver3 : 0.002850s
+
+Average time for solver3 on 883 unsatisfiable tests (50 variables and 218 clauses):
+- 0.728277s

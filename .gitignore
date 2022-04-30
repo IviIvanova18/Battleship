@@ -3,4 +3,7 @@
 *.time
 main
 time
+*.time
 zchaff
+temp
+temp.*

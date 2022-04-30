@@ -99,9 +99,12 @@ void assign_to_modal(modal *m, int pos, bool val) {
 bool DPLL(clauseSet cs, modal *m) {
     literal l = init_literal(), l2, l3;
     clause c;
+
     remove_valid_clauses(&cs);
     c = find_unit_clause(cs);
     while (!is_null_clause(c)){
+        // printf("in unit while with the clause : "); print_clause(c);
+
         l2 = first_non_null_literal(c);
         assign_to_modal(m, l2.pos, !l2.negation);
         unit_propagate(l2, &cs);
@@ -111,6 +114,7 @@ bool DPLL(clauseSet cs, modal *m) {
 
     l = find_pure_literal(cs);
     while (!is_null_lit(l)) {
+        // printf("in pure while with the literal : "); print_literal(l);
         assign_to_modal(m, l.pos, !l.negation);
         pure_literal_assign(l, &cs);
         l = find_pure_literal(cs);
@@ -118,16 +122,19 @@ bool DPLL(clauseSet cs, modal *m) {
     
     // remove_valid_clauses(&cs);
 
+
     if (is_empty_set(cs)) 
         return true;
     if (contains_empty_clause(cs))
         return false;
     
     l = first_non_null_literal_in_set(cs);
- 
+
     clauseSet cs1 = init_clauseSet(cs.size);
     copy_cset(cs, &cs1);
     assign_to_set(l, &cs1, true);
+    // printf("assigning  to true : "); print_literal(l);
+
     bool d1 = DPLL(cs1, m);
     if (d1) {
         free(cs1.tab);
@@ -137,6 +144,8 @@ bool DPLL(clauseSet cs, modal *m) {
     clauseSet cs2 = init_clauseSet(cs.size);
     copy_cset(cs, &cs2);
     assign_to_set(l, &cs2, false);
+    // printf("assigning  to false : "); print_literal(l);
+
     bool d2 = DPLL(cs2, m);
     if (d2) {
         free(cs2.tab);
@@ -249,7 +258,3 @@ bool DPLL(clauseSet cs, modal *m) {
 //     // free(cs2.tab);
 //     // return d1 || d2;
 // }
-
-void hello() {
-    return;
-}

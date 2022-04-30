@@ -3,8 +3,8 @@ GREEN = \033[0;32m
 YELLOW = \033[1;33m
 NC = \033[0m # No Color
 
-TESTS_SAT = Tests/Sat/uf20/* #Tests/Sat/uuf50/*
-TESTS_UNSAT = Tests/Unsat/pigon/*
+TESTS_SAT = Tests/Sat/uf20/* 
+TESTS_UNSAT = Tests/Sat/uuf50/* #Tests/Unsat/pigon/*
 main: sat.o dimacs.c modal.c solver1.c solver2.c solver3.c
 
 time: time.o
@@ -15,6 +15,14 @@ tests_sat3: main
 	@for i in $(TESTS_SAT) ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
 		./main $$i s 3 Tests/solver3.time; \
+	done
+
+tests_unsat3: main
+	@rm -f Tests/solver3.time
+	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
+	@for i in $(TESTS_UNSAT) ; do \
+		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
+		./main $$i u 3 Tests/solver3.time; \
 	done
 
 tests_sat2: main
