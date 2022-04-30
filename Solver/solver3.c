@@ -136,10 +136,11 @@ bool DPLL(clauseSet cs, modal *m) {
     // printf("assigning  to true : "); print_literal(l);
 
     bool d1 = DPLL(cs1, m);
-    if (d1) {
-        free(cs1.tab);
+    free(cs1.tab);
+
+    if (d1)
         return true;
-    }
+
 
     clauseSet cs2 = init_clauseSet(cs.size);
     copy_cset(cs, &cs2);
@@ -147,10 +148,10 @@ bool DPLL(clauseSet cs, modal *m) {
     // printf("assigning  to false : "); print_literal(l);
 
     bool d2 = DPLL(cs2, m);
-    if (d2) {
-        free(cs2.tab);
+    free(cs2.tab);
+    if (d2) 
         return true;
-    }
+    
     return false;
 }
 
