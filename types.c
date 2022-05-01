@@ -110,6 +110,13 @@ void print_literal_usual_form(literal l){
 			printf("(+O_%d)",k);
 		}
 		
+	}else if(l.name == 2010){
+		if (l.negation) {
+			printf("(-X_0,0,0)");
+
+		}else{
+			printf("(+X_0,0,0)");
+		}
 	}else{
 		printf("Error %d",l.name);
 	}
@@ -171,7 +178,11 @@ void addOrientation(clause *c,int k,bool negation){
 
 void addCell(clause *c,int i,int j, int k,bool negation){
 	literal l;
-	l.name = 100*i+10*j+k;
+	if(i== 0 && j==0 && k==0){
+		l.name = 2010;
+	}else {
+		l.name = 100*i+10*j+k;
+	}
 	l.negation = negation;
 	add_element_Clause(c,l);
 }
