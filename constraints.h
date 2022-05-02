@@ -83,6 +83,7 @@ void print_Clause_DIMACS_Format(clause c, FILE *fileOut);
 void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut);
 
 void nonExistingBoat(List_Clause *clauseList);
+void nonExistingCell(List_Clause *clauseList);
 
 
 #endif 
