@@ -65,12 +65,15 @@ pied by battleships on that row/column.*/
 void combinationUtil(int arr[], int data[], int start, int end,int index, int r,combination_list *comb_list);
 void createCombination(int r,combination_list* comb_list,int lenght);
 ////first two okay////
-void NChosesKColumnFirstPart(List_Clause *clauseList,int column_list[]);
-void NChosesKColumnSecondPart(List_Clause *clauseList,int column_list[]);
-void NChosesKColumn(List_Clause *clauseList,int column_list[]);
-void NChosesKLineFirstPart(List_Clause *clauseList,int line_list[]);
-void NChosesKLineSecondPart(List_Clause *clauseList,int line_list[]);
-void NChosesKLine(List_Clause *clauseList,int line_list[]);
+
+void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row);
+
+// void NChosesKColumnFirstPart(List_Clause *clauseList,int column_list[]);
+// void NChosesKColumnSecondPart(List_Clause *clauseList,int column_list[]);
+// void NChosesKColumn(List_Clause *clauseList,int column_list[]);
+// void NChosesKLineFirstPart(List_Clause *clauseList,int line_list[]);
+// void NChosesKLineSecondPart(List_Clause *clauseList,int line_list[]);
+// void NChosesKLine(List_Clause *clauseList,int line_list[]);
 
 /*The boats are placed so that no boat touches any other boat,
 not even diagonally*/
@@ -88,9 +91,8 @@ void print_Clause_DIMACS_Format(clause c, FILE *fileOut);
 void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut);
 
 void nonExistingBoat(List_Clause *clauseList);
-void nonExistingCell(List_Clause *clauseList);
 
-void CNF_N_Choses_k_Column(List_Clause *clauseList, int column_list[]);
-void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row);
+
+
 
 #endif 

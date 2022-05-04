@@ -26,15 +26,11 @@ int main(int argc, char* argv[]){
     thereIsAtMostOneBoatK(&list);
     contiguousCell(&list);
 
-    // oneBoatOrSectionOfBoat(&list);
+    oneBoatOrSectionOfBoat(&list);
     // TestConstr(&list);
     noBoatTouchesAnother(&list);
-    // NChosesKColumn(&list,column_list);
-    // NChosesKLine(&list,line_list);
-
-    // CNF_N_Choses_k_Column(&list,column_list);
 	nonExistingBoat(&list);
-    // NChosesKColumn(&list,column_list);
+
 
     // KChosesNCNF(&list,line_list,true);
     // KChosesNCNF(&list,column_list,false);

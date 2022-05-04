@@ -113,9 +113,11 @@ void print_List_Clause(List_Clause*L);
 void print_literal_usual_form(literal l);
 void print_Clause(clause c);
 void add_element_Clause(clause *c,literal l);
+void reset_Clause(clause *c);
 
 void addBoat(clause *c,int i,int j, int k,bool negation);
 void addOrientation(clause *c,int k,bool negation);
 void addCell(clause *c,int i,int j, int k,bool negation);
+
 
 #endif 

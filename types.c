@@ -186,3 +186,11 @@ void addCell(clause *c,int i,int j, int k,bool negation){
 	l.negation = negation;
 	add_element_Clause(c,l);
 }
+
+void reset_Clause(clause *c){
+	for(int i=0;i<c->size;i++){
+		c->tab[i].name = 0;
+		c->tab[i].negation = false;
+	}
+	c->size =0;
+}
