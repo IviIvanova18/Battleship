@@ -6,6 +6,7 @@
 
 int main(int argc, char* argv[]){
    
+    
     List_Clause list;
     list = create_empty_List_Clauses();
     if (argc < 3) {
@@ -21,7 +22,8 @@ int main(int argc, char* argv[]){
     int line_list[GridSizeWidth];
     read_game_file(f,column_list,line_list);
     // allConstraints(&list,column_list,line_list);
-   
+    
+    
     thereIsAtLeastOneBoatK(&list);
     thereIsAtMostOneBoatK(&list);
     contiguousCell(&list);
