@@ -306,7 +306,6 @@ void TestConstr(List_Clause *clauseList){
 					if (k1 != k2){
 						clause c;
 						c.size=0;
-
 						//-X_i,j,k1
 						addBoat(&c,i,j,k1,true);
 						//-X_i,j,k2
@@ -405,9 +404,9 @@ void noBoatTouchesAnother(List_Clause *clauseList){
 //(¬B ∨ O ∨ ¬X0) ∧ (¬B ∨ O ∨ ¬X1) ∧ (¬B ∨ O ∨ ¬X2) ∧ (¬B ∨ O ∨ ¬X3))
 void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList){
 
-	int k,i,j,r,t;
+	int k,i,j,r,t,k1;
 	clause c;		
-	for (k = StartBoat; k < BoatCount; k++){
+	for (k = 2; k < 4; k++){
 	int boatSize = matchKBoatToNSizeofK(k);
 	// printf("%d\n",boatSize);
 		for (i = 0; i < GridSizeHeight; i++){	
@@ -417,19 +416,25 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList){
 						if(r>=0 && r<=GridSizeHeight-1 && t>=0 && t<=GridSizeWidth-1){
 							c.size=0;
 
-							//-Xrtk
-							addCell(&c,r,t,k,true);
+							for(k1 =StartBoat;k1<BoatCount;k1++){
+								//-Xrtk
+								addCell(&c,r,t,k1,true);
+							}
 							//-Bi,j,k
 							addBoat(&c,i,j,k,true);
 							//Ok
 							addOrientation(&c,k,false);
 							add_element_List_Clause(clauseList,&c);
+							
 						}
 					}
 				}
 				if (j-1>=0){
 					c.size=0;
-
+					for(k1 =StartBoat;k1<BoatCount;k1++){
+					//-Xrtk
+						addCell(&c,r,t,k1,true);
+					}
 					//-Xi,j-1,k
 					addCell(&c,i,j-1,k,true);
 					//-Bi,j,k
@@ -440,7 +445,10 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList){
 				}
 				if(j+boatSize < GridSizeWidth){
 					c.size=0;
-
+					for(k1 =StartBoat;k1<BoatCount;k1++){
+					//-Xrtk
+						addCell(&c,r,t,k1,true);
+					}
 					//-Xi,j+n,k
 					addCell(&c,i,j+boatSize,k,true);
 					//-Bi,j,k
@@ -503,7 +511,7 @@ void SuroundingCellAndClauseHorizintal(List_Clause *clauseList, bool additionalL
 //Vertical//
 void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList){
 
-	int k,i,j,r,t;
+	int k,i,j,r,t,k1;
 
 	clause c;
 	for (k = StartBoat; k < BoatCount; k++){
@@ -514,6 +522,10 @@ void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList){
 					for(r=j-1; r<=j+1;r+=2){
 						if(r>=0 && r<=GridSizeHeight-1 && t>=0 && t<=GridSizeWidth-1){
 							c.size=0;
+							for(k1 =StartBoat;k1<BoatCount;k1++){
+								//-Xrtk
+								addCell(&c,r,t,k1,true);
+							}
 							//-Xrtk
 							addCell(&c,t,r,k,true);
 							//-Bi,j,k
@@ -527,6 +539,10 @@ void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList){
 				
 				if (i-1>=0){
 					c.size=0;
+					for(k1 =StartBoat;k1<BoatCount;k1++){
+					//-Xrtk
+						addCell(&c,r,t,k1,true);
+					}
 					//-Xi-1,j,k
 					addCell(&c,i-1,j,k,true);
 					//-Bi,j,k
@@ -538,6 +554,10 @@ void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList){
 				}
 				if(i+boatSize < GridSizeHeight){
 					c.size=0;
+					for(k1 =StartBoat;k1<BoatCount;k1++){
+					//-Xrtk
+						addCell(&c,r,t,k1,true);
+					}
 					//-Xi,j+n,k
 					addCell(&c,i+boatSize,j,k,true);
 					//-Bi,j,k
@@ -645,7 +665,7 @@ void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row){
 	clause newClause;
 	int l,c,i,j,k,n;
 	int p = 0;
-	for(j=0;j<1;j++){
+	for(j=0;j<GridSizeHeight;j++){
 		n = row_list[j];
 		printf("n is %d\n",n);
 		if(n<-1){
