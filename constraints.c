@@ -212,11 +212,11 @@ void contiguousCell(List_Clause *clauseList){
 	// (¬Bi,j,k ∨ ¬O ∨ Xi,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+1,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+2,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+3,j)
     notBnotOCellXVerical(clauseList);
     // (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ B) 
-   	allNotCellXHorizontalandBorNotO(clauseList,true);
+   	// allNotCellXHorizontalandBorNotO(clauseList,true);
     // // (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ ¬O) 
-    allNotCellXHorizontalandBorNotO(clauseList,false);
+    // allNotCellXHorizontalandBorNotO(clauseList,false);
     //  (¬B ∨ O ∨ X1) ∧ (¬B ∨ O ∨ X5) ∧ (¬B ∨ O ∨ X6) ∧ (¬B ∨ O ∨ X7)
-    notBOCellXHorizontal(clauseList);
+    // notBOCellXHorizontal(clauseList);
 	
 }
 void thereIsAtLeastOneBoatK(List_Clause *clauseList){

@@ -1,6 +1,7 @@
 *.Identifier
 *.o
 *.time
+.nfs*
 main
 time
 zchaff
