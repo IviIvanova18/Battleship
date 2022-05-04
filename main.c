@@ -4,17 +4,7 @@
 #include "types.h"
 #include "constraints.h"
 
-void read_minisat_modal(FILE *f) {
-    char *s = malloc(sizeof(char) * 100);
-    fgets(s, 10, f);
-    free(s);
-    int x;
-    while (!feof(f)) {
-        fscanf(f, "%d", &x);
-        if (x > 0)
-            printf("%d\n", x);
-    }
-}
+
 
 int main(int argc, char* argv[]){
    
@@ -41,27 +31,22 @@ int main(int argc, char* argv[]){
     contiguousCell(&list);
 
     oneBoatOrSectionOfBoat(&list);
-    // TestConstr(&list);
+    TestConstr(&list);
     noBoatTouchesAnother(&list);
 	nonExistingBoat(&list);
 
 
     // KChosesNCNF(&list,line_list,true);
     // KChosesNCNF(&list,column_list,false);
+
     // NotBOAllNotSuroundingCellHorizintal(&list);
 
+
+    // NotBOAllNotSuroundingCellVertical(&list);
     // print_List_Clause(&list);
 
 
 
     print_In_DIMACS_Format(&list,fileOut);
 
-    FILE *g = fopen("model.txt", "r");
-    assert(g);
-    read_minisat_modal(g);
-    fclose(g);
-
-	
-
-    return 0;
 }
