@@ -11,6 +11,11 @@
 #define iTest 1
 #define jTest 1
 #define kTest 0
+
+//////////////
+void TestConstr(List_Clause *clauseList);
+//////////////////////
+
 /*Boat Existence*/
 
 /*depending on the k returns the size of thr boat
@@ -58,7 +63,7 @@ void read_game_file(FILE* f, int column_list[], int line_list[]);
 pied by battleships on that row/column.*/
 ///No idea what is going on here///
 void combinationUtil(int arr[], int data[], int start, int end,int index, int r,combination_list *comb_list);
-void createCombination(int r,combination_list* comb_list);
+void createCombination(int r,combination_list* comb_list,int lenght);
 ////first two okay////
 void NChosesKColumnFirstPart(List_Clause *clauseList,int column_list[]);
 void NChosesKColumnSecondPart(List_Clause *clauseList,int column_list[]);
@@ -85,5 +90,7 @@ void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut);
 void nonExistingBoat(List_Clause *clauseList);
 void nonExistingCell(List_Clause *clauseList);
 
+void CNF_N_Choses_k_Column(List_Clause *clauseList, int column_list[]);
+void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row);
 
 #endif 

@@ -151,7 +151,7 @@ void print_List_Clause(List_Clause *L)
             print_Clause(c->data);
         }else{
 			print_Clause(c->data);
-            printf(" -> ");
+            printf(" \n ");
         }
         
         c = c->next;

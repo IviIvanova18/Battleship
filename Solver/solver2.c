@@ -1,6 +1,6 @@
 #include "sat.h"
 
-#define MAXITERATIONS 1000000
+#define MAXITERATIONS 100
 #define P 0.5
 
 modal solver2(clauseSet cs) {

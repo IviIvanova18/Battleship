@@ -21,21 +21,27 @@ int main(int argc, char* argv[]){
     int line_list[GridSizeWidth];
     read_game_file(f,column_list,line_list);
     // allConstraints(&list,column_list,line_list);
-    oneBoatOrSectionOfBoat(&list);
-    // contiguousCell(&list);
-    // noBoatTouchesAnother(&list);
-
+   
     thereIsAtLeastOneBoatK(&list);
     thereIsAtMostOneBoatK(&list);
-    oneBoatOrSectionOfBoat(&list);
-	nonExistingBoat(&list);
-    // nonExistingCell(&list);
+    // contiguousCell(&list);
 
-    allNotCellXHorizontalandBorNotO(&list,true); 
-    allNotCellXHorizontalandBorNotO(&list,false);
-    notBOCellXHorizontal(&list);
+    // oneBoatOrSectionOfBoat(&list);
+    // TestConstr(&list);
+    // noBoatTouchesAnother(&list);
+    // NChosesKColumn(&list,column_list);
+    // NChosesKLine(&list,line_list);
+
+    // CNF_N_Choses_k_Column(&list,column_list);
+	// nonExistingBoat(&list);
+    // NChosesKColumn(&list,column_list);
+
+    // KChosesNCNF(&list,line_list,true);
+    // KChosesNCNF(&list,column_list,false);
 
     // print_List_Clause(&list);
+
+
 
     print_In_DIMACS_Format(&list,fileOut);
 

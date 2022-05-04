@@ -13,6 +13,7 @@
 #define GridSizeHeight 10
 #define GridSizeWidth 10
 
+#define StartBoat 0
 #define BoatCount 10
 
 #define BigBoatSize 4
