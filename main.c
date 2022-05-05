@@ -5,10 +5,8 @@
 #include "constraints.h"
 
 
-
 int main(int argc, char* argv[]){
    
-    
     List_Clause list;
     list = create_empty_List_Clauses();
     if (argc < 3) {
@@ -25,16 +23,20 @@ int main(int argc, char* argv[]){
     read_game_file(f,column_list,line_list);
     // allConstraints(&list,column_list,line_list);
     
-    
     contiguousCell(&list);
-
+    
     thereIsAtLeastOneBoatK(&list);
     thereIsAtMostOneBoatK(&list);
 
-    oneBoatOrSectionOfBoat(&list);
-    TestConstr(&list);
+    oneBoatOrSectionOfBoat(&list); 
     noBoatTouchesAnother(&list);
-	nonExistingBoat(&list);
+
+    oneBoat(&list); 
+
+
+    // TestConstr(&list);
+	// nonExistingBoat(&list);
+
 
 
     // KChosesNCNF(&list,line_list,true);

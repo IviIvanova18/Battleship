@@ -56,6 +56,7 @@ void thereIsAtMostOneBoatK(List_Clause *clauseList);
 /*In every cell there is only one boat or section of boat.*/
 //good
 void oneBoatOrSectionOfBoat(List_Clause *clauseList);
+void oneBoat(List_Clause *clauseList);
 
 void read_game_file(FILE* f, int column_list[], int line_list[]);
 
