@@ -20,15 +20,16 @@ int main(int argc, char* argv[]){
     fileOut = fopen(argv[2],"w");
     assert(f);
     assert(fileOut);
-    int column_list[GridSizeHeight]; 
+    int column_list[GridSizeHeight];
     int line_list[GridSizeWidth];
     read_game_file(f,column_list,line_list);
     // allConstraints(&list,column_list,line_list);
     
     
+    contiguousCell(&list);
+
     thereIsAtLeastOneBoatK(&list);
     thereIsAtMostOneBoatK(&list);
-    contiguousCell(&list);
 
     oneBoatOrSectionOfBoat(&list);
     TestConstr(&list);
@@ -39,14 +40,10 @@ int main(int argc, char* argv[]){
     // KChosesNCNF(&list,line_list,true);
     // KChosesNCNF(&list,column_list,false);
 
-    // NotBOAllNotSuroundingCellHorizintal(&list);
-
-
-    // NotBOAllNotSuroundingCellVertical(&list);
     // print_List_Clause(&list);
 
 
-
     print_In_DIMACS_Format(&list,fileOut);
+    return 0;
 
 }

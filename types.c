@@ -40,26 +40,66 @@ List_Clause add_element_List_Clause(List_Clause* L, clause *c){
 	return *L;
 }
 
+// combination_list create_empty_combination_list(){
+// 	combination_list comb_list;
+// 	comb_list.size = 0;
+// 	return comb_list;
+// }
+// void add_new_combination(combination_list *comb_list,combination combination){
+// 	comb_list->size++;
+// 	comb_list->tab[comb_list->size-1] = combination;
+// }
+/*Combinations*/
 combination_list create_empty_combination_list(){
-	combination_list comb_list;
-	comb_list.size = 0;
-	return comb_list;
+	combination_list l ={0,NULL,NULL};
+	return l;
 }
-void add_new_combination(combination_list *comb_list,combination combination){
-	comb_list->size++;
-	comb_list->tab[comb_list->size-1] = combination;
+Node_Combination *create_element_combination_list(combination *c){
+    Node_Combination *el;
+	el = (Node_Combination *)malloc(sizeof(Node_Combination));
+	if (el==NULL)
+	{
+		fprintf(stderr, "create_element_List_Point : impossible allocation\n");
+		exit(-1);
+	}
+	el->data = *c;
+
+	el->next = NULL;
+	return el;
+}
+
+combination_list add_element_combination_list(combination_list* L, combination *c){
+    Node_Combination *el;
+    
+	el = create_element_combination_list(c);
+	if (L->size == 0)
+	{
+		L->first = L->last = el;
+		el->next =NULL;
+	}
+	else
+	{
+		L->last->next = el;
+		L->last = el;
+		el->next = NULL;
+	}
+	L->size++;
+	
+	return *L;
 }
 
 void print_all_combinations(combination_list comb_list) {
-	for(int j=0;j<comb_list.size;j++){
+	Node_Combination *comb;
+	comb = comb_list.first;
+	while(comb->next!=NULL){
         combination c;
-        c = comb_list.tab[j];
+        c = comb->data;
         for(int i=0;i<c.size;i++){
             printf("%d ",c.tab[i]);
         }
            
         printf("\n");
-        
+        comb = comb->next;
     }
 }
 
@@ -194,3 +234,4 @@ void reset_Clause(clause *c){
 	}
 	c->size =0;
 }
+

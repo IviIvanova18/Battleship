@@ -66,6 +66,7 @@ void combinationUtil(int arr[], int data[], int start, int end,int index, int r,
 void createCombination(int r,combination_list* comb_list,int lenght);
 ////first two okay////
 
+void NChosesK(List_Clause *clauseList,int line_list[],int column_list[]);
 void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row);
 
 // void NChosesKColumnFirstPart(List_Clause *clauseList,int column_list[]);

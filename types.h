@@ -31,8 +31,6 @@
 
 
 
-
-
 //x
 typedef struct _literal_ {
     int name; 
@@ -91,23 +89,26 @@ typedef struct CellX_{
 //[1,2,3]
 typedef struct _combination_ {
     int size; 
-    int tab[10];
+    int tab[MAXSIZE];
 }combination;
+
+typedef struct Node_Combination_{
+    combination data;
+    struct Node_Combination_ *next;
+}Node_Combination;
 
 //[1,2,3],[2,3,4]...
 typedef struct _combination_list_ {
     int size;
-    combination tab[MAXVARNUM];
+    Node_Combination *first;
+    Node_Combination *last;
 }combination_list;
 
+/*Clauses*/
 Node_Clause *create_element_List_Clause(clause *clause);
 List_Clause create_empty_List_Clauses();
 List_Clause add_element_List_Clause(List_Clause* L, clause *clause);
 clause* copyInputClauseToDestination(clause* destination, clause* input);
-
-combination_list create_empty_combination_list();
-void add_new_combination(combination_list *comb_list,combination combination);
-void print_all_combinations(combination_list comb_list);
 
 void print_List_Clause(List_Clause*L);
 void print_literal_usual_form(literal l);
@@ -115,6 +116,13 @@ void print_Clause(clause c);
 void add_element_Clause(clause *c,literal l);
 void reset_Clause(clause *c);
 
+/*Combinations*/
+combination_list create_empty_combination_list();
+Node_Combination *create_element_combination_list(combination *c);
+combination_list add_element_combination_list(combination_list* L, combination *c);
+void print_all_combinations(combination_list comb_list);
+
+/*Variables*/
 void addBoat(clause *c,int i,int j, int k,bool negation);
 void addOrientation(clause *c,int k,bool negation);
 void addCell(clause *c,int i,int j, int k,bool negation);
