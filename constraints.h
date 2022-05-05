@@ -12,9 +12,6 @@
 #define jTest 1
 #define kTest 0
 
-//////////////
-void TestConstr(List_Clause *clauseList);
-//////////////////////
 
 /*Boat Existence*/
 
@@ -29,32 +26,32 @@ int matchKBoatToNSizeofK(int k);
 /* if isBoat == true :(¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ B)
 * else : (¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ O)
 */ 
-//good
+
 void allNotCellXVericalandBorO(List_Clause *clauseList,bool isBoat);
 
 
-//good
+
 /* if isBoat == true :  (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ B) 
 * else (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ ¬O) 
 */
 void allNotCellXHorizontalandBorNotO(List_Clause *clauseList, bool isBoat);
 
-//good
+
 void notBnotOCellXVerical(List_Clause *clauseList);
 void notBOCellXHorizontal(List_Clause *clauseList);
 /*The boat k occupies the cells such that*/
 void contiguousCell(List_Clause *clauseList);
 
 /*There is at least one boat k*/
-//good
-void thereIsAtLeastOneBoatK(List_Clause *clauseList);
 
+void thereIsAtLeastOneBoatK(List_Clause *clauseList);
+void onlyOneBoatInCell(List_Clause *clauseList);
 /*There is at most one boat k*/
-//good
+
 void thereIsAtMostOneBoatK(List_Clause *clauseList);
 
 /*In every cell there is only one boat or section of boat.*/
-//good
+
 void oneBoatOrSectionOfBoat(List_Clause *clauseList);
 
 void read_game_file(FILE* f, int column_list[], int line_list[]);

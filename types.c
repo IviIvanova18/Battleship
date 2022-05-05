@@ -40,20 +40,14 @@ List_Clause add_element_List_Clause(List_Clause* L, clause *c){
 	return *L;
 }
 
-// combination_list create_empty_combination_list(){
-// 	combination_list comb_list;
-// 	comb_list.size = 0;
-// 	return comb_list;
-// }
-// void add_new_combination(combination_list *comb_list,combination combination){
-// 	comb_list->size++;
-// 	comb_list->tab[comb_list->size-1] = combination;
-// }
+
 /*Combinations*/
 combination_list create_empty_combination_list(){
-	combination_list l ={0,NULL,NULL};
-	return l;
+	combination_list L ={0,NULL,NULL};
+	return L;
 }
+
+
 Node_Combination *create_element_combination_list(combination *c){
     Node_Combination *el;
 	el = (Node_Combination *)malloc(sizeof(Node_Combination));
@@ -87,18 +81,22 @@ combination_list add_element_combination_list(combination_list* L, combination *
 	
 	return *L;
 }
+void print_curr_combination(combination c){
+	
+    for(int i=0;i<c.size;i++){
+        printf("%d ",c.tab[i]);
+    }
+       
+    printf("\n");
+}
 
 void print_all_combinations(combination_list comb_list) {
 	Node_Combination *comb;
 	comb = comb_list.first;
 	while(comb->next!=NULL){
-        combination c;
-        c = comb->data;
-        for(int i=0;i<c.size;i++){
-            printf("%d ",c.tab[i]);
-        }
-           
-        printf("\n");
+       	combination c;
+   		c = comb->data;
+		print_curr_combination(c);
         comb = comb->next;
     }
 }
@@ -107,17 +105,6 @@ void add_element_Clause(clause *clause,literal literal){
 	clause->size++;
 	clause->tab[clause->size-1] = literal;
 }
-// clause* copyInputClauseToDestination(clause* destination, clause* input){
-//     int i;
-//     clause *ptr = destination;
-//     for(i = 0; i < input->size; i++){
-
-//         destination->tab[i].name = input->tab[i].name;
-// 		printf("%d\n",destination->tab[i].name);
-//         destination->tab[i].negation = true;
-//     }
-//     return ptr;
-// }
 
 
 void print_literal_usual_form(literal l){

@@ -23,27 +23,10 @@ int main(int argc, char* argv[]){
     int column_list[GridSizeHeight];
     int line_list[GridSizeWidth];
     read_game_file(f,column_list,line_list);
-    // allConstraints(&list,column_list,line_list);
-    
-    
-    contiguousCell(&list);
-
-    thereIsAtLeastOneBoatK(&list);
-    thereIsAtMostOneBoatK(&list);
-
-    oneBoatOrSectionOfBoat(&list);
-    TestConstr(&list);
-    noBoatTouchesAnother(&list);
-	nonExistingBoat(&list);
-
-
-    // KChosesNCNF(&list,line_list,true);
-    // KChosesNCNF(&list,column_list,false);
-
-    // print_List_Clause(&list);
-
+    allConstraints(&list,column_list,line_list);
 
     print_In_DIMACS_Format(&list,fileOut);
+
     return 0;
 
 }

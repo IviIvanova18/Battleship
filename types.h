@@ -10,11 +10,11 @@
 #define MAXSIZE 100
 #define MAXVARNUM 1000
 
-#define GridSizeHeight 10
-#define GridSizeWidth 10
+#define GridSizeHeight 4
+#define GridSizeWidth 4
 
-#define StartBoat 0
-#define BoatCount 10
+#define StartBoat 6
+#define BoatCount 8
 
 #define BigBoatSize 4
 #define BigBoatCount 1
@@ -89,7 +89,7 @@ typedef struct CellX_{
 //[1,2,3]
 typedef struct _combination_ {
     int size; 
-    int tab[MAXSIZE];
+    int tab[200];
 }combination;
 
 typedef struct Node_Combination_{
@@ -120,6 +120,7 @@ void reset_Clause(clause *c);
 combination_list create_empty_combination_list();
 Node_Combination *create_element_combination_list(combination *c);
 combination_list add_element_combination_list(combination_list* L, combination *c);
+void print_curr_combination(combination c);
 void print_all_combinations(combination_list comb_list);
 
 /*Variables*/

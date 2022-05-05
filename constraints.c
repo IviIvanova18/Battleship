@@ -32,15 +32,10 @@
 int matchKBoatToNSizeofK(int k){
 	switch (k)
 	{
-	case 0:
-	case 1:
-	case 2:
-	case 3:
+	case 0 ... 3:
 		return TinyBoatSize;
 		break;
-	case 4: 
-	case 5: 
-	case 6: 
+	case 4 ... 6: 
 		return SmallBoatSize;
 		break;
 	case 7: 
@@ -58,7 +53,6 @@ int matchKBoatToNSizeofK(int k){
 
 /*if isBoat == true :(¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ B)
 * else : (¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ O)*/ 
-///works ///
 void allNotCellXVericalandBorO(List_Clause *clauseList,bool isBoat){
 	int k,i,j,n;
 	clause c;
@@ -68,7 +62,6 @@ void allNotCellXVericalandBorO(List_Clause *clauseList,bool isBoat){
 		for(i = 0; i <= GridSizeHeight-boatSize;i++){
 			for (j = 0; j < GridSizeWidth; j++){
 				c.size=0;
-				
 				for(n = 0; n <= boatSize-1;n++){
 					//-Xi+n,j,k
 					addCell(&c,i + n,j,k,true);
@@ -92,7 +85,6 @@ void allNotCellXVericalandBorO(List_Clause *clauseList,bool isBoat){
 /*if isBoat == true :  (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ B) 
 * else (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ ¬O) 
 */
-//works//
 void allNotCellXHorizontalandBorNotO(List_Clause *clauseList, bool isBoat){
 	int k,i,j,n;
 	clause c;
@@ -121,7 +113,6 @@ void allNotCellXHorizontalandBorNotO(List_Clause *clauseList, bool isBoat){
 
 
 // (¬Bi,j,k ∨ ¬O ∨ Xi,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+1,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+2,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+3,j)
-//works//
 void notBnotOCellXVerical(List_Clause *clauseList){
     int k,i,j,n;
 	clause c;
@@ -239,12 +230,8 @@ void oneBoatOrSectionOfBoat(List_Clause *clauseList){
 	for(i = 0; i < GridSizeHeight ;i++){
 		for (j = 0; j < GridSizeWidth; j++){
 			for (k1 = StartBoat; k1 < BoatCount; k1++){
-				// int boatSizeK1 = matchKBoatToNSizeofK(k1);
 				for(k2 = k1+1; k2 < BoatCount ;k2++){
-					// int boatSizeK2 = matchKBoatToNSizeofK(k2);
-					// if((i<=GridSizeHeight-boatSizeK1 || j<=GridSizeWidth-boatSizeK1)&&(i<=GridSizeHeight-boatSizeK2 || j<=GridSizeWidth-boatSizeK2)){
 					if (k1 != k2){
-						// c.size=0;
 						c.size = 0;
 						//-X_i,j,k1
 						addCell(&c,i,j,k1,true);
@@ -261,17 +248,14 @@ void oneBoatOrSectionOfBoat(List_Clause *clauseList){
 
 ////Test contstr//
 // there can not be two boats in the same square
-void TestConstr(List_Clause *clauseList){
+void onlyOneBoatInCell(List_Clause *clauseList){
 	int i,j,k1,k2;
+	clause c;
 	for(i = 0; i < GridSizeHeight ;i++){
 		for (j = 0; j < GridSizeWidth; j++){
 			for (k1 = StartBoat; k1 < BoatCount; k1++){
-				// int boatSizeK1 = matchKBoatToNSizeofK(k1);
 				for(k2 = k1+1; k2 < BoatCount ;k2++){
-					// int boatSizeK2 = matchKBoatToNSizeofK(k2);
-					// if((i<=GridSizeHeight-boatSizeK1 || j<=GridSizeWidth-boatSizeK1)&&(i<=GridSizeHeight-boatSizeK2 || j<=GridSizeWidth-boatSizeK2)){
 					if (k1 != k2){
-						clause c;
 						c.size=0;
 						//-X_i,j,k1
 						addBoat(&c,i,j,k1,true);
@@ -331,7 +315,6 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList){
 	clause c;		
 	for (k = StartBoat; k < BoatCount; k++){
 	int boatSize = matchKBoatToNSizeofK(k);
-	// printf("%d\n",boatSize);
 		for (i = 0; i < GridSizeHeight; i++){	
             for(j = 0; j <= GridSizeWidth-boatSize;j++){
 				for(r=i-1; r<=i+1;r+=2){
@@ -369,14 +352,12 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList){
 					for(k1 =StartBoat;k1<BoatCount;k1++){
 					//-Xrtk
 						c.size=0;
-						addCell(&c,i,j+boatSize,k1,true);
 						//-Xi,j+n,k
-						//addCell(&c,i,j+boatSize,k,true);
+						addCell(&c,i,j+boatSize,k1,true);
 						//-Bi,j,k
 						addBoat(&c,i,j,k,true);
 						//Ok
 						addOrientation(&c,k,false);
-						// print_Clause(c);
 						add_element_List_Clause(clauseList,&c);
 					}
 					
@@ -395,7 +376,7 @@ void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList){
 	int k,i,j,r,t,k1;
 
 	clause c;
-	for (k = 2; k < 3; k++){
+	for (k = StartBoat; k < BoatCount; k++){
 	int boatSize = matchKBoatToNSizeofK(k);
 		for (i = 0; i <= GridSizeHeight-boatSize; i++){	
             for(j = 0; j < GridSizeWidth;j++){
@@ -498,39 +479,40 @@ void nonExistingBoat(List_Clause *clauseList){
 	}
 }
 
-void createCombination(int r,combination_list* comb_list,int lenght)
+void createCombination(int r,combination_list *cl,int lenght)
 {   
-
-	int *arr = malloc(sizeof(int)*(lenght-1));
+    
+    int *arr = malloc(sizeof(int)*(lenght-1));
 	for(int i = 0;i<lenght;i++){
 		arr[i]=i;
 	}
 
     int n = lenght;
     int data[r];
-    combinationUtil(arr, data, 0, n-1, 0, r,comb_list);
+   
+    combinationUtil(arr, data, 0, n-1, 0, r,cl);
 }
-void combinationUtil(int arr[], int data[], int start, int end,int index, int r,combination_list *comb_list){
+void combinationUtil(int arr[], int data[], int start, int end,int index, int r, combination_list *cl){
     if (index == r)
     {   
-        int j=0;
-		combination combination;
-		combination.size = 0;
-        for (j=0; j<r; j++){
-			combination.size++;
-			combination.tab[combination.size-1] = data[j];
-		}
-        add_element_combination_list(comb_list,&combination);
+		
+        combination c;
+        c.size =0;
+        for (int j=0; j<r; j++){
+            
+            c.size++;
+            c.tab[c.size-1] = data[j];
+        }
+        add_element_combination_list(cl,&c);
         return;
     }
 
     for (int i=start; i<=end && end-i+1 >= r-index; i++)
     {
         data[index] = arr[i];
-        combinationUtil(arr, data, i+1, end, index+1, r,comb_list);
+        combinationUtil(arr, data, i+1, end, index+1, r,cl);
     }
 }
-
 
 void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row){
 	combination_list combList;
@@ -539,9 +521,9 @@ void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row){
 	clause newClause;
 	int l,i,j,k,n;
 	int p = 0;
-	for(j=0;j<GridSizeHeight;j++){
+	int count;
+	for(j=0;j<GridSizeWidth;j++){
 		n = row_list[j];
-		// printf("n is %d\n",n);
 		if(n<-1){
 			printf("Error");
 			return;
@@ -550,27 +532,36 @@ void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row){
 			printf("Error");
 			return;
 		}
-		for(l=0; l<=GridSizeWidth;l++){
+		int len = GridSizeHeight*(BoatCount-StartBoat);
+		for(l=0; l<=len;l++){
 			if(l!=n){
-				combList.size = 0;
-				createCombination(l,&combList,100);
-				// printf("l = %d\n",l);
-				// print_all_combinations(combList);
+				combList = create_empty_combination_list();
+				createCombination(l,&combList,len);
+				
 				Node_Combination* c;
 				c = combList.first;
-				while(c->next!=NULL){
-					currComb = c->data;
+				while(c!=NULL){
+					currComb.size = c->data.size;
+					for(int s =0;s<c->data.size;s++){
+						currComb.tab[s]=c->data.tab[s];
+					}
+					bool flag = true;
 					newClause.size = 0;
+					count =0;
+					p=0;
 					for(k=StartBoat;k<BoatCount;k++){
 						for(i=0;i<GridSizeHeight;i++){
-							if(i == currComb.tab[p] && l>0){
-								// printf("%d",currComb.tab[p]);
+							if(p == currComb.size) flag = false;
+							if( (currComb.tab[p] )== count && flag ){
+								p++;
 								if(row){
 									addCell(&newClause,i,j,k,true);
 								}else{
 									addCell(&newClause,j,i,k,true);
 								}
-								p++;
+
+								if(p == currComb.size) flag = false;
+								
 							}else{
 								if(row){
 									addCell(&newClause,i,j,k,false);
@@ -578,13 +569,14 @@ void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row){
 									addCell(&newClause,j,i,k,false);
 								}
 							}
+							count ++;
 						}
-						p=0;
-						// print_Clause(newClause);
-						// printf("\n");
-						add_element_List_Clause(clauseList, &newClause);
-
+						
+						
 					}
+					
+					count =0;
+					add_element_List_Clause(clauseList, &newClause);
 					c= c->next;
 				}
 
@@ -605,7 +597,7 @@ void allConstraints(List_Clause *clauseList,int column_list[],int line_list[]){
     oneBoatOrSectionOfBoat(clauseList);
 	noBoatTouchesAnother(clauseList);
 	nonExistingBoat(clauseList);
-	TestConstr(clauseList);
+	onlyOneBoatInCell(clauseList);
 	KChosesNCNF(clauseList,line_list,true);
     KChosesNCNF(clauseList,column_list,false);
 
