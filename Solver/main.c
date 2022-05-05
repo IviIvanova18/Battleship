@@ -18,14 +18,11 @@ int main(int argc, char *argv[]) {
     read_DIMACS(&CS, f);
     remove_valid_clauses(&CS);
 
-
-
     bool SAT;
     modal m = init_combination(CS.tab[0].size);
     
     if (argv[3][0] == '3') {
         SAT = DPLL(CS, &m); // The set is being free inside the function
-        // puts("\nDPLL");
     }
     else if (argv[3][0] == '1') {
         SAT = solver1(CS, &m);
