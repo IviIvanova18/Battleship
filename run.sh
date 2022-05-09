@@ -1,8 +1,7 @@
 make clean 
 make all
+./main $1 "${1%/*}/"`basename $1 .in`.cnf
+minisat "${1%/*}/"`basename $1 .in`.cnf "${1%/*}/"`basename $1 .in`.model
+./find_model "${1%/*}/"`basename $1 .in`.model
 
-# echo starting
-./main $1 out3.txt
-minisat out3.txt model.txt > t2.tmp
-./find_model
-# ./zchaff out.txt
+# echo "${1%/*}/"`basename $1 .in`.cnf
