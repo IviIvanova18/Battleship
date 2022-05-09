@@ -12,8 +12,8 @@ bool solver1(clauseSet cs, combination *c) {
             if (!cs.tab[i].valid) {
                 if (!check_modal(cs.tab[i], *c)) {
                     all_good = false;
-                    break; 
-                }   
+                    break;
+                }
             }
         }
         // counter++;
@@ -37,7 +37,7 @@ bool solver1(clauseSet cs, combination *c) {
  * since same_name is true even for p and -p, 
  * the simplified version will be wrong in the case of p + -p
  * but it will be set as valid so it will just get removed by simpli_cset
- */ 
+ */
 clause simpli(clause c) {
     clause dejaVu = init_null_clause(c.size); // TODO could be pa problem 
     for (int i = 0; i < c.size; i++) {
@@ -55,6 +55,6 @@ clause simpli(clause c) {
 }
 
 void simpli_cset(clauseSet *cs) {
-    for (int i = 0; i < cs->size; i++) 
+    for (int i = 0; i < cs->size; i++)
         cs->tab[i] = simpli(cs->tab[i]);
 }

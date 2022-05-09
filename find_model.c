@@ -17,7 +17,7 @@ int totalSize() {
     return count;
 }
 
-void print_table(int *tab,int size) {
+void print_table(int *tab, int size) {
     char table[size][size];
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
@@ -26,7 +26,7 @@ void print_table(int *tab,int size) {
     }
     for (int i = 0; i < totalSize(); i++) {
         printf("%c ", (tab[i] % 10 + '0'));
-        int numCopy = tab[i];        
+        int numCopy = tab[i];
         int k = numCopy % 10;
         numCopy /= 10;
         int j = numCopy % 10;
@@ -40,7 +40,7 @@ void print_table(int *tab,int size) {
         for (int j = 0; j < size; j++) {
             if (table[i][j] != '-')
                 printf(YELLOW"%c "RESET, table[i][j]);
-            else 
+            else
                 printf("%c ", table[i][j]);
         }
         puts("");
@@ -67,7 +67,7 @@ void read_minisat_modal(FILE *f, int *tab) {
     puts("");
 }
 
-int main(int argc, char* argv[]){
+int main(int argc, char *argv[]) {
     if (argc < 2) {
         printf("Input format : filename");
         return 1;
@@ -79,11 +79,11 @@ int main(int argc, char* argv[]){
     int *tab = calloc(15, sizeof(int));
     read_minisat_modal(g, tab);
     int size = GridSizeHeight;
-    print_table(tab,size);
+    print_table(tab, size);
 
     fclose(g);
 
     free(tab);
-   
+
     return 0;
 }

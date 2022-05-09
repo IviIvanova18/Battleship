@@ -28,16 +28,15 @@ int main(int argc, char *argv[]) {
 
 
 
-    
+
 
     bool SAT;
     modal m = init_combination(CS.tab[0].size);
-    
+
     if (argv[3][0] == '3') {
         SAT = DPLL(CS, &m); // The set is being free inside the function
         // puts("\nDPLL");
-    }
-    else if (argv[3][0] == '1') {
+    } else if (argv[3][0] == '1') {
         SAT = solver1(CS, &m);
         clear_cset(CS);
     } else {
@@ -63,17 +62,17 @@ int main(int argc, char *argv[]) {
 
     if (argv[2][0] == 's' || argv[2][0] == 'S')
         assert(SAT);
-    else 
+    else
         assert(!SAT);
 
     FILE *g;
-    if (argc == 5) g =  fopen(argv[4], "a");
-    else g =  fopen("Tests/time.time", "w");
+    if (argc == 5) g = fopen(argv[4], "a");
+    else g = fopen("Tests/time.time", "w");
 
-    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
     // fprintf(g, "%s, ", argv[1]); // Test's name
     fprintf(g, "%f\n", time_spent);
- 
+
     free(m.tab);
     free(CS.tab);
     free(cs2.tab);

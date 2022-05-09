@@ -17,7 +17,7 @@ bool check_modal(clause c, modal m) {
 
 bool check_set_modal(clauseSet cs, modal m) {
     for (int i = 0; i < cs.size; i++)
-        if (!cs.tab[i].valid && !check_modal(cs.tab[i], m)) 
+        if (!cs.tab[i].valid && !check_modal(cs.tab[i], m))
             return false;
     return true;
 }
