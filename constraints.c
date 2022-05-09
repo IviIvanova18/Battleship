@@ -26,7 +26,7 @@
 /*depending on the k returns the size of thr boat
 * k in 1...3 -> TinyBoat -> 1
 * k in 4...6 -> SmallBoat -> 2
-* k in 7,8 -> MediumBoat ->3
+* k in 7...8 -> MediumBoat ->3
 * k in 9 -> BigBoat -> 4
 */
 int matchKBoatToNSizeofK(int k){
@@ -38,8 +38,7 @@ int matchKBoatToNSizeofK(int k){
 	case 4 ... 6: 
 		return SmallBoatSize;
 		break;
-	case 7: 
-	case 8: 
+	case 7 ... 8: 
 		return MediumBoatSize;
 		break;
 	case 9: 
@@ -93,7 +92,7 @@ void allNotCellXHorizontalandBorNotO(List_Clause *clauseList, bool isBoat){
 		for (i = 0; i < GridSizeHeight; i++){
             for(j = 0; j <= GridSizeWidth-boatSize ;j++){
 
-				c.size=0;
+				reset_Clause(&c);
 
 				for(n = 0; n <= boatSize-1;n++){
 					addCell(&c,i,j+n,k,true);
@@ -164,9 +163,9 @@ void notBOCellXHorizontal(List_Clause *clauseList){
 
 void contiguousCell(List_Clause *clauseList){
 	// (¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ B)
-	allNotCellXVericalandBorO(clauseList,true);
+	// allNotCellXVericalandBorO(clauseList,true);
 	// (¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ O)
-	allNotCellXVericalandBorO(clauseList,false);
+	// allNotCellXVericalandBorO(clauseList,false);
 	// (¬Bi,j,k ∨ ¬O ∨ Xi,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+1,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+2,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+3,j)
     notBnotOCellXVerical(clauseList);
     // (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ B) 
@@ -177,22 +176,51 @@ void contiguousCell(List_Clause *clauseList){
     notBOCellXHorizontal(clauseList);
 	
 }
+// void thereIsAtLeastOneBoatK(List_Clause *clauseList){
+// 	int k,i,j;
+// 	clause c;
+// 	for (k = StartBoat; k < BoatCount; k++){
+// 		int boatSize = matchKBoatToNSizeofK(k);
+// 		reset_Clause(&c);
+// 		for (i = 0; i < GridSizeHeight; i++){
+//             for(j = 0; j < GridSizeWidth ;j++){
+// 				if((i<=GridSizeHeight-boatSize || j<=GridSizeWidth-boatSize)){
+// 					addBoat(&c,i,j,k,false);
+// 				}   
+//             }
+// 		}
+//     	add_element_List_Clause(clauseList,&c);
+// 	}
+
+// }
+
 void thereIsAtLeastOneBoatK(List_Clause *clauseList){
 	int k,i,j;
-	clause c;
+	clause c, c2, c3;
 	for (k = StartBoat; k < BoatCount; k++){
 		int boatSize = matchKBoatToNSizeofK(k);
 		reset_Clause(&c);
+		reset_Clause(&c2);
+		reset_Clause(&c3);
 		for (i = 0; i < GridSizeHeight; i++){
             for(j = 0; j < GridSizeWidth ;j++){
 				if((i<=GridSizeHeight-boatSize || j<=GridSizeWidth-boatSize)){
 					addBoat(&c,i,j,k,false);
 				}   
+				if(i<=GridSizeHeight-boatSize){
+					addBoat(&c2,i,j,k,false);
+				}
+				if(j<=GridSizeWidth-boatSize){
+					addBoat(&c3,i,j,k,false);
+				}   	
             }
 		}
+		addOrientation(&c2,k,true);
+		addOrientation(&c3,k,false);
     	add_element_List_Clause(clauseList,&c);
+    	add_element_List_Clause(clauseList,&c2);
+    	add_element_List_Clause(clauseList,&c3);
 	}
-
 }
 
 
@@ -232,7 +260,7 @@ void oneBoatOrSectionOfBoat(List_Clause *clauseList){
 			for (k1 = StartBoat; k1 < BoatCount; k1++){
 				for(k2 = k1+1; k2 < BoatCount ;k2++){
 					if (k1 != k2){
-						c.size = 0;
+						reset_Clause(&c);
 						//-X_i,j,k1
 						addCell(&c,i,j,k1,true);
 						//-X_i,j,k2
@@ -312,23 +340,40 @@ void noBoatTouchesAnother(List_Clause *clauseList){
 void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList){
 
 	int k,i,j,r,t,k1;
-	clause c;		
+	clause c, c2, c3;
+	// clause c;
 	for (k = StartBoat; k < BoatCount; k++){
 	int boatSize = matchKBoatToNSizeofK(k);
+	// printf("%d\n",boatSize);
 		for (i = 0; i < GridSizeHeight; i++){	
             for(j = 0; j <= GridSizeWidth-boatSize;j++){
 				for(r=i-1; r<=i+1;r+=2){
 					for(t=j-1; t<=j+boatSize;t++){
 						if(r>=0 && r<=GridSizeHeight-1 && t>=0 && t<=GridSizeWidth-1){
 							for(k1 = StartBoat;k1<BoatCount;k1++){
-								c.size=0;
-								//-Xrtk
-								addCell(&c,r,t,k1,true);
-								//-Bi,j,k
-								addBoat(&c,i,j,k,true);
-								//Ok
-								addOrientation(&c,k,false);
-								add_element_List_Clause(clauseList,&c);
+								if (k1 != k) {
+									reset_Clause(&c);
+									reset_Clause(&c2);
+									reset_Clause(&c3);
+									//-Xrtk
+									addBoat(&c3,i,j,k,true);
+									addOrientation(&c3,k,false);
+									addCell(&c3,r,t,k1,true);
+
+									addBoat(&c,i,j,k,true);
+									addOrientation(&c,k,false);
+									addBoat(&c,r,t,k1,true);
+									addOrientation(&c,k1,false);
+
+									addBoat(&c2,i,j,k,true);
+									addOrientation(&c2,k,false);
+									addBoat(&c2,r,t,k1,true);
+									addOrientation(&c2,k1,true);			
+
+									add_element_List_Clause(clauseList,&c);
+									add_element_List_Clause(clauseList,&c2);
+									add_element_List_Clause(clauseList,&c3);
+								}
 							}	
 						}
 					}
@@ -336,29 +381,60 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList){
 				if (j-1>=0){
 					for(k1 =StartBoat;k1<BoatCount;k1++){
 						//-Xrtk
-						c.size=0;
-						addCell(&c,i,j-1,k1,true);
-						//-Xi,j-1,k
-						//addCell(&c,i,j-1,k,true);
-						//-Bi,j,k
+						// c.size=0;
+						// addCell(&c,i,j-1,k1,true);
+						reset_Clause(&c);
+						reset_Clause(&c2);
+						reset_Clause(&c3);
+						
+						addBoat(&c3,i,j,k,true);
+						addOrientation(&c3,k1,false);
+						addCell(&c3,i,j-1,k1,true);
+
 						addBoat(&c,i,j,k,true);
-						//Ok
 						addOrientation(&c,k,false);
+						addBoat(&c,i,j-1,k1,true);
+						addOrientation(&c,k1,false);
+
+						addBoat(&c2,i,j,k,true);
+						addOrientation(&c2,k,false);
+						addBoat(&c2,i,j-1,k1,true);
+						addOrientation(&c2,k1,true);			
+
 						add_element_List_Clause(clauseList,&c);
+						add_element_List_Clause(clauseList,&c2);
+						add_element_List_Clause(clauseList,&c3);
 					}
 					
 				}
 				if(j+boatSize < GridSizeWidth){
 					for(k1 =StartBoat;k1<BoatCount;k1++){
-					//-Xrtk
-						c.size=0;
-						//-Xi,j+n,k
-						addCell(&c,i,j+boatSize,k1,true);
-						//-Bi,j,k
+
+					// //-Xrtk
+					// 	c.size=0;
+					// 	addCell(&c,i,j+boatSize,k1,true);
+						reset_Clause(&c);
+						reset_Clause(&c2);
+						reset_Clause(&c3);
+						
+						addBoat(&c3,i,j,k,true);
+						addOrientation(&c3,k,false);
+						addCell(&c3,i,j+boatSize,k1,true);
+
 						addBoat(&c,i,j,k,true);
-						//Ok
 						addOrientation(&c,k,false);
+						addBoat(&c,i,j+boatSize,k1,true);
+						addOrientation(&c,k1,false);
+
+						addBoat(&c2,i,j,k,true);
+						addOrientation(&c2,k,false);
+						addBoat(&c2,i,j+boatSize,k1,true);
+						addOrientation(&c2,k1,true);			
+
 						add_element_List_Clause(clauseList,&c);
+						add_element_List_Clause(clauseList,&c2);
+						add_element_List_Clause(clauseList,&c3);
+						
 					}
 					
 				}
@@ -375,24 +451,38 @@ void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList){
 
 	int k,i,j,r,t,k1;
 
-	clause c;
+	clause c, c2, c3;
+	// for (k = 2; k < 3; k++){
 	for (k = StartBoat; k < BoatCount; k++){
+		
 	int boatSize = matchKBoatToNSizeofK(k);
 		for (i = 0; i <= GridSizeHeight-boatSize; i++){	
             for(j = 0; j < GridSizeWidth;j++){
-				for(t=i-1; t<=i+boatSize;t++){
-					for(r=j-1; r<=j+1;r+=2){
+				for(r=i-1; r<=i+boatSize;r++){
+					for(t=j-1; t<=j+1;t+=2){
 						if(r>=0 && r<=GridSizeHeight-1 && t>=0 && t<=GridSizeWidth-1){
 							for(k1 =StartBoat;k1<BoatCount;k1++){
-								c.size=0;
-								addCell(&c,r,t,k1,true);
-								//-Xrtk
-								//addCell(&c,t,r,k,true);
-								//-Bi,j,k
+								reset_Clause(&c);
+								reset_Clause(&c2);
+								reset_Clause(&c3);
+								
+								addBoat(&c3,i,j,k,true);
+								addOrientation(&c3,k,true);
+								addCell(&c3,r,t,k1,true);
+
 								addBoat(&c,i,j,k,true);
-								//-Ok
 								addOrientation(&c,k,true);
+								addBoat(&c,r,t,k1,true);
+								addOrientation(&c,k1,true);
+
+								addBoat(&c2,i,j,k,true);
+								addOrientation(&c2,k,true);
+								addBoat(&c2,r,t,k1,true);
+								addOrientation(&c2,k1,false);			
+
 								add_element_List_Clause(clauseList,&c);
+								add_element_List_Clause(clauseList,&c2);
+								add_element_List_Clause(clauseList,&c3);
 							}
 						}
 					}
@@ -400,34 +490,55 @@ void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList){
 				
 				if (i-1>=0){
 					for(k1 =StartBoat;k1<BoatCount;k1++){
-						c.size=0;
-						//-Xrtk
-						addCell(&c,i-1,j,k1,true);
-						//-Xi-1,j,k
-						//addCell(&c,i-1,j,k,true);
-						//-Bi,j,k
+
+						reset_Clause(&c);
+						reset_Clause(&c2);
+						reset_Clause(&c3);
+						
+						addBoat(&c3,i,j,k,true);
+						addOrientation(&c3,k,true);
+						addCell(&c3,i-1,j,k1,true);
+
 						addBoat(&c,i,j,k,true);
-						//-Ok
 						addOrientation(&c,k,true);
-						//curr clause : -Xi-1,j,k + -Bi,j,k + -Ok
+						addBoat(&c,i-1,j,k1,true);
+						addOrientation(&c,k1,true);
+
+						addBoat(&c2,i,j,k,true);
+						addOrientation(&c2,k,true);
+						addBoat(&c2,i-1,j,k1,true);
+						addOrientation(&c2,k1,false);			
+
 						add_element_List_Clause(clauseList,&c);
+						add_element_List_Clause(clauseList,&c2);
+						add_element_List_Clause(clauseList,&c3);
 					}
 					
 				}
 				if(i+boatSize < GridSizeHeight){
 					for(k1 =StartBoat;k1<BoatCount;k1++){
-					//-Xrtk
-						c.size=0;
+					
+						reset_Clause(&c);
+						reset_Clause(&c2);
+						reset_Clause(&c3);
+						
+						addBoat(&c3,i,j,k,true);
+						addOrientation(&c3,k,true);
+						addCell(&c3,i+boatSize,j,k1,true);
 
-						addCell(&c,i+boatSize,j,k1,true);
-						//-Xi,j+n,k
-						//addCell(&c,i+boatSize,j,k,true);
-						//-Bi,j,k
 						addBoat(&c,i,j,k,true);
-						//-Ok
 						addOrientation(&c,k,true);
-						//curr clause : -Xi+n,j,k + -Bi,j,k + -Ok
+						addBoat(&c,i+boatSize,j,k1,true);
+						addOrientation(&c,k1,true);
+
+						addBoat(&c2,i,j,k,true);
+						addOrientation(&c2,k,true);
+						addBoat(&c2,i+boatSize,j,k1,true);
+						addOrientation(&c2,k1,false);			
+
 						add_element_List_Clause(clauseList,&c);
+						add_element_List_Clause(clauseList,&c2);
+						add_element_List_Clause(clauseList,&c3);
 					}
 					
 				}
@@ -514,31 +625,32 @@ void combinationUtil(int arr[], int data[], int start, int end,int index, int r,
     }
 }
 
-void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row){
+int KChosesNCNF(FILE *file, int row_list[],bool row){
 	combination_list combList;
 	combList = create_empty_combination_list();
 	combination currComb;
 	clause newClause;
 	int l,i,j,k,n;
 	int p = 0;
-	int count;
+	int count = 0, countCombi = 0;
 	for(j=0;j<GridSizeWidth;j++){
 		n = row_list[j];
 		if(n<-1){
 			printf("Error");
-			return;
+			return -1;
 		}
 		if(GridSizeHeight<n){
 			printf("Error");
-			return;
+			return -1;
 		}
 		int len = GridSizeHeight*(BoatCount-StartBoat);
 		for(l=0; l<=len;l++){
 			if(l!=n){
 				combList = create_empty_combination_list();
 				createCombination(l,&combList,len);
-				
+				countCombi += combList.size;
 				Node_Combination* c;
+				Node_Combination* prev;
 				c = combList.first;
 				while(c!=NULL){
 					currComb.size = c->data.size;
@@ -570,25 +682,28 @@ void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row){
 								}
 							}
 							count ++;
-						}
-						
-						
+						}		
 					}
 					
 					count =0;
-					add_element_List_Clause(clauseList, &newClause);
-					c= c->next;
+					//add_element_List_Clause(clauseList, &newClause);
+					print_Clause_DIMACS_Format2(newClause,file);
+					fprintf(file, "0\n");
+					prev = c;
+					c = c->next;
+					free(prev);
 				}
 
 			}
 		}
 	}
+	return countCombi;
 }
 
-void NChosesK(List_Clause *clauseList,int line_list[],int column_list[]){
-	KChosesNCNF(clauseList,line_list,true);
-    KChosesNCNF(clauseList,column_list,false);
-}
+// void NChosesK(List_Clause *clauseList,int line_list[],int column_list[]){
+// 	KChosesNCNF(clauseList,line_list,true);
+//     KChosesNCNF(clauseList,column_list,false);
+// }
 /////////////////////////
 void allConstraints(List_Clause *clauseList,int column_list[],int line_list[]){
 	contiguousCell(clauseList);
@@ -598,16 +713,16 @@ void allConstraints(List_Clause *clauseList,int column_list[],int line_list[]){
 	noBoatTouchesAnother(clauseList);
 	nonExistingBoat(clauseList);
 	onlyOneBoatInCell(clauseList);
-	KChosesNCNF(clauseList,line_list,true);
-    KChosesNCNF(clauseList,column_list,false);
+	
 
 }
 
-void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut){
+void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut, int count){
 	assert (clauseList); 
     Node_Clause *c;
+	Node_Clause *prev;
     c = clauseList->first;
-	fprintf(fileOut,"p cnf 2010 %d\n",clauseList->size);
+	// fprintf(fileOut,"p cnf 2010 %d\n",clauseList->size + count);
     while (c!=NULL) {
         if(c->next==NULL){
             print_Clause_DIMACS_Format(c->data,fileOut);
@@ -615,8 +730,12 @@ void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut){
 			print_Clause_DIMACS_Format(c->data,fileOut);
             fprintf(fileOut,"\n");
         }
+		prev = c;
         c = c->next;
+		free(prev);
     }
+	clauseList->first = NULL;
+
 }
 
 void print_Clause_DIMACS_Format(clause c, FILE *fileOut){
@@ -640,3 +759,20 @@ void print_Clause_DIMACS_Format(clause c, FILE *fileOut){
 
 
 
+void print_Clause_DIMACS_Format2(clause c, FILE *fileOut){
+	int k;
+	int n = c.size;
+	literal l;
+	
+	for (k = 0; k < n; k++)
+	{	
+		l = c.tab[k];
+		if(l.negation){
+			fprintf(fileOut,"-%d ",l.name);
+
+		}else{
+			fprintf(fileOut,"%d ",l.name);
+		}
+
+	} 
+}

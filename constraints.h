@@ -58,35 +58,28 @@ void read_game_file(FILE* f, int column_list[], int line_list[]);
 
 /*The numbers outside the grid show the number of cells occu-
 pied by battleships on that row/column.*/
-///No idea what is going on here///
 void combinationUtil(int arr[], int data[], int start, int end,int index, int r,combination_list *comb_list);
 void createCombination(int r,combination_list* comb_list,int lenght);
-////first two okay////
 
-void NChosesK(List_Clause *clauseList,int line_list[],int column_list[]);
-void KChosesNCNF(List_Clause *clauseList, int row_list[],bool row);
+// void NChosesK(List_Clause *clauseList,int line_list[],int column_list[]);
+int KChosesNCNF(FILE *file, int row_list[],bool row);
 
-// void NChosesKColumnFirstPart(List_Clause *clauseList,int column_list[]);
-// void NChosesKColumnSecondPart(List_Clause *clauseList,int column_list[]);
-// void NChosesKColumn(List_Clause *clauseList,int column_list[]);
-// void NChosesKLineFirstPart(List_Clause *clauseList,int line_list[]);
-// void NChosesKLineSecondPart(List_Clause *clauseList,int line_list[]);
-// void NChosesKLine(List_Clause *clauseList,int line_list[]);
+
 
 /*The boats are placed so that no boat touches any other boat,
 not even diagonally*/
-//// no mistakes ////
 void noBoatTouchesAnother(List_Clause *clauseList);
 void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList);
 void SuroundingCellAndClauseHorizintal(List_Clause *clauseList, bool additionalLiteral);
 void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList);
 void SuroundingCellAndClauseVertical(List_Clause *clauseList, bool additionalLiteral);
-////////////////////
+
 
 void allConstraints(List_Clause *clauseList,int column_list[],int line_list[]);
 
 void print_Clause_DIMACS_Format(clause c, FILE *fileOut);
-void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut);
+void print_Clause_DIMACS_Format2(clause c, FILE *fileOut);
+void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut, int count);
 
 void nonExistingBoat(List_Clause *clauseList);
 
