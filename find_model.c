@@ -68,7 +68,12 @@ void read_minisat_modal(FILE *f, int *tab) {
 }
 
 int main(int argc, char* argv[]){
-    FILE *g = fopen("model.txt", "r");
+    if (argc < 2) {
+        printf("Input format : filename");
+        return 1;
+    }
+
+    FILE *g = fopen(argv[1], "r");
     assert(g);
 
     int *tab = calloc(15, sizeof(int));

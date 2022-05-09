@@ -26,7 +26,7 @@
 /*depending on the k returns the size of thr boat
 * k in 1...3 -> TinyBoat -> 1
 * k in 4...6 -> SmallBoat -> 2
-* k in 7...8 -> MediumBoat ->3
+* k in 7...8 -> MediumBoat -> 3
 * k in 9 -> BigBoat -> 4
 */
 int matchKBoatToNSizeofK(int k){
@@ -352,6 +352,7 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList){
 						if(r>=0 && r<=GridSizeHeight-1 && t>=0 && t<=GridSizeWidth-1){
 							for(k1 = StartBoat;k1<BoatCount;k1++){
 								if (k1 != k) {
+
 									reset_Clause(&c);
 									reset_Clause(&c2);
 									reset_Clause(&c3);
@@ -713,8 +714,6 @@ void allConstraints(List_Clause *clauseList,int column_list[],int line_list[]){
 	noBoatTouchesAnother(clauseList);
 	nonExistingBoat(clauseList);
 	onlyOneBoatInCell(clauseList);
-	
-
 }
 
 void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut, int count){

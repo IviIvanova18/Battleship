@@ -10,11 +10,11 @@
 #define MAXSIZE 100
 #define MAXVARNUM 1000
 
-#define GridSizeHeight 4
-#define GridSizeWidth 4
+#define GridSizeHeight 6
+#define GridSizeWidth 6
 
 #define StartBoat 5
-#define BoatCount 8
+#define BoatCount 10
 
 #define BigBoatSize 4
 #define BigBoatCount 1
