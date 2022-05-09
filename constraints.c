@@ -593,7 +593,7 @@ void nonExistingBoat(List_Clause *clauseList){
 void createCombination(int r,combination_list *cl,int lenght)
 {   
     
-    int *arr = malloc(sizeof(int)*(lenght-1));
+    int *arr = malloc(sizeof(int)* lenght);
 	for(int i = 0;i<lenght;i++){
 		arr[i]=i;
 	}
