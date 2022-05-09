@@ -16,26 +16,13 @@ int main(int argc, char *argv[]) {
     clauseSet CS = init_clauseSet(600);
 
     read_DIMACS(&CS, f);
-    // print_clauseSet(CS);
     remove_valid_clauses(&CS);
-    // remove_clause(&CS, 0);
-    // puts("");
-    // print_clauseSet(CS);
-    clauseSet cs2 = init_clauseSet(600);
-    copy_cset(CS, &cs2);
-    // puts("cs2 ; ");
-    // print_clauseSet(cs2);
-
-
-
-    
 
     bool SAT;
     modal m = init_combination(CS.tab[0].size);
     
     if (argv[3][0] == '3') {
         SAT = DPLL(CS, &m); // The set is being free inside the function
-        // puts("\nDPLL");
     }
     else if (argv[3][0] == '1') {
         SAT = solver1(CS, &m);
@@ -76,7 +63,6 @@ int main(int argc, char *argv[]) {
  
     free(m.tab);
     free(CS.tab);
-    free(cs2.tab);
     fclose(f);
     return 0;
 }
