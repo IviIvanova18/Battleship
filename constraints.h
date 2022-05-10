@@ -28,7 +28,6 @@ int matchKBoatToNSizeofK(int k);
 /* if isBoat == true :(¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ B)
 * else : (¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ O)
 */
-
 void allNotCellXVericalandBorO(List_Clause *clauseList, bool isBoat);
 
 
@@ -46,30 +45,28 @@ void notBOCellXHorizontal(List_Clause *clauseList);
 void contiguousCell(List_Clause *clauseList);
 
 /*There is at least one boat k*/
-
 void thereIsAtLeastOneBoatK(List_Clause *clauseList);
 
+/*There can not be two boats in the same square*/
 void onlyOneBoatInCell(List_Clause *clauseList);
 
 /*There is at most one boat k*/
-
 void thereIsAtMostOneBoatK(List_Clause *clauseList);
 
 /*In every cell there is only one boat or section of boat.*/
-
 void oneBoatOrSectionOfBoat(List_Clause *clauseList);
 
+/*Reads the grid from file*/
 void read_game_file(FILE *f, int column_list[], int line_list[],int *L, int *H, int *startBoat, int *lastBoat);
 
-/*The numbers outside the grid show the number of cells occu-
-pied by battleships on that row/column.*/
+/*The numbers outside the grid show the number of cells occupied by battleships on that row/column.*/
 void combinationUtil(int arr[], int data[], int start, int end, int index, int r, combination_list *comb_list);
 
+/*All possible combination r out of array of size 'lenght'*/
 void createCombination(int r, combination_list *comb_list, int lenght);
 
-// void NChosesK(List_Clause *clauseList,int line_list[],int column_list[]);
+/*Transforms all combination in CNF format*/
 int KChosesNCNF(FILE *file, int row_list[], bool row);
-
 
 /*The boats are placed so that no boat touches any other boat,
 not even diagonally*/
@@ -83,7 +80,7 @@ void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList);
 
 void SuroundingCellAndClauseVertical(List_Clause *clauseList, bool additionalLiteral);
 
-
+/*Calls all constraints one after another*/
 void allConstraints(List_Clause *clauseList, int column_list[], int line_list[]);
 
 void print_Clause_DIMACS_Format(clause c, FILE *fileOut);
@@ -92,6 +89,7 @@ void print_Clause_DIMACS_Format2(clause c, FILE *fileOut);
 
 void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut, int count);
 
+/*Returns boats that can never be created because they won't fit inside the grid*/
 void nonExistingBoat(List_Clause *clauseList);
 
 
