@@ -17,16 +17,16 @@ int totalSize() {
     return count;
 }
 
-void print_table(int *tab,int size) {
+void print_table(int *tab, int size) {
     char table[size][size];
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            table[i][j] = '-' ;
+            table[i][j] = '-';
         }
     }
     for (int i = 0; i < totalSize(); i++) {
         printf("%c ", (tab[i] % 10 + '0'));
-        int numCopy = tab[i];        
+        int numCopy = tab[i];
         int k = numCopy % 10;
         numCopy /= 10;
         int j = numCopy % 10;
@@ -40,7 +40,7 @@ void print_table(int *tab,int size) {
         for (int j = 0; j < size; j++) {
             if (table[i][j] != '-')
                 printf(YELLOW"%c "RESET, table[i][j]);
-            else 
+            else
                 printf("%c ", table[i][j]);
         }
         puts("");
@@ -57,7 +57,7 @@ void read_minisat_modal(FILE *f, int *tab) {
         fscanf(f, "%d", &x);
         if (x > 0) {
             printf("%d ", x);
-            if ((x > 0 && x < 999) || x == 2010) {
+            if ((x > 0 && x < 999) || x==2010) {
                 tab[i] = x;
                 i++;
             }
@@ -67,18 +67,23 @@ void read_minisat_modal(FILE *f, int *tab) {
     puts("");
 }
 
-int main(int argc, char* argv[]){
-    FILE *g = fopen("model.txt", "r");
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Input format : filename");
+        return 1;
+    }
+
+    FILE *g = fopen(argv[1], "r");
     assert(g);
 
     int *tab = calloc(15, sizeof(int));
     read_minisat_modal(g, tab);
     int size = GridSizeHeight;
-    print_table(tab,size);
+    print_table(tab, size);
 
     fclose(g);
 
     free(tab);
-   
+
     return 0;
 }
