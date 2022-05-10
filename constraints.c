@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
+int GridSizeHeight, GridSizeWidth;
+int StartBoat, BoatCount;
 // x1 = xi,j
 // x2 = xi+1,j
 // x3 = xi+2,j
@@ -296,23 +297,24 @@ void onlyOneBoatInCell(List_Clause *clauseList) {
         }
     }
 }
-/////
 
-void read_game_file(FILE *f, int column_list[], int line_list[]) {
+
+void read_game_file(FILE *f, int column_list[], int line_list[],int *L, int *H, int *startBoat, int *lastBoat) {
     int x;
     int count = 0;
-    int L, H;
-    fscanf(f, "%d", &L);
-    fscanf(f, "%d", &H);
+    fscanf(f, "%d", L);
+    fscanf(f, "%d", H);
+	fscanf(f, "%d", startBoat);
+    fscanf(f, "%d", lastBoat);
 
-    while (!feof(f) && count < H) {
+    while (!feof(f) && count < *H) {
         fscanf(f, "%d", &x);
         column_list[count] = x;
         count++;
 
     }
     count = 0;
-    while (!feof(f) && count < L) {
+    while (!feof(f) && count < *L) {
         fscanf(f, "%d", &x);
         line_list[count] = x;
         count++;

@@ -7,14 +7,16 @@
 #ifndef _TYPES_H_
 #define _TYPES_H_
 
+#define MAXNUM 10
 #define MAXSIZE 100
 #define MAXVARNUM 1000
 
-#define GridSizeHeight 6
-#define GridSizeWidth 6
+// #define GridSizeHeight 6
+// #define GridSizeWidth 6
 
-#define StartBoat 5
-#define BoatCount 10
+// #define StartBoat 5
+// #define BoatCount 10
+
 
 #define BigBoatSize 4
 #define BigBoatCount 1

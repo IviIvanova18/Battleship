@@ -4,6 +4,10 @@
 #include "types.h"
 #include "constraints.h"
 
+
+// extern int GridSizeHeight, GridSizeWidth;
+// extern int StartBoat, BoatCount;
+
 void copy_file(FILE *f, FILE *g) {
     char c;
     fscanf(f, "%c", &c);
@@ -26,12 +30,11 @@ int main(int argc, char *argv[]) {
     FILE *fileOut = fopen("t.tmp", "w");
     assert(f);
     assert(fileOut);
-    int column_list[GridSizeHeight];
-    int line_list[GridSizeWidth];
-
-    read_game_file(f, column_list, line_list);
+    int column_list[MAXNUM];
+    int line_list[MAXNUM];
+    read_game_file(f, column_list, line_list, &GridSizeHeight, &GridSizeWidth, &StartBoat, &BoatCount);
     allConstraints(&list, column_list, line_list);
-
+   
     // NotBOAllNotSuroundingCellHorizintal(&list);
     // print_List_Clause(&list);
     int count = 0;

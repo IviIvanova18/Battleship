@@ -12,6 +12,8 @@
 #define jTest 1
 #define kTest 0
 
+extern int GridSizeHeight, GridSizeWidth;
+extern int StartBoat, BoatCount;
 
 /*Boat Existence*/
 
@@ -57,7 +59,7 @@ void thereIsAtMostOneBoatK(List_Clause *clauseList);
 
 void oneBoatOrSectionOfBoat(List_Clause *clauseList);
 
-void read_game_file(FILE *f, int column_list[], int line_list[]);
+void read_game_file(FILE *f, int column_list[], int line_list[],int *L, int *H, int *startBoat, int *lastBoat);
 
 /*The numbers outside the grid show the number of cells occu-
 pied by battleships on that row/column.*/
