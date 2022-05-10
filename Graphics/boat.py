@@ -22,6 +22,7 @@ class Boat():
         self.boardX, self.boardY = 30, 30
         self.originX = x
         self.originY = y
+       
 
 
 
