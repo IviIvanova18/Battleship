@@ -30,11 +30,10 @@ modal solver2(clauseSet cs) {
         if (x <= P) {
             l = random_literal(cl);
             // puts("passed random literal");
-        }
-        else {
+        } else {
             l = deterministic(cl, cs, c);
             // puts("passed deterministic literal");
-        } 
+        }
         // printf("l.pos : %d\n", l.pos);
         // printf("abs(l.name) - 1 : %d\n", abs(l.name) - 1);
         // printf("c.tab[l.pos] : %d\n", c.tab[abs(l.name) - 1]);
@@ -45,7 +44,7 @@ modal solver2(clauseSet cs) {
         i++;
     }
     foundModal = check_set_modal(cs, c);
-    
+
     free(cs2.tab);
     if (foundModal) return c;
     else return null_modal();
@@ -60,8 +59,7 @@ int number(literal l, clauseSet cs, bool positive) {
             if (p != -1) {
                 if (positive)
                     if (cs.tab[i].tab[p].name > 0) count++;
-                else 
-                    if (cs.tab[i].tab[p].name < 0) count++;
+                    else if (cs.tab[i].tab[p].name < 0) count++;
             }
 
         }
@@ -74,7 +72,7 @@ int score(literal l, clauseSet cs, combination c) {
     // printf("In score : lit : %d ; pos : %d\n", l.name, l.pos);
     if (c.tab[l.pos] == 1)
         return abs(number(l, cs, false) - number(l, cs, true));
-    else 
+    else
         return abs(number(l, cs, true) - number(l, cs, false));
 }
 

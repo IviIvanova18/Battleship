@@ -57,7 +57,7 @@ void read_minisat_modal(FILE *f, int *tab) {
         fscanf(f, "%d", &x);
         if (x > 0) {
             printf("%d ", x);
-            if ((x > 0 && x < 999) || x==2010) {
+            if (x > 0 && x < 999) {
                 tab[i] = x;
                 i++;
             }

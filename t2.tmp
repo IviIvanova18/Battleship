@@ -1,11 +1,11 @@
 WARNING: for repeatability, setting FPU to use double precision
 ============================[ Problem Statistics ]=============================
 |                                                                             |
-|  Number of variables:          2009                                         |
-|  Number of clauses:            2776                                         |
-|  Parse time:                   0.00 s                                       |
+|  Number of variables:          2007                                         |
+|  Number of clauses:           35898                                         |
+|  Parse time:                   0.02 s                                       |
 |  Eliminated clauses:           0.01 Mb                                      |
-|  Simplification time:          0.01 s                                       |
+|  Simplification time:          2.56 s                                       |
 |                                                                             |
 ============================[ Search Statistics ]==============================
 | Conflicts |          ORIGINAL         |          LEARNT          | Progress |
@@ -13,11 +13,11 @@ WARNING: for repeatability, setting FPU to use double precision
 ===============================================================================
 ===============================================================================
 restarts              : 1
-conflicts             : 0              (0 /sec)
-decisions             : 4              (0.00 % random) (211 /sec)
-propagations          : 60             (3168 /sec)
-conflict literals     : 0              (-nan % deleted)
-Memory used           : 13.00 MB
-CPU time              : 0.018939 s
+conflicts             : 8              (3 /sec)
+decisions             : 24             (0.00 % random) (9 /sec)
+propagations          : 198            (77 /sec)
+conflict literals     : 31             (3.12 % deleted)
+Memory used           : 18.00 MB
+CPU time              : 2.58479 s
 
 SATISFIABLE

@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
+int GridSizeHeight, GridSizeWidth;
+int StartBoat, BoatCount;
 // x1 = xi,j
 // x2 = xi+1,j
 // x3 = xi+2,j
@@ -297,24 +298,23 @@ void onlyOneBoatInCell(List_Clause *clauseList) {
     }
 }
 
-void read_game_file(FILE *f, int column_list[], int line_list[]) {
+
+void read_game_file(FILE *f, int column_list[], int line_list[],int *L, int *H, int *startBoat, int *lastBoat) {
     int x;
     int count = 0;
-    int L, H;
-	int startBoat,endBoat;
-    fscanf(f, "%d", &L);
-    fscanf(f, "%d", &H);
-	fscanf(f, "%d", &startBoat);
-    fscanf(f, "%d", &endBoat);
+    fscanf(f, "%d", L);
+    fscanf(f, "%d", H);
+	fscanf(f, "%d", startBoat);
+    fscanf(f, "%d", lastBoat);
 
-    while (!feof(f) && count < H) {
+    while (!feof(f) && count < *H) {
         fscanf(f, "%d", &x);
         column_list[count] = x;
         count++;
 
     }
     count = 0;
-    while (!feof(f) && count < L) {
+    while (!feof(f) && count < *L) {
         fscanf(f, "%d", &x);
         line_list[count] = x;
         count++;
@@ -324,7 +324,7 @@ void read_game_file(FILE *f, int column_list[], int line_list[]) {
 }
 
 
-/*No boat touches anoter boat*/
+//No boat touches anoter boat
 void noBoatTouchesAnother(List_Clause *clauseList) {
     //Horizontal
     //=>
@@ -342,8 +342,10 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList) {
 
     int k, i, j, r, t, k1;
     clause c, c2, c3;
+    // clause c;
     for (k = StartBoat; k < BoatCount; k++) {
         int boatSize = matchKBoatToNSizeofK(k);
+        // printf("%d\n",boatSize);
         for (i = 0; i < GridSizeHeight; i++) {
             for (j = 0; j <= GridSizeWidth - boatSize; j++) {
                 for (r = i - 1; r <= i + 1; r += 2) {
@@ -452,6 +454,7 @@ void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList) {
     int k, i, j, r, t, k1;
 
     clause c, c2, c3;
+    // for (k = 2; k < 3; k++){
     for (k = StartBoat; k < BoatCount; k++) {
 
         int boatSize = matchKBoatToNSizeofK(k);
@@ -683,7 +686,7 @@ int KChosesNCNF(FILE *file, int row_list[], bool row) {
                     }
 
                     count = 0;
-                    
+                    //add_element_List_Clause(clauseList, &newClause);
                     print_Clause_DIMACS_Format2(newClause, file);
                     fprintf(file, "0\n");
                     prev = c;
@@ -697,7 +700,11 @@ int KChosesNCNF(FILE *file, int row_list[], bool row) {
     return countCombi;
 }
 
-
+// void NChosesK(List_Clause *clauseList,int line_list[],int column_list[]){
+// 	KChosesNCNF(clauseList,line_list,true);
+//     KChosesNCNF(clauseList,column_list,false);
+// }
+/////////////////////////
 void allConstraints(List_Clause *clauseList, int column_list[], int line_list[]) {
     contiguousCell(clauseList);
     thereIsAtLeastOneBoatK(clauseList);
