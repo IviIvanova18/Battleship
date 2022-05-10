@@ -43,11 +43,6 @@ typedef struct _clause_ {
     int size;
 } clause;
 
-// typedef struct _clauseSet_ {
-//     clause tab[MAXSIZE];
-//     int size;
-// } clauseSet;
-
 
 typedef struct Node_Clause_ {
     clause data;

@@ -35,8 +35,6 @@ int main(int argc, char *argv[]) {
     read_game_file(f, column_list, line_list, &GridSizeHeight, &GridSizeWidth, &StartBoat, &BoatCount);
     allConstraints(&list, column_list, line_list);
    
-    // NotBOAllNotSuroundingCellHorizintal(&list);
-    // print_List_Clause(&list);
     int count = 0;
 
     count = KChosesNCNF(fileOut, line_list, true);
@@ -53,9 +51,7 @@ int main(int argc, char *argv[]) {
     assert(newFileOut);
 
     fprintf(newFileOut, "p cnf 2010 %d\n", list.size + count);
-    // fprintf(newFileOut,"p cnf 2010 %d\n",count);
     copy_file(fileOut, newFileOut);
-    // fprintf(newFileOut,"p cnf 2010 %d\n",list.size);
     print_In_DIMACS_Format(&list, newFileOut, count);
 
 

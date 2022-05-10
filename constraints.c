@@ -6,23 +6,7 @@
 
 int GridSizeHeight, GridSizeWidth;
 int StartBoat, BoatCount;
-// x1 = xi,j
-// x2 = xi+1,j
-// x3 = xi+2,j
-// x4 = xi+3,j
-// x5 = xi,j+1
-// x6 = xi,j+2
-// x7 = xi,j+3
 
-// for ship n =4
-// (¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ B) ∧ 
-// (¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ O) ∧ 
-// (¬B ∨ ¬O ∨ X1) ∧ (¬B ∨ ¬O ∨ X2) ∧
-//  (¬B ∨ ¬O ∨ X3) ∧ (¬B ∨ ¬O ∨ X4) ∧
-//   (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ B) ∧
-//    (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ ¬O) ∧ 
-//    (¬B ∨ O ∨ X1) ∧ (¬B ∨ O ∨ X5) ∧ 
-//    (¬B ∨ O ∨ X6) ∧ (¬B ∨ O ∨ X7)
 
 /*depending on the k returns the size of thr boat
 * k in 1...3 -> TinyBoat -> 1
@@ -117,7 +101,6 @@ void notBnotOCellXVerical(List_Clause *clauseList) {
     for (k = StartBoat; k < BoatCount; k++) {
         int boatSize = matchKBoatToNSizeofK(k);
         for (i = 0; i <= GridSizeHeight - boatSize; i++) {
-            //GridSizeHeight-boatSize
             for (j = 0; j < GridSizeWidth; j++) {
                 for (n = 0; n <= boatSize - 1; n++) {
                     c.size = 0;
@@ -137,7 +120,7 @@ void notBnotOCellXVerical(List_Clause *clauseList) {
     }
 }
 
-//    (¬B ∨ O ∨ X1) ∧ (¬B ∨ O ∨ X5) ∧ (¬B ∨ O ∨ X6) ∧ (¬B ∨ O ∨ X7)
+// (¬B ∨ O ∨ X1) ∧ (¬B ∨ O ∨ X5) ∧ (¬B ∨ O ∨ X6) ∧ (¬B ∨ O ∨ X7)
 void notBOCellXHorizontal(List_Clause *clauseList) {
     int k, i, j, n;
     clause c;
@@ -161,37 +144,14 @@ void notBOCellXHorizontal(List_Clause *clauseList) {
 }
 
 void contiguousCell(List_Clause *clauseList) {
-    // (¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ B)
-    // allNotCellXVericalandBorO(clauseList,true);
-    // (¬X1 ∨ ¬X2 ∨ ¬X3 ∨ ¬X4 ∨ O)
-    // allNotCellXVericalandBorO(clauseList,false);
+    // =>
     // (¬Bi,j,k ∨ ¬O ∨ Xi,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+1,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+2,j) ∧ (¬Bi,j,k ∨ ¬O ∨ xi+3,j)
     notBnotOCellXVerical(clauseList);
-    // (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ B) 
-    // allNotCellXHorizontalandBorNotO(clauseList,true);
-    // // (¬X1 ∨ ¬X5 ∨ ¬X6 ∨ ¬X7 ∨ ¬O) 
-    // allNotCellXHorizontalandBorNotO(clauseList,false);
+    //=>
     //  (¬B ∨ O ∨ X1) ∧ (¬B ∨ O ∨ X5) ∧ (¬B ∨ O ∨ X6) ∧ (¬B ∨ O ∨ X7)
     notBOCellXHorizontal(clauseList);
 
 }
-// void thereIsAtLeastOneBoatK(List_Clause *clauseList){
-// 	int k,i,j;
-// 	clause c;
-// 	for (k = StartBoat; k < BoatCount; k++){
-// 		int boatSize = matchKBoatToNSizeofK(k);
-// 		reset_Clause(&c);
-// 		for (i = 0; i < GridSizeHeight; i++){
-//             for(j = 0; j < GridSizeWidth ;j++){
-// 				if((i<=GridSizeHeight-boatSize || j<=GridSizeWidth-boatSize)){
-// 					addBoat(&c,i,j,k,false);
-// 				}   
-//             }
-// 		}
-//     	add_element_List_Clause(clauseList,&c);
-// 	}
-
-// }
 
 void thereIsAtLeastOneBoatK(List_Clause *clauseList) {
     int k, i, j;
@@ -225,7 +185,6 @@ void thereIsAtLeastOneBoatK(List_Clause *clauseList) {
 
 void thereIsAtMostOneBoatK(List_Clause *clauseList) {
     int k, i, j, ip, jp;
-    // literal l;
     for (k = StartBoat; k < BoatCount; k++) {
         int boatSize = matchKBoatToNSizeofK(k);
         for (i = 0; i < GridSizeHeight; i++) {
@@ -275,8 +234,8 @@ void oneBoatOrSectionOfBoat(List_Clause *clauseList) {
 }
 
 
-////Test contstr//
-// there can not be two boats in the same square
+
+// There can not be two boats in the same square
 void onlyOneBoatInCell(List_Clause *clauseList) {
     int i, j, k1, k2;
     clause c;
@@ -329,7 +288,6 @@ void noBoatTouchesAnother(List_Clause *clauseList) {
     //Horizontal
     //=>
     NotBOAllNotSuroundingCellHorizintal(clauseList);
-
     //Vertical
     //=>
     NotBOAllNotSuroundingCellVertical(clauseList);
@@ -447,16 +405,12 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList) {
     }
 }
 
-////////////////////////////////////////
 //Vertical//
 void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList) {
 
     int k, i, j, r, t, k1;
-
     clause c, c2, c3;
-    // for (k = 2; k < 3; k++){
     for (k = StartBoat; k < BoatCount; k++) {
-
         int boatSize = matchKBoatToNSizeofK(k);
         for (i = 0; i <= GridSizeHeight - boatSize; i++) {
             for (j = 0; j < GridSizeWidth; j++) {
@@ -551,6 +505,7 @@ void NotBOAllNotSuroundingCellVertical(List_Clause *clauseList) {
         }
     }
 }
+
 
 void nonExistingBoat(List_Clause *clauseList) {
     int k;
@@ -686,7 +641,6 @@ int KChosesNCNF(FILE *file, int row_list[], bool row) {
                     }
 
                     count = 0;
-                    //add_element_List_Clause(clauseList, &newClause);
                     print_Clause_DIMACS_Format2(newClause, file);
                     fprintf(file, "0\n");
                     prev = c;
@@ -700,11 +654,6 @@ int KChosesNCNF(FILE *file, int row_list[], bool row) {
     return countCombi;
 }
 
-// void NChosesK(List_Clause *clauseList,int line_list[],int column_list[]){
-// 	KChosesNCNF(clauseList,line_list,true);
-//     KChosesNCNF(clauseList,column_list,false);
-// }
-/////////////////////////
 void allConstraints(List_Clause *clauseList, int column_list[], int line_list[]) {
     contiguousCell(clauseList);
     thereIsAtLeastOneBoatK(clauseList);
@@ -720,7 +669,6 @@ void print_In_DIMACS_Format(List_Clause *clauseList, FILE *fileOut, int count) {
     Node_Clause *c;
     Node_Clause *prev;
     c = clauseList->first;
-    // fprintf(fileOut,"p cnf 2010 %d\n",clauseList->size + count);
     while (c != NULL) {
         if (c->next == NULL) {
             print_Clause_DIMACS_Format(c->data, fileOut);
