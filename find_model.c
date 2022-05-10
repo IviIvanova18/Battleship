@@ -21,7 +21,7 @@ void print_table(int *tab,int size) {
     char table[size][size];
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            table[i][j] = '-';
+            table[i][j] = '-' ;
         }
     }
     for (int i = 0; i < totalSize(); i++) {
@@ -57,7 +57,7 @@ void read_minisat_modal(FILE *f, int *tab) {
         fscanf(f, "%d", &x);
         if (x > 0) {
             printf("%d ", x);
-            if (x > 0 && x < 999) {
+            if ((x > 0 && x < 999) || x == 2010) {
                 tab[i] = x;
                 i++;
             }
