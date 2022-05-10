@@ -4,7 +4,6 @@ import tkinter as tk
 from tkinter import *
 from tkinter.font import Font
 from traceback import print_tb
-from turtle import width
 from board import Board, read_board_from_file
 from boat import Boat
 import numpy as np
@@ -33,30 +32,57 @@ def rules():
     closeButton = Button(rulesLabel, text="Close", command=rulesWindow.destroy)
     closeButton.place(x=225, y=400)
 
+matchBoatToSize= {
+    0 : 1,
+    1 : 1,
+    2 : 1,
+    3 : 1,
+    4 : 2,
+    5 : 2,
+    6 : 2,
+    7 : 3,
+    8 : 3,
+    9 : 4
+}
+        
+def placeTile(rootName,x,y,movables,size):
+    
+    for size in range(size):
+        movables.append(Boat(x+size*33,y,rootName,rootName))
 
-
-def placeBoats(rootName,x,y):
+def placeBoats(rootName,x,y,b):
     global movables
     movables = []
-    for tile in range(4):
-        movables.append(Boat(x+tile*60,y,rootName, rootName))
-    count =0 
-    for sc in range(3):
-        for s in range(2):
-            movables.append(Boat(x+count*33+sc*20,y+40,rootName, rootName))
-            count+=1
-    count =0 
-    for sc in range(2):
-        for s in range(3):
-            movables.append(Boat(x+count*33+sc*20,y+80,rootName, rootName))
-            count+=1
-    for s in range(4):
-        movables.append(Boat(x+s*33,y+120,rootName, rootName))
+    prev = -1
+    count = 0
+    for boat in range(b.startBoat,b.lastBoat):
+        size = matchBoatToSize[boat]
+        if prev != size:
+            count = 0
+        placeTile(rootName,x+count*20,y,movables,size)
+        count +=1
+        y +=40
+        # prev = size
+        
+    # for tile in range(4):
+    #     movables.append(Boat(x+tile*60,y,rootName, rootName))
+    # count =0 
+    # for sc in range(3):
+    #     for s in range(2):
+    #         movables.append(Boat(x+count*33+sc*20,y+40,rootName, rootName))
+    #         count+=1
+    # count =0 
+    # for sc in range(2):
+    #     for s in range(3):
+    #         movables.append(Boat(x+count*33+sc*20,y+80,rootName, rootName))
+    #         count+=1
+    # for s in range(4):
+    #     movables.append(Boat(x+s*33,y+120,rootName, rootName))
 
 
-def solvePuzzle():
-    boatPlacement = read_solution_game()
-    # print(movables)
+def solvePuzzle(b):
+    boatPlacement = read_solution_game(b)
+    print(movables)
     for tile in movables:
         item = boatPlacement.pop()
         x,y = item
@@ -69,7 +95,7 @@ def split(word):
 
 
 
-def read_solution_game():
+def read_solution_game(b):
     f = open(sys.argv[2],'r')
     row=0
     listTiles = list()
@@ -94,7 +120,7 @@ def popupmsg(msg, title):
     B1 = tk.Button(root, text="Okay", command = root.destroy)
     B1.pack()
 
-def checkModel():
+def checkModel(b):
     listTile =list()
     grid = np.zeros((10, 10))
     for tile in movables:
@@ -103,13 +129,13 @@ def checkModel():
         # IndexError: index 11 is out of bounds for axis 0 with size 10
         # when outside of boinds see again the constrains
 
-        if x<0 or x>=10 or y< 0 or y>=10:
+        if x<0 or x>= b.height or y< 0 or y>=b.width:
             popupmsg("Put all the boats in the grid!",'Error')
         else:
             grid[x][y]=1
         listTile.append(tilePositionCoordinates)
-    solution = read_solution_game()
-    solutiongrid = np.zeros((10, 10))
+    solution = read_solution_game(b)
+    solutiongrid = np.zeros((b.height, b.width))
     for cell in solution:
         i,j = cell
         solutiongrid[j][i]=1
@@ -126,15 +152,23 @@ def resetPuzzle():
         tile.returnToOrigin()
 
 
+
+
+
 def board(): 
     global board
     # boardWindow = Toplevel(root,height=500,width=700)
     root.title("Board") 
     root.geometry('700x500') 
     root.config(bg="#a1f0ea")
-    b = Board(0,0,None,None,None)
+    b = Board(0,0,None,None,None,0,0)
     b= read_board_from_file(b)
-    n,m=b.height,b.width   
+    # print(b.listColumn)
+    # print(b.listRow)
+    # board = b.listColumn+b.listRow
+    # print(board)
+    print(b.startBoat, b.lastBoat)
+
     board = list()
     for col in range(b.height):
         line=list()
@@ -144,27 +178,28 @@ def board():
         board.append(line)
     b.listColumn.append(None)
     board.append(b.listColumn)
-
-
-    boardWidth = boardHeight= 385
+   
+    for widget in root.winfo_children():
+        widget.destroy()
+    boardWidth = boardHeight= 35*(b.height+1)
     boardFrame = Frame(root)
     boardFrame.place(x=30, y=40, width=boardWidth, height = boardHeight)
 
-    labels = list()
+    # labels = list()
     squares = list()
-    for i in range(11):
-        for j in range(11):
-            label = board[i][j]
-            labels.append(Label(text = label))
+    for i in range(b.height+1):
+        for j in range(b.width+1):
+            # label = board[i][j]
+            # labels.append(Label(text = label))
             frame = Frame(boardFrame, bd=0.5,background="#0f3536")
             frame.place(x=i*35,y = j*35,width=35, height=35)
             if (i, j) in b.listRocks:
                 color = "#858a99"
-            elif j == n or i == m:
+            elif j == b.width or i == b.height:
                 color = "#d3eff0"
             else :
                 color =  "#74ccf4"
-            square = Label(frame,text=label, bg =color, height=30, width=30)   
+            square = Label(frame,text=board[i][j], bg =color, height=30, width=30)   
             squares.append(square)
             squares[-1].pack(fill=X)
             frame.lift()
@@ -174,13 +209,13 @@ def board():
         bd=0.5,
         font=font, 
         relief = RAISED,
-        command=checkModel)
+        command= lambda : checkModel(b))
     checkButton.place(x=110,y=boardHeight+80,height = 20, width= 100)
     solveButton = Button(root, text = "Solve",bg='#366d91',
         fg='#ffffff',
         bd=0.5,
         font=font, 
-        relief = RAISED,command=solvePuzzle)
+        relief = RAISED,command= lambda :solvePuzzle(b))
     solveButton.place(x=260,y=boardHeight+80,height = 20, width= 100)
     solveButton = Button(root, text = "Reset",bg='#366d91',
         fg='#ffffff',
@@ -188,7 +223,7 @@ def board():
         font=font, 
         relief = RAISED,command=resetPuzzle)
     solveButton.place(x=410,y=boardHeight+80,height = 20, width= 100)
-    placeBoats(root,boardWidth+50,100)
+    placeBoats(root,boardWidth+50,40,b)
 
 
 
