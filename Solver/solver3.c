@@ -29,7 +29,7 @@ bool is_empty_set(clauseSet cs) {
 }
 
 bool contains_empty_clause(clauseSet cs) {
-    for (int i = 0; i < cs.size; i++) 
+    for (int i = 0; i < cs.size; i++)
         if (is_null_clause(cs.tab[i]))
             return true;
     return false;
@@ -47,8 +47,8 @@ void unit_propagate(literal l, clauseSet *cs) {
         for (int i = 0; i < cs->size; i++) {
             if (in_clause2(l, cs->tab[i]) >= 0)
                 cs->tab[i].valid = true;
-            if (neg_in_clause(l, cs->tab[i])) 
-                cs->tab[i].tab[l.pos] = init_literal();         
+            if (neg_in_clause(l, cs->tab[i]))
+                cs->tab[i].tab[l.pos] = init_literal();
         }
         remove_valid_clauses(cs);
     }
@@ -59,9 +59,9 @@ bool is_pure_literal(literal l, clauseSet cs) {
 }
 
 literal find_pure_literal(clauseSet cs) {
-    for (int i = 0; i < cs.size; i++) 
-        for (int j = 0; j < cs.tab[i].size; j++) 
-            if (!is_null_lit(cs.tab[i].tab[j]) && is_pure_literal(cs.tab[i].tab[j], cs)) 
+    for (int i = 0; i < cs.size; i++)
+        for (int j = 0; j < cs.tab[i].size; j++)
+            if (!is_null_lit(cs.tab[i].tab[j]) && is_pure_literal(cs.tab[i].tab[j], cs))
                 return cs.tab[i].tab[j];
     return init_literal();
 }
@@ -73,7 +73,7 @@ void pure_literal_assign(literal l, clauseSet *cs) {
 }
 
 literal first_non_null_literal(clause c) {
-    for (int i = 0; i < c.size; i++) 
+    for (int i = 0; i < c.size; i++)
         if (!is_null_lit(c.tab[i]))
             return c.tab[i];
     return init_literal();
@@ -91,7 +91,7 @@ literal first_non_null_literal_in_set(clauseSet cs) {
 void assign_to_modal(modal *m, int pos, bool val) {
     if (val)
         m->tab[pos] = 1;
-    else 
+    else
         m->tab[pos] = 0;
 }
 
@@ -102,9 +102,7 @@ bool DPLL(clauseSet cs, modal *m) {
 
     remove_valid_clauses(&cs);
     c = find_unit_clause(cs);
-    while (!is_null_clause(c)){
-        // printf("in unit while with the clause : "); print_clause(c);
-
+    while (!is_null_clause(c)) {
         l2 = first_non_null_literal(c);
         assign_to_modal(m, l2.pos, !l2.negation);
         unit_propagate(l2, &cs);
@@ -119,15 +117,14 @@ bool DPLL(clauseSet cs, modal *m) {
         pure_literal_assign(l, &cs);
         l = find_pure_literal(cs);
     }
-    
+
     // remove_valid_clauses(&cs);
 
-
-    if (is_empty_set(cs)) 
+    if (is_empty_set(cs))
         return true;
     if (contains_empty_clause(cs))
         return false;
-    
+
     l = first_non_null_literal_in_set(cs);
 
     clauseSet cs1 = init_clauseSet(cs.size);
@@ -159,7 +156,7 @@ bool DPLL(clauseSet cs, modal *m) {
 
 // bool DPLL(clauseSet cs, modal *m) { // , clauseSet *cs1, clauseSet *cs2
 //     remove_valid_clauses(&cs);
-    
+
 //     puts("In");
 //     puts("*************"); print_clauseSet(cs);
 //     printf("size of cs : %d\n", cs.size);
@@ -168,7 +165,7 @@ bool DPLL(clauseSet cs, modal *m) {
 //     clause c;
 //     // modal m = init_combination(cs.tab[0].size);
 //     c = find_unit_clause(cs);
-    
+
 //     if (!is_null_clause(c)) {printf("unit : "); print_clause(c);}
 //     else puts("found nul clause");
 //     while (!is_null_clause(c)){
@@ -182,7 +179,7 @@ bool DPLL(clauseSet cs, modal *m) {
 //         // return true;
 //         // unit_propagate(first_non_null_literal(c), &cs);
 //         c = find_unit_clause(cs);
-        
+
 //         // print_clauseSet(cs);
 //     }
 //     puts("passed first while");
@@ -210,7 +207,7 @@ bool DPLL(clauseSet cs, modal *m) {
 //         return true;
 //     }
 //     // puts("passed is_empty_set");
-    
+
 //     if (contains_empty_clause(cs)) {
 //         puts("contains_empty_clause");
 //         return false;
@@ -218,7 +215,7 @@ bool DPLL(clauseSet cs, modal *m) {
 //     // puts("passed contains_empty_clause");
 //     l = first_non_null_literal_in_set(cs);
 //     // puts("passed first_non_null_literal");
-   
+
 //     clauseSet cs1 = init_clauseSet(cs.size);
 //     copy_cset(cs, &cs1);
 //     assign_to_set(l, &cs1, true);

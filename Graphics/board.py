@@ -10,16 +10,6 @@ class Board :
         self.startBoat= startBoat
         self.lastBoat = lastBoat
        
-# def create_dict():
-#     global matchBoatToSize
-#     if matchBoatToSize not in globals():
-#         matchBoatToSize= {
-#             range(0,4): 1,
-#             range(4,7): 2,
-#             range(7,9): 3,
-#             9: 4
-#         }
-    
 
 def read_board_from_file(board):
     f = open(sys.argv[1],'r')
@@ -28,15 +18,14 @@ def read_board_from_file(board):
     list_cols = [int(ch) for ch in f.readline() if ch != '\n' if ch != ' ' ]
     list_rows = [int(ch) for ch in f.readline() if ch != '\n' if ch != ' ' ]
     list_rocks = list()
-    for line in f.readlines():
-        x, y = [int(x) for x in line.split()]
-        rock = (x,y)
-        list_rocks.append(rock)
+    # for line in f.readlines():
+    #     x, y = [int(x) for x in line.split()]
+    #     rock = (x,y)
+    #     list_rocks.append(rock)
     
     f.close()
     board = Board(h,w,list_cols,list_rows,list_rocks,startBoat,lastBoat)
     return board
-
 
 
 

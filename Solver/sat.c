@@ -5,7 +5,7 @@
 literal init_literal() {
     literal l;
     l.name = 0;
-    l.negation = false;    
+    l.negation = false;
     // l.pos = 0;
     return l;
 }
@@ -45,19 +45,19 @@ void free_clause(clause c) {
 }
 
 void clear_cset(clauseSet cs) {
-    for (int i = 0; i < cs.size; i++) 
+    for (int i = 0; i < cs.size; i++)
         free_clause(cs.tab[i]);
 }
 
 void supLitClause(literal l, clause *c) {
     for (int i = 0; i < c->size; i++) {
-        if (same_name(l,c->tab[i])) {
+        if (same_name(l, c->tab[i])) {
             for (int j = i; j < c->size - 1; j++)
                 c->tab[j] = c->tab[j + 1];
             c->size--;
             return;
         }
-    } 
+    }
 }
 
 void remove_clause(clauseSet *cs, int p) {
@@ -105,13 +105,18 @@ void print_modal(modal m) {
     for (int i = 0; i < m.size - 1; i++)
         printf("%d ", m.tab[i]);
     printf("%d\n", m.tab[m.size - 1]);
-    
+
 }
 
 void print_is_valid(clause c) {
-    if (c.valid) 
-        {printf("Valid : "); print_clause(c);}
-    else {printf("NOT Valid : "); print_clause(c);}
+    if (c.valid) {
+        printf("Valid : ");
+        print_clause(c);
+    }
+    else {
+        printf("NOT Valid : ");
+        print_clause(c);
+    }
 
 }
 
@@ -148,7 +153,7 @@ bool same_name(literal a, literal b) {
 // }
 
 bool same_var(literal a, literal b) {
-    return (same_name(a,b) && ((a.name > 0 &&  b.name > 0) || (a.name < 0 &&  b.name < 0)));
+    return (same_name(a, b) && ((a.name > 0 && b.name > 0) || (a.name < 0 && b.name < 0)));
 }
 
 bool neg_in_clause(literal l, clause c) {
@@ -166,13 +171,13 @@ bool neg_in_clauseSet(literal l, clauseSet cs) {
 }
 
 int in_clause(literal l, clause c) {
-    for (int i = 0; i < c.size; i++) 
+    for (int i = 0; i < c.size; i++)
         if (same_name(l, c.tab[i])) return i;
     return -1;
 }
 
 int in_clause2(literal l, clause c) {
-    for (int i = 0; i < c.size; i++) 
+    for (int i = 0; i < c.size; i++)
         if (same_var(l, c.tab[i])) return i;
     return -1;
 }
@@ -210,7 +215,7 @@ clauseSet false_set(clauseSet cs, modal m) {
 
 clause random_false_clause(clauseSet cs, modal m) {
     clause c = random_clause(cs);
-    while (check_modal(c, m)) 
+    while (check_modal(c, m))
         c = random_clause(cs);
     return c;
 }
@@ -220,7 +225,7 @@ literal random_literal(clause c) {
 }
 
 double random_min_max(double min, double max) {
-    double range = (max - min); 
+    double range = (max - min);
     double div = RAND_MAX / range;
     return min + (rand() / div);
 }
