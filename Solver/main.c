@@ -16,7 +16,6 @@ int main(int argc, char *argv[]) {
     clauseSet CS = init_clauseSet(600);
 
     read_DIMACS(&CS, f);
-    // print_clauseSet(CS);
     remove_valid_clauses(&CS);
     // remove_clause(&CS, 0);
     // puts("");
@@ -75,7 +74,6 @@ int main(int argc, char *argv[]) {
 
     free(m.tab);
     free(CS.tab);
-    free(cs2.tab);
     fclose(f);
     return 0;
 }
