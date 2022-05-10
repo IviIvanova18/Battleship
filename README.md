@@ -24,8 +24,8 @@ To execute all the components at the same time:
 ```./run_final.sh Tests/{LxH}_games/game{LxH}_{i}.in```
 
 Following :
-    - `{LxH}`: The size of the grid
-    - `i`: the number of the grid
+- `{LxH}`: The size of the grid
+- `i`: the number of the grid
 
 - Example:
 ```./run_final.sh Tests/4x4_games/game4x4_1.in```
@@ -113,15 +113,14 @@ The graphical interface of Battleship is using python's library Tkinter.
 To execute only the graphics:
 
 * On windows:
-```python3 .\Graphics\graphics.py .\Tests\{LxH}_games\game{LxH}{i}.in .\Tests\{LxH}_games\game{LxH}{i}.solution
-```
+```python3 .\Graphics\graphics.py .\Tests\{LxH}_games\game{LxH}{i}.in .\Tests\{LxH}_games\game{LxH}{i}.solution```
 
 * On linux :
-```pyton3 ./Graphics/graphics.py Tests/{LxH}_games/game{LxH}{i}.in ./Tests/{LxH}_games/game{LxH}{i}.solution
-```
+```pyton3 ./Graphics/graphics.py Tests/{LxH}_games/game{LxH}{i}.in ./Tests/{LxH}_games/game{LxH}{i}.solution```
+
 Following :
-    - `{LxH}`: The size of the grid
-    - `i`: the number of the grid
+- `{LxH}`: The size of the grid
+- `i`: the number of the grid
 
 
 
