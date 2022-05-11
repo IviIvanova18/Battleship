@@ -18,6 +18,7 @@ def read_board_from_file(board):
     list_cols = [int(ch) for ch in f.readline() if ch != '\n' if ch != ' ' ]
     list_rows = [int(ch) for ch in f.readline() if ch != '\n' if ch != ' ' ]
     list_rocks = list()
+    # Additional feature to the game : there are rocks in the grid -> boats can't be placed
     # for line in f.readlines():
     #     x, y = [int(x) for x in line.split()]
     #     rock = (x,y)
