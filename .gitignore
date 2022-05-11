@@ -2,7 +2,11 @@
 *.o
 *.time
 .nfs*
+*.tmp
+
+# executables
 main
+find_model
+find_model_final
 time
 zchaff
-*.tmp
