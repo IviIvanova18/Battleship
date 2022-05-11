@@ -46,17 +46,11 @@ void remove_valid_clauses(clauseSet *cs); /* Remove all valid clauses from c */
 
 /* Printing */
 void print_literal(literal l);
-
 void print_clause(clause c);
-
 void print_clauseSet(clauseSet cs);
-
 void print_modal(modal m);
-
 void print_modal2(modal m);
-
 void print_is_valid(clause c);
-
 void print_all_combi(int varNum);
 
 /* Simple tests */

@@ -66,6 +66,8 @@ bool all_one(combination cb) {
 
 modal null_modal(int varNum) {
     modal m;
+    m.size = varNum;
+    m.tab = malloc(sizeof(int) * varNum);
     for (int i = 0; i < varNum; i++)
         m.tab[i] = -1;
     m.size = varNum;

@@ -6,6 +6,7 @@ YELLOW = \033[1;33m
 NC = \033[0m # No Color
 
 TESTS_SAT = ../Tests/Sat/uf20/* ../Tests/Sat/uf50/*
+TESTS_SAT2 = ../Tests/Sat/uf20/*
 TESTS_UNSAT = ../Tests/Unsat/uuf50/*
 SIMPLE_SAT = ../Tests/Simple/SAT/*
 SIMPLE_UNSAT = ../Tests/Simple/UNSAT/*
@@ -35,7 +36,7 @@ test3: tests_sat3 tests_unsat3
 tests_sat2: main
 	@rm -f Tests/solver2.time
 	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
-	@for i in $(SIMPLE_SAT) ; do \
+	@for i in $(TESTS_SAT2) ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
 		./main $$i s 2 ../Tests/solver2.time; \
 	done

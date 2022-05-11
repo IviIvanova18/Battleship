@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     FILE *f = fopen(argv[1], "r");
     assert(f);
 
-    clauseSet CS = init_clauseSet(600);
+    clauseSet CS = init_clauseSet(MAXSIZE);
 
     read_DIMACS(&CS, f);
     remove_valid_clauses(&CS);

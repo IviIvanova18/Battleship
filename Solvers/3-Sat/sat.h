@@ -18,7 +18,6 @@ clauseSet init_clauseSet(int clauseNum); /* Init a clause set */
 
 /* Printing */
 void print_clause(clause c);
-
 void print_clauseSet(clauseSet cs);
 
 /***************
@@ -28,18 +27,15 @@ void add_clause_Cset(clauseSet *cs, clause c);
 
 bool is_null_lit(literal l); /* True if l's name is '0' */
 bool is_null_clause(clause c); /* True if all the literals are null */
-clause init_null_clause();
 
+clause init_null_clause();
 literal init_literal();
 
-int in_clause(literal l, clause c);
-
-int neg_in_clause(literal l, clause c);
-
+int in_clause(literal l, clause c); /* True if the literal l is in the clause c */
+int neg_in_clause(literal l, clause c); /* True if the negation of the literal l is in the clause c */
 bool neg_in_clauseSet(literal l, clauseSet cs); /* True if the negation of the literal l is in the clauseSet cs */
-void remove_literal(literal l, clause *c);
-
-int abs_in_clause(literal l, clause c);
+void remove_literal(literal l, clause *c); /* Removes l from c */
+int abs_in_clause(literal l, clause c); /* True if the negation of the literal l is in the clauseSet cs */
 
 void copy_cset(clauseSet cs, clauseSet *cs2); /* Copy cs into cs2 */
 void copy_cset2(clauseSet cs, clauseSet *cs1, clauseSet *cs2); /* Copy cs into cs1 and cs2 */
@@ -47,7 +43,6 @@ void remove_clause(clauseSet *cs, int p); /* Remove the clause at position p fro
 void remove_valid_clauses(clauseSet *cs); /* Remove all valid clauses from c */
 
 int number(clauseSet *cs, literal l);
-
 int max_score(clauseSet *cs, literal l);
 
 /***************
@@ -76,10 +71,8 @@ void assign_to_set(literal l, clauseSet *cs, bool val); /* Assigning a truth val
 void assign_to_modal(modal *m, int pos, bool val); /* Assign val to the modal at position pos */
 
 bool DPLL(clauseSet cs); /* Uses DPLL to decide if cs is sat or unsat */
-
 //bool DPLL(clauseSet cs, FILE *f); /* Uses DPLL to decide if cs is sat or unsat, if sat m is a modal of cs */
-//bool DPLL(clauseSet cs, FILE *f, linked *watched);
-//bool DPLL(clauseSet cs, FILE *f, linked *watched, bool assign, literal l2, bool assignVal);
+
 
 
 

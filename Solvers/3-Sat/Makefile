@@ -1,5 +1,3 @@
-#CC = gcc -o executable -std=c11 -Wall -ggdb3
-
 CC = clang
 
 RED = \033[0;31m
@@ -14,9 +12,6 @@ all: $(FILES)
 main: sat.o dimacs.o
 
 satTo3Sat: satTo3Sat.o sat.o dimacs.o
-
-time: time.o
-
 
 ################
 # Tests       #
@@ -52,4 +47,4 @@ test_conversion: satTo3Sat
 	done
 
 clean:
-	rm -f *.o $(FILES)
+	rm -f *.o $(FILES) temp.cnf

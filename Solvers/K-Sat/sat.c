@@ -98,7 +98,6 @@ void print_modal(modal m) {
     for (int i = 0; i < m.size - 1; i++)
         printf("%d ", m.tab[i]);
     printf("%d\n", m.tab[m.size - 1]);
-
 }
 
 void print_is_valid(clause c) {

@@ -42,7 +42,6 @@ void print_clause_file(FILE *f, clause c) {
 }
 
 void read_general_DIMACS(int varNum, int clauseNum, int *newVarNum, int *newClauseNum, FILE *in, FILE *out) {
-//    printf("varNum : %d\n", varNum);
     int *c, x, addedVars = varNum;
     *newClauseNum = 0;
 

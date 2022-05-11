@@ -3,6 +3,16 @@
 #define MAXITERATIONS 100000
 #define P 0.5
 
+//modal null_modal(int varNum) {
+//    modal m;
+//    m.size = varNum;
+//    m.tab = malloc(sizeof(int) * varNum);
+//    for (int i = 0; i < varNum; i++)
+//        m.tab[i] = -1;
+//    m.size = varNum;
+//    return m;
+//}
+
 modal solver2(clauseSet cs) {
     int i = 0;
     double x;
@@ -27,8 +37,8 @@ modal solver2(clauseSet cs) {
     foundModal = check_set_modal(cs, c);
 
     free(cs2.tab);
-    if (foundModal) return c;
-    else return null_modal();
+    if (foundModal) { return c;}
+    else{return null_modal(cs.tab[0].size);}
 }
 
 int number(literal l, clauseSet cs, bool positive) {

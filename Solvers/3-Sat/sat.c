@@ -96,7 +96,6 @@ void remove_clause(clauseSet *cs, int p) {
 void remove_valid_clauses(clauseSet *cs) {
     for (int i = 0; i < cs->size; i++) {
         if (cs->tab[i].valid) {
-//            puts("valid");
             remove_clause(cs, i);
             i--;
         }
@@ -126,7 +125,6 @@ void assign(literal l, clause *c, bool val) {
 void assign_to_set(literal l, clauseSet *cs, bool val) {
     for (int i = 0; i < cs->size; i++)
         assign(l, &cs->tab[i], val);
-//    remove_valid_clauses(cs);
 }
 
 bool is_unit_clause(clause c) {
@@ -165,7 +163,6 @@ void unit_propagate(literal l, clauseSet *cs) {
             if (in_clause(l, cs->tab[i]) >= 0)
                 cs->tab[i].valid = true;
             if (neg_in_clause(l, cs->tab[i]) >= 0) {
-//                printf("literal : %d and its negation are in : ", l); print_clause(cs->tab[i]);
                 remove_literal(l, &cs->tab[i]);
             }
         }
@@ -208,69 +205,35 @@ literal first_non_null_literal_in_set(clauseSet cs) {
     return init_literal();
 }
 
-// void assign_to_modal(modal *m, int pos, bool val) {
-//     if (val)
-//         m->tab[pos] = 1;
-//     else 
-//         m->tab[pos] = 0;
-// }
-
-
-//bool DPLL(clauseSet cs, FILE *f) {
 bool DPLL(clauseSet cs) {
     literal l, l2;
     clause c;
-//    print_clauseSet(cs);
     remove_valid_clauses(&cs);
-//    puts("after");
-//    print_clauseSet(cs);
 
     c = find_unit_clause(cs);
     while (!is_null_clause(c)) {
-//        printf("in unit while with the clause : "); print_clause(c);
         l2 = first_non_null_literal(c);
-        // assign_to_modal(m, l2.pos, !l2.negation);
 //        fprintf(f, "%d ", l2);
         unit_propagate(l2, &cs);
         c = find_unit_clause(cs);
     }
-    // remove_valid_clauses(&cs);
-//    puts("after unit");
-//    print_clauseSet(cs);
-
 
     l = find_pure_literal(cs);
     while (!is_null_lit(l)) {
-//        printf("###########in pure while with the literal : %d\n", l);
-//        print_clauseSet(cs);
-
-        // assign_to_modal(m, l.pos, !l.negation);
 //        fprintf(f, "%d ", l);
         pure_literal_assign(l, &cs);
         l = find_pure_literal(cs);
     }
-//    puts("after pure");
-//    print_clauseSet(cs);
 
-    // remove_valid_clauses(&cs);
-
-
-    if (is_empty_set(cs)) {
-//        puts("is_empty_set");
-        return true;
-    }
-    if (contains_empty_clause(cs)) {
-//        puts("contains_empty_clause");
-        return false;
-    }
+    if (is_empty_set(cs)) return true;
+    if (contains_empty_clause(cs)) return false;
 
     l = first_non_null_literal_in_set(cs);
 
     clauseSet cs1 = init_clauseSet(cs.size);
     copy_cset(cs, &cs1);
     assign_to_set(l, &cs1, true);
-//    printf("assigning : %d to true\n\n", l);
-//    remove_valid_clauses(&cs1);
+
     bool d1 = DPLL(cs1);
     free(cs1.tab);
     if (d1)
@@ -279,12 +242,8 @@ bool DPLL(clauseSet cs) {
     clauseSet cs2 = init_clauseSet(cs.size);
     copy_cset(cs, &cs2);
     assign_to_set(l, &cs2, false);
-//    printf("assigning : %d to false\n\n", l);
+
     bool d2 = DPLL(cs2);
-
     free(cs2.tab);
-    if (d2)
-        return true;
-
-    return false;
+    return d2;
 }
