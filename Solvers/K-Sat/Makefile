@@ -5,9 +5,7 @@ GREEN = \033[0;32m
 YELLOW = \033[1;33m
 NC = \033[0m # No Color
 
-#TESTS_SAT = ../Tests/Sat/uf20/*
-# TESTS_SAT = ../Tests/Sat/uf50/*
-
+TESTS_SAT = ../Tests/Sat/uf20/* ../Tests/Sat/uf50/*
 TESTS_UNSAT = ../Tests/Unsat/uuf50/*
 SIMPLE_SAT = ../Tests/Simple/SAT/*
 SIMPLE_UNSAT = ../Tests/Simple/UNSAT/*

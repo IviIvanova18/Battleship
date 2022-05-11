@@ -108,17 +108,13 @@ bool DPLL(clauseSet cs, modal *m) {
         unit_propagate(l2, &cs);
         c = find_unit_clause(cs);
     }
-    // remove_valid_clauses(&cs);
 
     l = find_pure_literal(cs);
     while (!is_null_lit(l)) {
-        // printf("in pure while with the literal : "); print_literal(l);
         assign_to_modal(m, l.pos, !l.negation);
         pure_literal_assign(l, &cs);
         l = find_pure_literal(cs);
     }
-
-    // remove_valid_clauses(&cs);
 
     if (is_empty_set(cs))
         return true;
@@ -130,129 +126,17 @@ bool DPLL(clauseSet cs, modal *m) {
     clauseSet cs1 = init_clauseSet(cs.size);
     copy_cset(cs, &cs1);
     assign_to_set(l, &cs1, true);
-    // printf("assigning  to true : "); print_literal(l);
 
     bool d1 = DPLL(cs1, m);
     free(cs1.tab);
-
     if (d1)
         return true;
-
 
     clauseSet cs2 = init_clauseSet(cs.size);
     copy_cset(cs, &cs2);
     assign_to_set(l, &cs2, false);
-    // printf("assigning  to false : "); print_literal(l);
 
     bool d2 = DPLL(cs2, m);
     free(cs2.tab);
-    if (d2)
-        return true;
-
-    return false;
+    return d2;
 }
-
-// Version with prints
-
-// bool DPLL(clauseSet cs, modal *m) { // , clauseSet *cs1, clauseSet *cs2
-//     remove_valid_clauses(&cs);
-
-//     puts("In");
-//     puts("*************"); print_clauseSet(cs);
-//     printf("size of cs : %d\n", cs.size);
-
-//     literal l;
-//     clause c;
-//     // modal m = init_combination(cs.tab[0].size);
-//     c = find_unit_clause(cs);
-
-//     if (!is_null_clause(c)) {printf("unit : "); print_clause(c);}
-//     else puts("found nul clause");
-//     while (!is_null_clause(c)){
-//         l = first_non_null_literal(c);
-//         assign_to_modal(m, l.pos, !l.negation);
-
-//         printf("Found literal : "); print_literal(l);
-//         printf("before unit_propagate : \n"); print_clauseSet(cs);
-//         unit_propagate(l, &cs);
-//         printf("after unit_propagate : \n"); print_clauseSet(cs);
-//         // return true;
-//         // unit_propagate(first_non_null_literal(c), &cs);
-//         c = find_unit_clause(cs);
-
-//         // print_clauseSet(cs);
-//     }
-//     puts("passed first while");
-//     remove_valid_clauses(&cs);
-
-//     l = find_pure_literal(cs);
-//     if (!is_null_lit(l)){printf("Found pure : "); print_literal(l);}
-//     while (!is_null_lit(l)) {
-//         assign_to_modal(m, l.pos, !l.negation);
-
-//         printf("\nin find_pure_literal while \n");
-//         printf("before pure_literal_assign : \n"); print_clauseSet(cs);
-
-//         pure_literal_assign(l, &cs);
-//         printf("after pure_literal_assign : \n"); print_clauseSet(cs);
-
-//         l = find_pure_literal(cs);
-//         printf("Found pure : "); print_literal(l);
-//     }
-//     puts("passed 2nd while");
-
-//     remove_valid_clauses(&cs);
-//     if (is_empty_set(cs)) {
-//         puts("is_empty_set");
-//         return true;
-//     }
-//     // puts("passed is_empty_set");
-
-//     if (contains_empty_clause(cs)) {
-//         puts("contains_empty_clause");
-//         return false;
-//     }
-//     // puts("passed contains_empty_clause");
-//     l = first_non_null_literal_in_set(cs);
-//     // puts("passed first_non_null_literal");
-
-//     clauseSet cs1 = init_clauseSet(cs.size);
-//     copy_cset(cs, &cs1);
-//     assign_to_set(l, &cs1, true);
-//     printf("\ncalling with true : "); print_literal(l);
-//     bool d1 = DPLL(cs1, m);
-//     free(cs1.tab);
-//     if (d1) {
-//         puts("d1 true");
-//         return true;
-//     }
-//     clauseSet cs2 = init_clauseSet(cs.size);
-//     copy_cset(cs, &cs2);
-//     assign_to_set(l, &cs2, false);
-//     printf("\ncalling with false : "); print_literal(l);
-//     bool d2 = DPLL(cs2, m);
-//     free(cs2.tab);
-
-//     if (d2) {
-//         puts("d2 true");
-
-//         return true;
-//     }
-//     puts("!!!false!!!");
-
-//     return false;
-
-
-//      /* Normal version less efficient cause will always run twice (but looks nicer) */
-//     // clauseSet cs1 = init_clauseSet(cs.size);
-//     // clauseSet cs2 = init_clauseSet(cs.size);  
-//     // copy_cset(cs, &cs1);
-//     // copy_cset(cs, &cs2);
-//     // assign_to_set(l, &cs1, true);
-//     // assign_to_set(l, &cs2, false);
-//     // bool d1 = DPLL(cs1, m);
-//     // bool d2 = DPLL(cs2, m);
-//     // free(cs1.tab);
-//     // free(cs2.tab);
-//     // return d1 || d2;
-// }

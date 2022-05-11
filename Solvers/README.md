@@ -30,8 +30,8 @@ Can only be used with 3-Sat DIMACS files, so **always convert before running**.
     make satTo3Sat
     ./satTo3Sat filename output-filename
     ```
-  - `filename`: name of the DIMACS file
-  - `output-filename`: name of the new DIMACS file, will be written in the 3-Sat format
+    - `filename`: name of the DIMACS file
+    - `output-filename`: name of the new DIMACS file, will be written in the 3-Sat format
 
 - Example:
     ```
@@ -40,16 +40,17 @@ Can only be used with 3-Sat DIMACS files, so **always convert before running**.
     ```
 
 ### How to use (K-Sat solvers)
+
 - Go to ```Solvers/K-Sat/```
 - To run with a specific DIMACS file:
     ```
     make
     ./main filename x n output-filename
     ```
-  - `filename`: name of the DIMACS file
-  - `x`: expected output (s for SAT and u for UNSAT)
-  - `n`: solver number (1, 2 or 3)
-  - `output-filename`: an optional argument, used to print the run time
+    - `filename`: name of the DIMACS file
+    - `x`: expected output (s for SAT and u for UNSAT)
+    - `n`: solver number (1, 2 or 3)
+    - `output-filename`: an optional argument, used to print the run time
 
 - Example:
     ```
@@ -67,8 +68,8 @@ Can only be used with 3-Sat DIMACS files, so **always convert before running**.
     make
     ./main filename x
     ```
-  - `filename`: name of the DIMACS file
-  - `x`: expected output (s for SAT and u for UNSAT)
+    - `filename`: name of the DIMACS file
+    - `x`: expected output (s for SAT and u for UNSAT)
 
 - Example:
     ```
@@ -79,8 +80,11 @@ Can only be used with 3-Sat DIMACS files, so **always convert before running**.
 ### Tests
 
 (Most tests were taken from : https://www.cs.ubc.ca/~hoos/SATLIB/benchm.html)
+
 #### 3-Sat:
+
 To run the tests go to ```Solvers/3-Sat/```
+
 - To run all satisfiable tests:
   ```make tests_sat```
 - To run all unsatisfiable tests:
@@ -88,21 +92,23 @@ To run the tests go to ```Solvers/3-Sat/```
 - To run all tests:
   ```make test_all```
 
-
 #### K-Sat:
+
 To run the tests go to ```Solvers/K-Sat/```
+
 ##### Solver3:
+
 - To run all satisfiable tests:
   ```make tests_sat3```
-- To run all unsatisfiable tests: 
+- To run all unsatisfiable tests:
   ```make tests_unsat3```
 
 ##### Others:
-- To run all 'simple' tests: 
-  ```make test_simple```  
-(The simple tests are the size of the exercises done in class)  
-This will run all 'simple' tests (sat and unsat) with the 3 solvers
 
+- To run all 'simple' tests:
+  ```make test_simple```  
+  (The simple tests are the size of the exercises done in class)  
+  This will run all 'simple' tests (sat and unsat) with the 3 solvers
 
 We do not recommend running more complicated tests on solver 1 and 2, since solving times can be extremely long...
 

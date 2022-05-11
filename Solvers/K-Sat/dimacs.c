@@ -23,11 +23,7 @@ void read_p_line(FILE *f, int *varNum, int *clauseNum) {
 
 void add_to_sets(literal *l, clause *cl, clause *dejaVu) {
     int p = in_clause(*l, *dejaVu);
-    if (p == -1) {
-        // l->pos = dejaVu->size;  
-        add_l_clause2(dejaVu, *l);
-    }
-    // else l->pos = p;
+    if (p == -1) add_l_clause2(dejaVu, *l);
     l->pos = abs(l->name) - 1;
     add_l_clause(cl, *l);
 }
