@@ -10,7 +10,7 @@
 
 ## General info
 
-Battleships also known as Bimaru is a logic puzzle. This project consists in using a SAT-solver to automatically solve the Battleship puzzle given different grid sizes and boat count. For further information and all the logical formulas used for solvig the puzzle see the pdf file in the main folder. For more information about the game itself you can find [here](https://en.wikipedia.org/wiki/Battleship_(puzzle))
+Battleships also known as Bimaru is a logic puzzle. This project consists in using a SAT-solver to automatically solve the Battleship puzzle given different grid sizes and boat counts. For further information and all the logical formulas used for solving, the puzzle see the pdf file in the main folder. For more information about the game itself, you can find [here](https://en.wikipedia.org/wiki/Battleship_(puzzle))
 
 ## Technologies
 Project is created with:
@@ -19,21 +19,30 @@ Project is created with:
 
 ## To execute
 
+Getting started:
+
+```
+git clone https://github.com/IviIvanova18/Battleship.git
+cd BattleShip
+```
+
 To execute all the components at the same time:
 
 ```./run_final.sh Tests/{LxH}_games/game{LxH}_{i}.in```
 
 Following :
 - `{LxH}`: The size of the grid
-- `i`: the number of the grid
+- `i`: the number of the game test 
 
 - Example:
 ```./run_final.sh Tests/4x4_games/game4x4_1.in```
 
-	
+Remark: the most performant grid is of size 4x4
+
+  
 ## Logic
 
-TO DO ..
+The logical part is the main part of the game. It consists of modeling the problem in conjunctive normal form (product of clauses).
 
 ## Sat-solvers
 
@@ -73,9 +82,9 @@ DPLL.
 
 - To run all satisfiable tests:
   ```make tests_sat```
-- To run all unsatisfiable tests: (Not recommended with solver1, running times can be extremly long...)
+- To run all unsatisfiable tests: (Not recommended with solver1, running times can be extremely long...)
   ```make tests_unsat```
-- To run all 'simple' unsatisfiable tests: (The simple tests are the size of the exercices done in class)
+- To run all 'simple' unsatisfiable tests: (The simple tests are the size of the exercises done in class)
   ```make tests_unsat```
 
 - To run all tests:
@@ -83,7 +92,7 @@ DPLL.
 
 ##### Output:
 
-If the test is successful, only it's name will be printed.
+If the test is successful, only its name will be printed.
 Otherwise, the assert function will stop the program.
 
 ##### Format of test files:
@@ -113,14 +122,14 @@ The graphical interface of Battleship is using python's library Tkinter.
 To execute only the graphics:
 
 * On windows:
-```python3 .\Graphics\graphics.py .\Tests\{LxH}_games\game{LxH}{i}.in .\Tests\{LxH}_games\game{LxH}{i}.solution```
+```python3 .\Graphics\graphics.py .\Tests\{LxH}_games\game{LxH}_{i}.in .\Tests\{LxH}_games\game{LxH}_{i}.solution```
 
 * On linux :
-```pyton3 ./Graphics/graphics.py Tests/{LxH}_games/game{LxH}{i}.in ./Tests/{LxH}_games/game{LxH}{i}.solution```
+```pyton3 ./Graphics/graphics.py Tests/{LxH}_games/game{LxH}_{i}.in ./Tests/{LxH}_games/game{LxH}_{i}.solution```
 
 Following :
 - `{LxH}`: The size of the grid
-- `i`: the number of the grid
+- `i`: the number of the game test 
 
 
 

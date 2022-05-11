@@ -1,8 +1,5 @@
 import tkinter as tk
 from tkinter import *
-# from board import Board, read_board_from_file
-# import graphics
-# from setuptools import Command
 
 
 class Boat():
@@ -23,7 +20,6 @@ class Boat():
         self.originX = x
         self.originY = y
        
-
 
 
     def drawSection(self,size):

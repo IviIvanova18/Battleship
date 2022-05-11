@@ -25,7 +25,6 @@ def rules():
 
     rulesWindow = Toplevel(root, height=700, width=700)
     rulesWindow.title("Rules")
-    # rulesWindow.iconbitmap("Scrabble.ico")
     rulesWindow.config(bg="#ff9130")
     rulesLabel = Label(rulesWindow, text=text,bg="#ff9130",font='Arial 9 bold')
     rulesLabel.place(relx=0.5, rely=0.5, anchor=CENTER)
@@ -62,27 +61,9 @@ def placeBoats(rootName,x,y,b):
         placeTile(rootName,x+count*20,y,movables,size)
         count +=1
         y +=40
-        # prev = size
-        
-    # for tile in range(4):
-    #     movables.append(Boat(x+tile*60,y,rootName, rootName))
-    # count =0 
-    # for sc in range(3):
-    #     for s in range(2):
-    #         movables.append(Boat(x+count*33+sc*20,y+40,rootName, rootName))
-    #         count+=1
-    # count =0 
-    # for sc in range(2):
-    #     for s in range(3):
-    #         movables.append(Boat(x+count*33+sc*20,y+80,rootName, rootName))
-    #         count+=1
-    # for s in range(4):
-    #     movables.append(Boat(x+s*33,y+120,rootName, rootName))
-
 
 def solvePuzzle(b):
     boatPlacement = read_solution_game(b)
-    print(movables)
     for tile in movables:
         item = boatPlacement.pop()
         x,y = item
@@ -90,10 +71,6 @@ def solvePuzzle(b):
 
 def split(word):
     return [char for char in word if char != '\n']
-
-
-
-
 
 def read_solution_game(b):
     f = open(sys.argv[2],'r')
@@ -109,7 +86,6 @@ def read_solution_game(b):
             col +=1
         row +=1
     f.close()
-    # print(listTiles)
     return listTiles
 
 def popupmsg(msg, title):
@@ -122,15 +98,14 @@ def popupmsg(msg, title):
 
 def checkModel(b):
     listTile =list()
-    grid = np.zeros((10, 10))
+    grid = np.zeros((b.height, b.width))
     for tile in movables:
         tilePositionCoordinates = tile.tileCoordinates()
         x,y = tilePositionCoordinates
-        # IndexError: index 11 is out of bounds for axis 0 with size 10
-        # when outside of boinds see again the constrains
-
-        if x<0 or x>= b.height or y< 0 or y>=b.width:
+        flag = True 
+        if (x<0 or x>= b.height or y< 0 or y>=b.width) and flag:
             popupmsg("Put all the boats in the grid!",'Error')
+            flag = False
         else:
             grid[x][y]=1
         listTile.append(tilePositionCoordinates)
@@ -144,30 +119,17 @@ def checkModel(b):
     else :
         popupmsg("Try again!","lose")
 
-
-
-
 def resetPuzzle():
     for tile in movables:
         tile.returnToOrigin()
 
-
-
-
-
 def board(): 
     global board
-    # boardWindow = Toplevel(root,height=500,width=700)
     root.title("Board") 
     root.geometry('700x500') 
     root.config(bg="#a1f0ea")
     b = Board(0,0,None,None,None,0,0)
     b= read_board_from_file(b)
-    # print(b.listColumn)
-    # print(b.listRow)
-    # board = b.listColumn+b.listRow
-    # print(board)
-    print(b.startBoat, b.lastBoat)
 
     board = list()
     for col in range(b.height):
@@ -185,12 +147,9 @@ def board():
     boardFrame = Frame(root)
     boardFrame.place(x=30, y=40, width=boardWidth, height = boardHeight)
 
-    # labels = list()
     squares = list()
     for i in range(b.height+1):
         for j in range(b.width+1):
-            # label = board[i][j]
-            # labels.append(Label(text = label))
             frame = Frame(boardFrame, bd=0.5,background="#0f3536")
             frame.place(x=i*35,y = j*35,width=35, height=35)
             if (i, j) in b.listRocks:
@@ -227,10 +186,6 @@ def board():
 
 
 
-
-
-# print(read_solution_game())
-
 root = Tk()
 root.resizable(True, True) 
 root.geometry('450x200') 
@@ -239,7 +194,6 @@ font = Font(family='Helvitica', size=15)
 welcomeFont = Font(family="Helvetica",size = 17, weight="bold",
                 slant="italic")
 welcomeLabel = Label(root, text = "Welcome to Battleship logic game!",background="#a1f0ea",font=welcomeFont)
-# welcomeLabel.place(anchor="center")
 rulesButton = Button(root, text = "Rules of the game",
     bg='#366d91',
     fg='#ffffff',
@@ -247,7 +201,6 @@ rulesButton = Button(root, text = "Rules of the game",
     font=font, 
     relief = RAISED, command = rules)
 
-# checkButton.place(x=110,y=boardHeight+80,height = 20, width= 100)
 
 playButton = Button(root, text="Play",
     bg='#366d91',
@@ -268,7 +221,6 @@ exitButton = Button(root, text = "Exit",
     command = root.quit)
 
 root.title("Battleship")
-# root.iconbitmap("battleship.png")
 
 welcomeLabel.place(x = 40, y = 10)
 rulesButton.place(x = 120, y = 50)
