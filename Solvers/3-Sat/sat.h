@@ -10,8 +10,6 @@
 #include <ctype.h>
 
 #include "types.h"
-#include "old/linked.h"
-
 
 /* initialization */
 clauseSet init_clauseSet(int clauseNum); /* Init a clause set */
