@@ -42,6 +42,14 @@ To execute all the components at the same time without the graphical interface:
 Remark: Before the first execution:
 ```chmod +x run.sh```
 
+To execute all the components at the same time with the custom sat-solver:
+
+
+```./run_custom_sat.sh Tests/{LxH}_games/game{LxH}_{i}.in```
+
+Remark: Before the first execution:
+```chmod +x run_custom_sat.sh```
+
 
 Following :
 - `{LxH}`: The size of the grid
