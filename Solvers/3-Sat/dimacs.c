@@ -69,15 +69,17 @@ void read_general_DIMACS(int varNum, int clauseNum, int *newVarNum, int *newClau
         } else if (j == 3) {
             print_clause_file(out, (clause) {c[0], c[1], c[2]});
             *newClauseNum += 1;
-        } else {
+        } else if (j > 3) {
             addedVars++;
             print_clause_file(out, (clause) {c[0], c[1], addedVars});
-            for (int k = 2; k < j - 3; k++) {
+            *newClauseNum = *newClauseNum + 1;
+            for (int k = 2; k <= j - 3; k++) {
                 print_clause_file(out, (clause) {c[k], -addedVars, addedVars + 1});
                 addedVars++;
+                *newClauseNum = *newClauseNum + 1;
             }
-            print_clause_file(out, (clause) {c[j - 2], c[j - 1], addedVars});
-            *newClauseNum += (j - 3);
+            print_clause_file(out, (clause) {c[j - 2], c[j - 1], -addedVars});
+            *newClauseNum = *newClauseNum + 1;
         }
         free(c);
     }
