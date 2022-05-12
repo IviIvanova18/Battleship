@@ -44,10 +44,14 @@ void print_table(int *tab, int size) {
     }
 }
 
-void read_minisat_modal(FILE *f, int *tab) {
+int read_minisat_modal(FILE *f, int *tab) {
     char *s = malloc(sizeof(char) * 10);
     fgets(s, 10, f);
+    if(s[0] =='U'){
+        return -1;
+    }
     free(s);
+    
     int x;
     int i = 0;
     while (!feof(f)) {
@@ -60,6 +64,7 @@ void read_minisat_modal(FILE *f, int *tab) {
 
         }
     }
+    return 0;
 }
 
 int main(int argc, char *argv[]) {
@@ -79,7 +84,10 @@ int main(int argc, char *argv[]) {
     fscanf(file, "%d", &BoatCount);
 
     int *tab = calloc(15, sizeof(int));
-    read_minisat_modal(g, tab);
+    if (read_minisat_modal(g, tab) == -1){
+        printf("-1");
+        return 1;
+    }
     int size = GridSizeHeight;
     print_table(tab, size);
 

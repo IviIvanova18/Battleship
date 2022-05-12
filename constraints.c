@@ -300,10 +300,8 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList) {
 
     int k, i, j, r, t, k1;
     clause c, c2, c3;
-    // clause c;
     for (k = StartBoat; k < BoatCount; k++) {
         int boatSize = matchKBoatToNSizeofK(k);
-        // printf("%d\n",boatSize);
         for (i = 0; i < GridSizeHeight; i++) {
             for (j = 0; j <= GridSizeWidth - boatSize; j++) {
                 for (r = i - 1; r <= i + 1; r += 2) {
@@ -341,8 +339,6 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList) {
                 if (j - 1 >= 0) {
                     for (k1 = StartBoat; k1 < BoatCount; k1++) {
                         //-Xrtk
-                        // c.size=0;
-                        // addCell(&c,i,j-1,k1,true);
                         reset_Clause(&c);
                         reset_Clause(&c2);
                         reset_Clause(&c3);
@@ -370,9 +366,7 @@ void NotBOAllNotSuroundingCellHorizintal(List_Clause *clauseList) {
                 if (j + boatSize < GridSizeWidth) {
                     for (k1 = StartBoat; k1 < BoatCount; k1++) {
 
-                        // //-Xrtk
-                        // 	c.size=0;
-                        // 	addCell(&c,i,j+boatSize,k1,true);
+                        // -Xrtk
                         reset_Clause(&c);
                         reset_Clause(&c2);
                         reset_Clause(&c3);
@@ -549,7 +543,8 @@ void nonExistingBoat(List_Clause *clauseList) {
 
 void createCombination(int r, combination_list *cl, int lenght) {
 
-    int *arr = malloc(sizeof(int) * lenght);
+    // int *arr = malloc(sizeof(int) * lenght);
+    int arr[lenght];
     for (int i = 0; i < lenght; i++) {
         arr[i] = i;
     }
@@ -571,6 +566,7 @@ void combinationUtil(int arr[], int data[], int start, int end, int index, int r
             c.tab[c.size - 1] = data[j];
         }
         add_element_combination_list(cl, &c);
+
         return;
     }
 
@@ -645,6 +641,7 @@ int KChosesNCNF(FILE *file, int row_list[], bool row) {
                     fprintf(file, "0\n");
                     prev = c;
                     c = c->next;
+
                     free(prev);
                 }
 

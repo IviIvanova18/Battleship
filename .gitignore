@@ -3,7 +3,9 @@
 *.time
 .nfs*
 *.tmp
-
+*.solution
+*.cnf
+*.model
 # executables
 main
 find_model
