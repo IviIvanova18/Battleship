@@ -5,7 +5,7 @@
 #include <string.h>
 #include <time.h>
 
-#define MAXSIZE 600
+#define MAXSIZE 1100
 
 typedef struct _literal_ {
     int name;
@@ -49,7 +49,8 @@ void print_literal(literal l);
 void print_clause(clause c);
 void print_clauseSet(clauseSet cs);
 void print_modal(modal m);
-void print_modal2(modal m);
+void print_modal2(modal m, FILE *f);
+void print_modal3(modal m);
 void print_is_valid(clause c);
 void print_all_combi(int varNum);
 

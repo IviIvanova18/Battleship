@@ -20,7 +20,7 @@ tests_sat3: main
 	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
 	@for i in $(TESTS_SAT) ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
-		./main $$i s 3 ../Tests/solver3.time; \
+		./main $$i s 3 ../Tests/solver3.model ../Tests/solver3.time; \
 	done
 
 tests_unsat3: main
@@ -28,7 +28,7 @@ tests_unsat3: main
 	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
 	@for i in $(TESTS_UNSAT) ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
-		./main $$i u 3 ../Tests/solver3.time; \
+		./main $$i u 3 ../Tests/solver3.model ../Tests/solver3.time; \
 	done
 
 test3: tests_sat3 tests_unsat3
@@ -38,7 +38,7 @@ tests_sat2: main
 	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
 	@for i in $(TESTS_SAT2) ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
-		./main $$i s 2 ../Tests/solver2.time; \
+		./main $$i s 2 ../Tests/solver2.model ../Tests/solver2.time; \
 	done
 
 tests_sat1: main
@@ -46,7 +46,7 @@ tests_sat1: main
 	@printf "$(YELLOW)##### Running SAT Tests ##### $(NC) \n"
 	@for i in $(TESTS_SAT) ; do \
 		printf "$(GREEN)`basename $$i .txt`$(NC): " ; \
-		./main $$i s 1 ../Tests/solver1.time; \
+		./main $$i s 1 ../Tests/solver1.model ../Tests/solver1.time; \
 	done
 
 tests_simpsat: main
@@ -55,7 +55,7 @@ tests_simpsat: main
   		printf "$(YELLOW)##### Solver $$i ##### $(NC) \n" ; \
 		for j in $(SIMPLE_SAT) ; do \
 			printf "$(GREEN)`basename $$j .txt`$(NC): " ; \
-			./main $$j s $$i ; \
+			./main $$j s $$i tmp.model; \
 		done ; \
   	done
 
@@ -65,7 +65,7 @@ tests_simpunsat: main
   		printf "$(YELLOW)##### Solver $$i ##### $(NC) \n" ; \
 		for j in $(SIMPLE_UNSAT) ; do \
 			printf "$(GREEN)`basename $$j .txt`$(NC): " ; \
-			./main $$j u $$i ; \
+			./main $$j u $$i tmp.model ; \
 		done ; \
   	done
 

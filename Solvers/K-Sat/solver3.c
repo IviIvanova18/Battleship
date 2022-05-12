@@ -126,6 +126,7 @@ bool DPLL(clauseSet cs, modal *m) {
     clauseSet cs1 = init_clauseSet(cs.size);
     copy_cset(cs, &cs1);
     assign_to_set(l, &cs1, true);
+    assign_to_modal(m, l.pos, true);
 
     bool d1 = DPLL(cs1, m);
     free(cs1.tab);
@@ -135,6 +136,7 @@ bool DPLL(clauseSet cs, modal *m) {
     clauseSet cs2 = init_clauseSet(cs.size);
     copy_cset(cs, &cs2);
     assign_to_set(l, &cs2, false);
+    assign_to_modal(m, l.pos, false);
 
     bool d2 = DPLL(cs2, m);
     free(cs2.tab);
