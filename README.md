@@ -104,12 +104,13 @@ Can only be used with 3-Sat DIMACS files, so **always convert before running**.
 - To run with a specific DIMACS file:
     ```
     make
-    ./main filename x n output-filename
+    ./main filename x n filename-model filename-time 
     ```
     - `filename`: name of the DIMACS file
     - `x`: expected output (s for SAT and u for UNSAT)
     - `n`: solver number (1, 2 or 3)
-    - `output-filename`: an optional argument, used to print the run time
+    - `filename-model`: output file, used to print the found model
+    - `filename-time `: an optional argument, used to print the run time
 
 - Example:
     ```
