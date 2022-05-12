@@ -25,7 +25,6 @@ void print_table(int *tab, int size) {
         }
     }
     for (int i = 0; i < totalSize(); i++) {
-        printf("%c ", (tab[i] % 10 + '0'));
         int numCopy = tab[i];
         int k = numCopy % 10;
         numCopy /= 10;
@@ -35,7 +34,6 @@ void print_table(int *tab, int size) {
         numCopy /= 10;
         table[i][j] = (char) (k + '0');
     }
-    puts("");
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             if (table[i][j] != '-')
@@ -47,42 +45,54 @@ void print_table(int *tab, int size) {
     }
 }
 
-void read_minisat_modal(FILE *f, int *tab) {
+int read_minisat_modal(FILE *f, int *tab) {
     char *s = malloc(sizeof(char) * 10);
     fgets(s, 10, f);
+    if(s[0] =='U'){
+        return -1;
+    }
     free(s);
     int x;
     int i = 0;
     while (!feof(f)) {
         fscanf(f, "%d", &x);
         if (x > 0) {
-            printf("%d ", x);
-            if (x > 0 && x < 999) {
+            if ((x > 0 && x < 999) || x==2010) {
                 tab[i] = x;
                 i++;
             }
 
         }
     }
-    puts("");
+    return 0;
 }
 
 int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Input format : filename");
+    if (argc < 3) {
+        printf("Input format : filename gamefile\n");
         return 1;
     }
 
     FILE *g = fopen(argv[1], "r");
     assert(g);
 
+    FILE *file = fopen(argv[2], "r");
+    assert(file);
+    fscanf(file, "%d", &GridSizeHeight);
+    fscanf(file, "%d", &GridSizeWidth);
+	fscanf(file, "%d", &StartBoat);
+    fscanf(file, "%d", &BoatCount);
+
     int *tab = calloc(15, sizeof(int));
-    read_minisat_modal(g, tab);
+    if (read_minisat_modal(g, tab) == -1){
+        printf("-1");
+        return 1;
+    }
     int size = GridSizeHeight;
     print_table(tab, size);
 
     fclose(g);
-
+    fclose(file);
     free(tab);
 
     return 0;

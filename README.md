@@ -26,13 +26,22 @@ git clone https://github.com/IviIvanova18/Battleship.git
 cd BattleShip
 ```
 
-To execute all the components at the same time:
+To execute all the components at the same time using the graphical interface:
 
 
 ```./run_final.sh Tests/{LxH}_games/game{LxH}_{i}.in```
 
 Remark: Before the first execution:
 ```chmod +x run_final.sh```
+
+To execute all the components at the same time without the graphical interface:
+
+
+```./run.sh Tests/{LxH}_games/game{LxH}_{i}.in```
+
+Remark: Before the first execution:
+```chmod +x run.sh```
+
 
 Following :
 - `{LxH}`: The size of the grid

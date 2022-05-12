@@ -77,7 +77,7 @@ def split(word):
 def read_solution_game(b):
     f = open(sys.argv[2],'r')
     line = f.readline()
-    if int(line) == -1:
+    if isinstance(line, int) and int(line) == -1:
         popupmsg("UNSAT",'Error')
         f.close()
         return -1
