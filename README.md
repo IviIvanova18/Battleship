@@ -10,7 +10,7 @@
 
 ## General info
 
-Battleships also known as Bimaru is a logic puzzle. This project consists in using a SAT-solver to automatically solve the Battleship puzzle given different grid sizes and boat counts. For further information and all the logical formulas used for solving, the puzzle see the pdf file in the main folder. For more information about the game itself, you can find [here](https://en.wikipedia.org/wiki/Battleship_(puzzle))
+Battleships also known as Bimaru is a logic puzzle. This project consists in using a SAT-solver to automatically solve the Battleship puzzle given different grid sizes and boat counts. For further information and all the logical formulas used for solving, the puzzle see the [pdf file]{Battleships.pdf}. For more information about the game itself, you can find [here](https://en.wikipedia.org/wiki/Battleship_(puzzle))
 
 ## Technologies
 Project is created with:
@@ -28,7 +28,11 @@ cd BattleShip
 
 To execute all the components at the same time:
 
+
 ```./run_final.sh Tests/{LxH}_games/game{LxH}_{i}.in```
+
+Remark: Before the first execution:
+```chmod +x run_final.sh```
 
 Following :
 - `{LxH}`: The size of the grid
