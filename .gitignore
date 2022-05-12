@@ -1,6 +1,5 @@
 *.Identifier
 *.o
-*.time
 .nfs*
 *.tmp
 *.solution
