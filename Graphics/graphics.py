@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter.font import Font
 from traceback import print_tb
-from board import Board, read_board_from_file
+from board import Board, read_board_from_file, popupmsg
 from boat import Boat
 import numpy as np
 
@@ -64,6 +64,8 @@ def placeBoats(rootName,x,y,b):
 
 def solvePuzzle(b):
     boatPlacement = read_solution_game(b)
+    if isinstance(boatPlacement, int):
+        return
     for tile in movables:
         item = boatPlacement.pop()
         x,y = item
@@ -74,10 +76,15 @@ def split(word):
 
 def read_solution_game(b):
     f = open(sys.argv[2],'r')
-    row=0
-    listTiles = list()
-    for line in f.readlines():
-        col=0
+    line = f.readline()
+    if int(line) == -1:
+        popupmsg("UNSAT",'Error')
+        f.close()
+        return -1
+    else :
+        row=0
+        listTiles = list()
+        col = 0 
         x = split(line)
         for c in x:
             if int(c) == 1:
@@ -85,16 +92,18 @@ def read_solution_game(b):
                 listTiles.append(tile)
             col +=1
         row +=1
-    f.close()
-    return listTiles
+        for line in f.readlines():
+            col=0
+            x = split(line)
+            for c in x:
+                if int(c) == 1:
+                    tile = (col,row)
+                    listTiles.append(tile)
+                col +=1
+            row +=1
+        f.close()
+        return listTiles
 
-def popupmsg(msg, title):
-    root = tk.Tk()
-    root.title(title)
-    label = tk.Label(root, text=msg)
-    label.pack(side="top", fill="x", pady=10)
-    B1 = tk.Button(root, text="Okay", command = root.destroy)
-    B1.pack()
 
 def checkModel(b):
     listTile =list()
@@ -110,6 +119,8 @@ def checkModel(b):
             grid[x][y]=1
         listTile.append(tilePositionCoordinates)
     solution = read_solution_game(b)
+    if isinstance(solution, int):
+        return
     solutiongrid = np.zeros((b.height, b.width))
     for cell in solution:
         i,j = cell
@@ -130,6 +141,7 @@ def board():
     root.config(bg="#a1f0ea")
     b = Board(0,0,None,None,None,0,0)
     b= read_board_from_file(b)
+    
 
     board = list()
     for col in range(b.height):

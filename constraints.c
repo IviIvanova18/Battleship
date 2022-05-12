@@ -543,7 +543,8 @@ void nonExistingBoat(List_Clause *clauseList) {
 
 void createCombination(int r, combination_list *cl, int lenght) {
 
-    int *arr = malloc(sizeof(int) * lenght);
+    // int *arr = malloc(sizeof(int) * lenght);
+    int arr[lenght];
     for (int i = 0; i < lenght; i++) {
         arr[i] = i;
     }
@@ -565,6 +566,9 @@ void combinationUtil(int arr[], int data[], int start, int end, int index, int r
             c.tab[c.size - 1] = data[j];
         }
         add_element_combination_list(cl, &c);
+        // free(arr);
+        // free(c.tab);
+
         return;
     }
 
@@ -639,6 +643,7 @@ int KChosesNCNF(FILE *file, int row_list[], bool row) {
                     fprintf(file, "0\n");
                     prev = c;
                     c = c->next;
+
                     free(prev);
                 }
 
