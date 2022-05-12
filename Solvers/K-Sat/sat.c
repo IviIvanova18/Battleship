@@ -100,6 +100,16 @@ void print_modal(modal m) {
     printf("%d\n", m.tab[m.size - 1]);
 }
 
+void print_modal2(modal m, FILE *f) {
+    for (int i = 0; i < m.size; i++) {
+        if (m.tab[i] == 1)
+            fprintf(f, "%d ", i + 1);
+        else
+            fprintf(f, "%d ", -(i + 1));
+    }
+    fputs("0", f);
+}
+
 void print_is_valid(clause c) {
     if (c.valid) {
         printf("Valid : ");

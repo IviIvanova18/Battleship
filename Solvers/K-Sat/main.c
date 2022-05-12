@@ -41,12 +41,15 @@ int main(int argc, char *argv[]) {
 
     clock_t end = clock();
 
-    if (SAT)
+    if (SAT) {
         puts("SAT");
-    else
+        fputs("SAT\n", g);
+        print_modal2(m, g);
+    } else {
+        fputs("UNSAT\n", g);
         puts("UNSAT");
+    }
 
-    print_modal2(m, g);
 //    bool check = check_set_modal(cs2, m);
 //    if (check)
 //        puts("check");
