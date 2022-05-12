@@ -566,8 +566,6 @@ void combinationUtil(int arr[], int data[], int start, int end, int index, int r
             c.tab[c.size - 1] = data[j];
         }
         add_element_combination_list(cl, &c);
-        // free(arr);
-        // free(c.tab);
 
         return;
     }

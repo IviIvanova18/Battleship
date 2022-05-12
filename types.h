@@ -49,28 +49,6 @@ typedef struct List_Clause_ {
     Node_Clause *last;
 } List_Clause;
 
-
-typedef struct Boat_ {
-    int n;//size of boat associated with k
-    // k in (1...10)
-    int k;//the number of boat 
-
-} Boat;
-
-typedef struct literalB_ {
-    bool val;
-    int i, j;
-    Boat boat;
-} literalB;
-
-typedef bool literalO;
-
-typedef struct CellX_ {
-    bool val;
-    int i, j;
-    int k;
-} CellX;
-
 //[1,2,3]
 typedef struct _combination_ {
     int size;
