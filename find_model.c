@@ -48,7 +48,7 @@ void print_table(int *tab, int size,int column_list[], int line_list[]) {
         // puts("");
     }
     for (int j = 0; j<size; j++){
-        printf(BLUE"%d ",line_list[j]);
+        printf(BLUE"%d "RESET,line_list[j]);
     }
     puts("");
 
@@ -103,8 +103,7 @@ int main(int argc, char *argv[]) {
     print_table(tab, size, column_list, line_list);
 
     fclose(g);
-    // fclose(file);
-    // free(tab);
+    free(tab);
 
     return 0;
 }
