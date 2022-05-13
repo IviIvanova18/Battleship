@@ -9,6 +9,9 @@
 
 #define YELLOW "\e[0;33m"
 #define RESET "\e[0m"
+#define BLUE "\e[0;34m"	
+#define RED "\e[0;91m"
+#define GREEN "\e[0;92m"
 
 int totalSize() {
     int count = 0;
@@ -17,7 +20,7 @@ int totalSize() {
     return count;
 }
 
-void print_table(int *tab, int size) {
+void print_table(int *tab, int size,int column_list[], int line_list[]) {
     char table[size][size];
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
@@ -41,8 +44,14 @@ void print_table(int *tab, int size) {
             else
                 printf("%c ", table[i][j]);
         }
-        puts("");
+        printf(BLUE"%d\n"RESET,column_list[i]);
+        // puts("");
     }
+    for (int j = 0; j<size; j++){
+        printf(BLUE"%d ",line_list[j]);
+    }
+    puts("");
+
 }
 
 int read_minisat_modal(FILE *f, int *tab) {
@@ -78,22 +87,24 @@ int main(int argc, char *argv[]) {
 
     FILE *file = fopen(argv[2], "r");
     assert(file);
-    fscanf(file, "%d", &GridSizeHeight);
-    fscanf(file, "%d", &GridSizeWidth);
-	fscanf(file, "%d", &StartBoat);
-    fscanf(file, "%d", &BoatCount);
+
+    int column_list[MAXNUM];
+    int line_list[MAXNUM];
+    read_game_file(file, column_list, line_list, &GridSizeHeight, &GridSizeWidth, &StartBoat, &BoatCount);
 
     int *tab = calloc(15, sizeof(int));
     if (read_minisat_modal(g, tab) == -1){
-        printf("-1");
+        printf(RED"UNSAT\n"RESET);
         return 1;
     }
     int size = GridSizeHeight;
-    print_table(tab, size);
+    printf(GREEN"SAT\n"RESET);
+
+    print_table(tab, size, column_list, line_list);
 
     fclose(g);
-    fclose(file);
-    free(tab);
+    // fclose(file);
+    // free(tab);
 
     return 0;
 }
